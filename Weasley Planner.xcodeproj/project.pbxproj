@@ -7,21 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13D001B76F50D776DC06FDD1 /* Pods_Weasley_Planner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FEA11C4ED9CB50D78DC1C2 /* Pods_Weasley_Planner.framework */; };
 		9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */; };
-		9BC2E15D202CE8BF000B8E15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15C202CE8BF000B8E15 /* ViewController.swift */; };
+		9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15C202CE8BF000B8E15 /* MainVC.swift */; };
 		9BC2E160202CE8BF000B8E15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E15E202CE8BF000B8E15 /* Main.storyboard */; };
 		9BC2E162202CE8BF000B8E15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E161202CE8BF000B8E15 /* Assets.xcassets */; };
 		9BC2E165202CE8BF000B8E15 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E163202CE8BF000B8E15 /* LaunchScreen.storyboard */; };
+		9BC2E16F202CE973000B8E15 /* MainLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E16E202CE973000B8E15 /* MainLayout.swift */; };
+		9BC2E174202CE9F3000B8E15 /* SidePaneLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E173202CE9F3000B8E15 /* SidePaneLayout.swift */; };
+		9BC2E178202CEA1C000B8E15 /* TitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E177202CEA1C000B8E15 /* TitleBar.swift */; };
+		9BC2E17A202CEA58000B8E15 /* SidePaneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E179202CEA58000B8E15 /* SidePaneVC.swift */; };
+		9BC2E17D202CEADD000B8E15 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E17C202CEADD000B8E15 /* Constants.swift */; };
+		9BC2E180202CEC55000B8E15 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E17F202CEC55000B8E15 /* UIViewExtension.swift */; };
+		9BC2E182202CED28000B8E15 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E181202CED28000B8E15 /* UIDeviceExtension.swift */; };
+		9BC2E188202CF903000B8E15 /* Harry P.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E183202CF0DA000B8E15 /* Harry P.ttf */; };
+		9BC2E18B202CFB73000B8E15 /* SlideInPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E18A202CFB73000B8E15 /* SlideInPresentationAnimator.swift */; };
+		9BC2E18D202CFB7F000B8E15 /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E18C202CFB7F000B8E15 /* SlideInPresentationController.swift */; };
+		9BC2E18F202CFB89000B8E15 /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E18E202CFB89000B8E15 /* SlideInPresentationManager.swift */; };
+		9BC2E191202DC781000B8E15 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E190202DC781000B8E15 /* DataHandler.swift */; };
+		9BC2E197202DCA70000B8E15 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E196202DCA70000B8E15 /* CalendarVC.swift */; };
+		9BC2E199202DCA7D000B8E15 /* ChoreChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E198202DCA7D000B8E15 /* ChoreChartVC.swift */; };
+		9BC2E19B202DCA89000B8E15 /* MealPlannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E19A202DCA89000B8E15 /* MealPlannerVC.swift */; };
+		9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E19C202DCA95000B8E15 /* ShoppingListVC.swift */; };
+		9BC2E19F202DCB0F000B8E15 /* UserPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E19E202DCB0F000B8E15 /* UserPane.swift */; };
+		9BCF3872202DD67700617558 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BCF3871202DD67700617558 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		74012A726E5A09C37CC7BC02 /* Pods-Weasley Planner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weasley Planner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner.debug.xcconfig"; sourceTree = "<group>"; };
+		97FEA11C4ED9CB50D78DC1C2 /* Pods_Weasley_Planner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weasley_Planner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC2E157202CE8BF000B8E15 /* Weasley Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weasley Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9BC2E15C202CE8BF000B8E15 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9BC2E15C202CE8BF000B8E15 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9BC2E15F202CE8BF000B8E15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9BC2E161202CE8BF000B8E15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BC2E164202CE8BF000B8E15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9BC2E166202CE8BF000B8E15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9BC2E16E202CE973000B8E15 /* MainLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLayout.swift; sourceTree = "<group>"; };
+		9BC2E173202CE9F3000B8E15 /* SidePaneLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePaneLayout.swift; sourceTree = "<group>"; };
+		9BC2E177202CEA1C000B8E15 /* TitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBar.swift; sourceTree = "<group>"; };
+		9BC2E179202CEA58000B8E15 /* SidePaneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePaneVC.swift; sourceTree = "<group>"; };
+		9BC2E17C202CEADD000B8E15 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9BC2E17F202CEC55000B8E15 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		9BC2E181202CED28000B8E15 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
+		9BC2E183202CF0DA000B8E15 /* Harry P.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Harry P.ttf"; sourceTree = "<group>"; };
+		9BC2E18A202CFB73000B8E15 /* SlideInPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationAnimator.swift; sourceTree = "<group>"; };
+		9BC2E18C202CFB7F000B8E15 /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
+		9BC2E18E202CFB89000B8E15 /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
+		9BC2E190202DC781000B8E15 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		9BC2E196202DCA70000B8E15 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		9BC2E198202DCA7D000B8E15 /* ChoreChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreChartVC.swift; sourceTree = "<group>"; };
+		9BC2E19A202DCA89000B8E15 /* MealPlannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlannerVC.swift; sourceTree = "<group>"; };
+		9BC2E19C202DCA95000B8E15 /* ShoppingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListVC.swift; sourceTree = "<group>"; };
+		9BC2E19E202DCB0F000B8E15 /* UserPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPane.swift; sourceTree = "<group>"; };
+		9BCF3871202DD67700617558 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weasley Planner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +69,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13D001B76F50D776DC06FDD1 /* Pods_Weasley_Planner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		601390D972C9C9E876545813 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				74012A726E5A09C37CC7BC02 /* Pods-Weasley Planner.debug.xcconfig */,
+				A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9BC2E14E202CE8BF000B8E15 = {
 			isa = PBXGroup;
 			children = (
 				9BC2E159202CE8BF000B8E15 /* Weasley Planner */,
 				9BC2E158202CE8BF000B8E15 /* Products */,
+				601390D972C9C9E876545813 /* Pods */,
+				F5BC63D430602DF4D977BC0D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +106,144 @@
 		9BC2E159202CE8BF000B8E15 /* Weasley Planner */ = {
 			isa = PBXGroup;
 			children = (
+				9BC2E189202CFB69000B8E15 /* Presentation */,
+				9BC2E184202CF0E3000B8E15 /* Assets */,
+				9BC2E17E202CEC46000B8E15 /* Extension */,
+				9BC2E17B202CEAAE000B8E15 /* Data */,
+				9BC2E176202CEA06000B8E15 /* View */,
+				9BC2E16D202CE91F000B8E15 /* Controller */,
+				9BC2E16C202CE916000B8E15 /* Storyboard */,
 				9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */,
-				9BC2E15C202CE8BF000B8E15 /* ViewController.swift */,
-				9BC2E15E202CE8BF000B8E15 /* Main.storyboard */,
-				9BC2E161202CE8BF000B8E15 /* Assets.xcassets */,
-				9BC2E163202CE8BF000B8E15 /* LaunchScreen.storyboard */,
 				9BC2E166202CE8BF000B8E15 /* Info.plist */,
+				9BCF3871202DD67700617558 /* GoogleService-Info.plist */,
 			);
 			path = "Weasley Planner";
+			sourceTree = "<group>";
+		};
+		9BC2E16C202CE916000B8E15 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E15E202CE8BF000B8E15 /* Main.storyboard */,
+				9BC2E163202CE8BF000B8E15 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		9BC2E16D202CE91F000B8E15 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E170202CE979000B8E15 /* Main */,
+				9BC2E175202CE9F7000B8E15 /* SidePane */,
+				9BC2E192202DCA07000B8E15 /* Calendar */,
+				9BC2E193202DCA11000B8E15 /* Chore Chart */,
+				9BC2E194202DCA19000B8E15 /* Meal Planner */,
+				9BC2E195202DCA1F000B8E15 /* Shopping List */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9BC2E170202CE979000B8E15 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E15C202CE8BF000B8E15 /* MainVC.swift */,
+				9BC2E16E202CE973000B8E15 /* MainLayout.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		9BC2E175202CE9F7000B8E15 /* SidePane */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E179202CEA58000B8E15 /* SidePaneVC.swift */,
+				9BC2E173202CE9F3000B8E15 /* SidePaneLayout.swift */,
+			);
+			path = SidePane;
+			sourceTree = "<group>";
+		};
+		9BC2E176202CEA06000B8E15 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E177202CEA1C000B8E15 /* TitleBar.swift */,
+				9BC2E19E202DCB0F000B8E15 /* UserPane.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9BC2E17B202CEAAE000B8E15 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E17C202CEADD000B8E15 /* Constants.swift */,
+				9BC2E190202DC781000B8E15 /* DataHandler.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9BC2E17E202CEC46000B8E15 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E17F202CEC55000B8E15 /* UIViewExtension.swift */,
+				9BC2E181202CED28000B8E15 /* UIDeviceExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		9BC2E184202CF0E3000B8E15 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E161202CE8BF000B8E15 /* Assets.xcassets */,
+				9BC2E183202CF0DA000B8E15 /* Harry P.ttf */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		9BC2E189202CFB69000B8E15 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E18A202CFB73000B8E15 /* SlideInPresentationAnimator.swift */,
+				9BC2E18C202CFB7F000B8E15 /* SlideInPresentationController.swift */,
+				9BC2E18E202CFB89000B8E15 /* SlideInPresentationManager.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9BC2E192202DCA07000B8E15 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E196202DCA70000B8E15 /* CalendarVC.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		9BC2E193202DCA11000B8E15 /* Chore Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E198202DCA7D000B8E15 /* ChoreChartVC.swift */,
+			);
+			path = "Chore Chart";
+			sourceTree = "<group>";
+		};
+		9BC2E194202DCA19000B8E15 /* Meal Planner */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E19A202DCA89000B8E15 /* MealPlannerVC.swift */,
+			);
+			path = "Meal Planner";
+			sourceTree = "<group>";
+		};
+		9BC2E195202DCA1F000B8E15 /* Shopping List */ = {
+			isa = PBXGroup;
+			children = (
+				9BC2E19C202DCA95000B8E15 /* ShoppingListVC.swift */,
+			);
+			path = "Shopping List";
+			sourceTree = "<group>";
+		};
+		F5BC63D430602DF4D977BC0D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97FEA11C4ED9CB50D78DC1C2 /* Pods_Weasley_Planner.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +253,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9BC2E169202CE8BF000B8E15 /* Build configuration list for PBXNativeTarget "Weasley Planner" */;
 			buildPhases = (
+				9120DA0CC21BF4A282CFF0FB /* [CP] Check Pods Manifest.lock */,
 				9BC2E153202CE8BF000B8E15 /* Sources */,
 				9BC2E154202CE8BF000B8E15 /* Frameworks */,
 				9BC2E155202CE8BF000B8E15 /* Resources */,
+				CAFDDEEB732A876786F1D85A /* [CP] Embed Pods Frameworks */,
+				B2C2D0D64CC8F998EEC5B67D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -124,6 +309,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BC2E165202CE8BF000B8E15 /* LaunchScreen.storyboard in Resources */,
+				9BC2E188202CF903000B8E15 /* Harry P.ttf in Resources */,
+				9BCF3872202DD67700617558 /* GoogleService-Info.plist in Resources */,
 				9BC2E162202CE8BF000B8E15 /* Assets.xcassets in Resources */,
 				9BC2E160202CE8BF000B8E15 /* Main.storyboard in Resources */,
 			);
@@ -131,13 +318,87 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9120DA0CC21BF4A282CFF0FB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Weasley Planner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2C2D0D64CC8F998EEC5B67D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CAFDDEEB732A876786F1D85A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9BC2E153202CE8BF000B8E15 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BC2E15D202CE8BF000B8E15 /* ViewController.swift in Sources */,
+				9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */,
+				9BC2E18B202CFB73000B8E15 /* SlideInPresentationAnimator.swift in Sources */,
+				9BC2E174202CE9F3000B8E15 /* SidePaneLayout.swift in Sources */,
 				9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */,
+				9BC2E197202DCA70000B8E15 /* CalendarVC.swift in Sources */,
+				9BC2E19F202DCB0F000B8E15 /* UserPane.swift in Sources */,
+				9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */,
+				9BC2E18F202CFB89000B8E15 /* SlideInPresentationManager.swift in Sources */,
+				9BC2E19B202DCA89000B8E15 /* MealPlannerVC.swift in Sources */,
+				9BC2E182202CED28000B8E15 /* UIDeviceExtension.swift in Sources */,
+				9BC2E17A202CEA58000B8E15 /* SidePaneVC.swift in Sources */,
+				9BC2E17D202CEADD000B8E15 /* Constants.swift in Sources */,
+				9BC2E178202CEA1C000B8E15 /* TitleBar.swift in Sources */,
+				9BC2E199202DCA7D000B8E15 /* ChoreChartVC.swift in Sources */,
+				9BC2E180202CEC55000B8E15 /* UIViewExtension.swift in Sources */,
+				9BC2E16F202CE973000B8E15 /* MainLayout.swift in Sources */,
+				9BC2E191202DC781000B8E15 /* DataHandler.swift in Sources */,
+				9BC2E18D202CFB7F000B8E15 /* SlideInPresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +533,7 @@
 		};
 		9BC2E16A202CE8BF000B8E15 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74012A726E5A09C37CC7BC02 /* Pods-Weasley Planner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -287,6 +549,7 @@
 		};
 		9BC2E16B202CE8BF000B8E15 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
