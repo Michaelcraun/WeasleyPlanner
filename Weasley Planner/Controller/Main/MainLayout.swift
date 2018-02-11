@@ -15,8 +15,6 @@ extension MainVC {
         let familyView = UIView()
         //TODO: Add blur effect to background ?
         
-        familyTable.backgroundColor = .clear
-        
         familyView.addSubview(mapView)
         familyView.addSubview(familyTable)
         view.addSubview(familyView)
@@ -33,12 +31,17 @@ extension MainVC {
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           padding: .init(top: -5, left: 5, bottom: 5, right: 5))
         
+        mapView.delegate = self
         mapView.anchor(top: familyView.topAnchor,
                        leading: familyView.leadingAnchor,
                        trailing: familyView.trailingAnchor,
                        padding: .init(top: 5, left: 5, bottom: 0, right: 5),
                        size: .init(width: 0, height: view.frame.width - 20))
         
+        familyTable.dataSource = self
+        familyTable.delegate = self
+        familyTable.backgroundColor = .clear
+        familyTable.register(UserCell.self, forCellReuseIdentifier: "userCell")
         familyTable.anchor(top: mapView.bottomAnchor,
                            leading: familyView.leadingAnchor,
                            trailing: familyView.trailingAnchor,
@@ -46,3 +49,21 @@ extension MainVC {
                            padding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 }
+
+extension MainVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return familyUsers.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
+        cell.clearCell()
+        cell.layoutCellForUser(familyUsers[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+}
+

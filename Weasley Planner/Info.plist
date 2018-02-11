@@ -52,5 +52,11 @@
 	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
 </dict>
 </plist>

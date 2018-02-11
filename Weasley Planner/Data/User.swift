@@ -9,15 +9,17 @@
 import UIKit
 
 class User {
+    var family: String?
     var icon: UIImage?
     var name: String?
     var location: String?
     var status: Bool
     
-    init(icon: UIImage, name: String, location: String, status: Bool) {
+    init(family: String? = nil, icon: UIImage? = nil, name: String? = nil, location: String? = nil, status: Bool = false) {
         self.icon = icon
         self.name = name
         self.location = location
         self.status = status
+        self.family = family
     }
 }

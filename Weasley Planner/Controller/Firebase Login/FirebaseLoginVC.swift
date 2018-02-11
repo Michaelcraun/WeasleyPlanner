@@ -51,12 +51,16 @@ extension FirebaseLoginVC: UIImagePickerControllerDelegate, UINavigationControll
     
     @objc func imagePickerPressed(_ sender: UIButton) {
         let imageController = UIImagePickerController()
-        imageController.sourceType = .camera
-        imageController.cameraCaptureMode = .photo
-        imageController.cameraDevice = .front
-//        imageController.cameraOverlayView
         imageController.delegate = self
         imageController.allowsEditing = true
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imageController.sourceType = .camera
+            imageController.cameraCaptureMode = .photo
+            imageController.cameraDevice = .front
+//            imageController.cameraOverlayView
+        } else {
+            imageController.sourceType = .photoLibrary
+        }
 
         present(imageController, animated: true, completion: nil)
     }

@@ -13,6 +13,8 @@ extension FirebaseLoginVC {
     func loginWithFirebase() {
         view.endEditing(true)
         
+        let imageName = NSUUID().uuidString
+        
         guard let email = emailField.inputField.text, email != "" else {
             print("FIREBASE: No email")
             return }
@@ -34,9 +36,7 @@ extension FirebaseLoginVC {
         
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             if error == nil {
-                let profileImageURL = self.uploadImage()
-                let userData: Dictionary<String,Any> = ["name" : "\(firstName) \(lastName)",
-                                                        "profileURL" : profileImageURL,
+                let userData: Dictionary<String,Any> = ["imageName" : imageName,
                                                         "status" : true]
                 
                 guard let user = user else {
@@ -45,20 +45,21 @@ extension FirebaseLoginVC {
                 }
                 
                 DataHandler.instance.updateFirebaseUser(uid: user.uid, userData: userData)
+                self.uploadImage(with: imageName)
             } else {
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .errorCodeUserNotFound:
                         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
                             if error == nil {
-                                let profileImageURL = self.uploadImage()
                                 let userData: Dictionary<String,Any> = ["family" : "",
                                                                         "name" : "\(firstName) \(lastName)",
-                                                                        "profileURL" : profileImageURL,
+                                                                        "imageName" : imageName,
                                                                         "status" : true]
                                 
                                 guard let user = user else { return }
                                 DataHandler.instance.updateFirebaseUser(uid: user.uid, userData: userData)
+                                self.uploadImage(with: imageName)
                             } else {
                                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                                     switch errorCode {
@@ -116,20 +117,18 @@ extension FirebaseLoginVC {
         
     }
     
-    func uploadImage() -> String {
-        var imageURL = ""
-        let imageName = NSUUID().uuidString
-        let imageRef = DataHandler.instance.REF_IMAGE.child("\(imageName).png")
-        if let uploadData = UIImagePNGRepresentation(iconPicker.image!) {
-            imageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
-                if let error = error {
-                    print("FIREBASE: Cannot store image on Firebase.", error)
-                    return
-                }
-                
-                if let profileImageURL = metadata?.downloadURL()?.absoluteString { imageURL = profileImageURL }
-            })
+    func uploadImage(with name: String) {
+        guard let uploadData = UIImagePNGRepresentation(iconPicker.image!) else {
+            print("FIREBASE: There was an error converting image to data...")
+            return
         }
-        return imageURL
+        
+        DataHandler.instance.REF_IMAGE.child("\(name).png").put(uploadData, metadata: nil, completion: { (metadata, error) in
+            if let error = error {
+                print("FIREBASE: Cannot store image on Firebase...", error)
+                return
+            }
+        })
+        print("FIREBASE: Successfully uploaded image to Firebase!")
     }
 }

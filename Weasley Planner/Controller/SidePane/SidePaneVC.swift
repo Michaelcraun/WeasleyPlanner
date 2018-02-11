@@ -10,12 +10,16 @@ import UIKit
 import Firebase
 
 class SidePaneVC: UIViewController {
+    //MARK: UI Variables
     let vcTable = UITableView()
     let selfPane = UserPane()
     let settingsButton = UIButton()
     let logOutButton = UIButton()
     let bottomPane = UIView()
     lazy var slideInTransitionManager = SlideInPresentationManager()
+    
+    //MARK: Data Variables
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()

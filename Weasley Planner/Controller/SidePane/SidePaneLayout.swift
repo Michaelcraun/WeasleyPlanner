@@ -71,10 +71,17 @@ extension SidePaneVC {
         } else {
             bottomPane.addSubview(logOutButton)
             
+            if let user = user {
+                selfPane.userIcon = user.icon
+                selfPane.userLocation = user.location
+                selfPane.userName = user.name
+                selfPane.userStatus = user.status
+            }
+            
             //MARK: Test data
-            selfPane.userLocation = "770 N State Road 9, Columbia City, IN, 46725"
-            selfPane.userName = "Michael Craun"
-            selfPane.userStatus = true
+//            selfPane.userLocation = "770 N State Road 9, Columbia City, IN, 46725"
+//            selfPane.userName = "Michael Craun"
+//            selfPane.userStatus = true
             
             selfPane.layoutForUser(with: 60)
             

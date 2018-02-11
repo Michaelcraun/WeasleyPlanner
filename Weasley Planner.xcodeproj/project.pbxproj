@@ -12,6 +12,8 @@
 		9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */; };
 		9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */; };
 		9B644D37202FC6C1003B6A50 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D36202FC6C1003B6A50 /* User.swift */; };
+		9B644D39203063DD003B6A50 /* MainFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D38203063DD003B6A50 /* MainFirebase.swift */; };
+		9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D3A20308BD6003B6A50 /* UserCell.swift */; };
 		9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */; };
 		9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15C202CE8BF000B8E15 /* MainVC.swift */; };
 		9BC2E160202CE8BF000B8E15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E15E202CE8BF000B8E15 /* Main.storyboard */; };
@@ -22,8 +24,6 @@
 		9BC2E178202CEA1C000B8E15 /* TitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E177202CEA1C000B8E15 /* TitleBar.swift */; };
 		9BC2E17A202CEA58000B8E15 /* SidePaneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E179202CEA58000B8E15 /* SidePaneVC.swift */; };
 		9BC2E17D202CEADD000B8E15 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E17C202CEADD000B8E15 /* Constants.swift */; };
-		9BC2E180202CEC55000B8E15 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E17F202CEC55000B8E15 /* UIViewExtension.swift */; };
-		9BC2E182202CED28000B8E15 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E181202CED28000B8E15 /* UIDeviceExtension.swift */; };
 		9BC2E188202CF903000B8E15 /* Harry P.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E183202CF0DA000B8E15 /* Harry P.ttf */; };
 		9BC2E18B202CFB73000B8E15 /* SlideInPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E18A202CFB73000B8E15 /* SlideInPresentationAnimator.swift */; };
 		9BC2E18D202CFB7F000B8E15 /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E18C202CFB7F000B8E15 /* SlideInPresentationController.swift */; };
@@ -35,10 +35,9 @@
 		9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E19C202DCA95000B8E15 /* ShoppingListVC.swift */; };
 		9BC2E19F202DCB0F000B8E15 /* UserPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E19E202DCB0F000B8E15 /* UserPane.swift */; };
 		9BCF3872202DD67700617558 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BCF3871202DD67700617558 /* GoogleService-Info.plist */; };
-		9BCF3874202DEA2500617558 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF3873202DEA2500617558 /* UIButtonExtension.swift */; };
+		9BCF3874202DEA2500617558 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF3873202DEA2500617558 /* UIKitExtensions.swift */; };
 		9BCF3877202DF42A00617558 /* FirebaseLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF3876202DF42A00617558 /* FirebaseLoginVC.swift */; };
 		9BCF3879202DF4B000617558 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF3878202DF4B000617558 /* InputView.swift */; };
-		9BCF387B202E07FC00617558 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF387A202E07FC00617558 /* UITextFieldExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +47,8 @@
 		9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginLayout.swift; sourceTree = "<group>"; };
 		9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginFirebase.swift; sourceTree = "<group>"; };
 		9B644D36202FC6C1003B6A50 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9B644D38203063DD003B6A50 /* MainFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFirebase.swift; sourceTree = "<group>"; };
+		9B644D3A20308BD6003B6A50 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		9BC2E157202CE8BF000B8E15 /* Weasley Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weasley Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BC2E15C202CE8BF000B8E15 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -60,8 +61,6 @@
 		9BC2E177202CEA1C000B8E15 /* TitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBar.swift; sourceTree = "<group>"; };
 		9BC2E179202CEA58000B8E15 /* SidePaneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePaneVC.swift; sourceTree = "<group>"; };
 		9BC2E17C202CEADD000B8E15 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		9BC2E17F202CEC55000B8E15 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		9BC2E181202CED28000B8E15 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		9BC2E183202CF0DA000B8E15 /* Harry P.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Harry P.ttf"; sourceTree = "<group>"; };
 		9BC2E18A202CFB73000B8E15 /* SlideInPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationAnimator.swift; sourceTree = "<group>"; };
 		9BC2E18C202CFB7F000B8E15 /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
@@ -73,10 +72,9 @@
 		9BC2E19C202DCA95000B8E15 /* ShoppingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListVC.swift; sourceTree = "<group>"; };
 		9BC2E19E202DCB0F000B8E15 /* UserPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPane.swift; sourceTree = "<group>"; };
 		9BCF3871202DD67700617558 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		9BCF3873202DEA2500617558 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		9BCF3873202DEA2500617558 /* UIKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		9BCF3876202DF42A00617558 /* FirebaseLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginVC.swift; sourceTree = "<group>"; };
 		9BCF3878202DF4B000617558 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		9BCF387A202E07FC00617558 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weasley Planner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,13 +97,6 @@
 				A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		9B644D35202FC622003B6A50 /* Family */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Family;
 			sourceTree = "<group>";
 		};
 		9BC2E14E202CE8BF000B8E15 = {
@@ -157,7 +148,6 @@
 			children = (
 				9BC2E170202CE979000B8E15 /* Main */,
 				9BC2E175202CE9F7000B8E15 /* SidePane */,
-				9B644D35202FC622003B6A50 /* Family */,
 				9BC2E192202DCA07000B8E15 /* Calendar */,
 				9BC2E193202DCA11000B8E15 /* Chore Chart */,
 				9BC2E194202DCA19000B8E15 /* Meal Planner */,
@@ -172,6 +162,7 @@
 			children = (
 				9BC2E15C202CE8BF000B8E15 /* MainVC.swift */,
 				9BC2E16E202CE973000B8E15 /* MainLayout.swift */,
+				9B644D38203063DD003B6A50 /* MainFirebase.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -191,6 +182,7 @@
 				9BCF3878202DF4B000617558 /* InputView.swift */,
 				9B644D2F202F4C7B003B6A50 /* TextButton.swift */,
 				9BC2E177202CEA1C000B8E15 /* TitleBar.swift */,
+				9B644D3A20308BD6003B6A50 /* UserCell.swift */,
 				9BC2E19E202DCB0F000B8E15 /* UserPane.swift */,
 			);
 			path = View;
@@ -209,10 +201,7 @@
 		9BC2E17E202CEC46000B8E15 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				9BC2E17F202CEC55000B8E15 /* UIViewExtension.swift */,
-				9BCF387A202E07FC00617558 /* UITextFieldExtension.swift */,
-				9BC2E181202CED28000B8E15 /* UIDeviceExtension.swift */,
-				9BCF3873202DEA2500617558 /* UIButtonExtension.swift */,
+				9BCF3873202DEA2500617558 /* UIKitExtensions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -424,16 +413,14 @@
 				9B644D37202FC6C1003B6A50 /* User.swift in Sources */,
 				9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */,
 				9BC2E18B202CFB73000B8E15 /* SlideInPresentationAnimator.swift in Sources */,
-				9BCF3874202DEA2500617558 /* UIButtonExtension.swift in Sources */,
+				9BCF3874202DEA2500617558 /* UIKitExtensions.swift in Sources */,
 				9BC2E174202CE9F3000B8E15 /* SidePaneLayout.swift in Sources */,
 				9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */,
-				9BCF387B202E07FC00617558 /* UITextFieldExtension.swift in Sources */,
 				9BC2E197202DCA70000B8E15 /* CalendarVC.swift in Sources */,
 				9BC2E19F202DCB0F000B8E15 /* UserPane.swift in Sources */,
 				9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */,
 				9BC2E18F202CFB89000B8E15 /* SlideInPresentationManager.swift in Sources */,
 				9BC2E19B202DCA89000B8E15 /* MealPlannerVC.swift in Sources */,
-				9BC2E182202CED28000B8E15 /* UIDeviceExtension.swift in Sources */,
 				9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */,
 				9BC2E17A202CEA58000B8E15 /* SidePaneVC.swift in Sources */,
 				9B644D30202F4C7B003B6A50 /* TextButton.swift in Sources */,
@@ -441,9 +428,10 @@
 				9BC2E178202CEA1C000B8E15 /* TitleBar.swift in Sources */,
 				9BC2E199202DCA7D000B8E15 /* ChoreChartVC.swift in Sources */,
 				9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */,
+				9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */,
 				9BCF3877202DF42A00617558 /* FirebaseLoginVC.swift in Sources */,
-				9BC2E180202CEC55000B8E15 /* UIViewExtension.swift in Sources */,
 				9BCF3879202DF4B000617558 /* InputView.swift in Sources */,
+				9B644D39203063DD003B6A50 /* MainFirebase.swift in Sources */,
 				9BC2E16F202CE973000B8E15 /* MainLayout.swift in Sources */,
 				9BC2E191202DC781000B8E15 /* DataHandler.swift in Sources */,
 				9BC2E18D202CFB7F000B8E15 /* SlideInPresentationController.swift in Sources */,

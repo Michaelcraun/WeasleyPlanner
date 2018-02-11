@@ -23,6 +23,10 @@ class UserPane: UIView {
     }
     
     func layoutForUser(with height: CGFloat) {
+        for subview in self.subviews {
+            subview.removeFromSuperview()
+        }
+        
         let userIconView = layoutProfileIcon(with: height)
         let statusIconView = layoutStatusIcon()
         let userNameLabel = layoutUserNameLabel()
