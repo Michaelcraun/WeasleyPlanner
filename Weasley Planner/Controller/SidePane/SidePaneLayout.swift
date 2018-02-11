@@ -11,16 +11,18 @@ import UIKit
 enum Controller: String {
     case main = "Family Tracker"
     case calendar = "Calendar"
+    case recipeList = "Recipe List"
     case mealPlanner = "Meal Planner"
     case shoppingList = "Shopping List"
     case choreChart = "Chore Chart"
-    static var allControllers: [Controller] { return [.main, .calendar, .mealPlanner, .shoppingList, .choreChart] }
+    static var allControllers: [Controller] { return [.main, .calendar, .recipeList, .mealPlanner, .shoppingList, .choreChart] }
     
     var segueIdentifier: String {
         switch self {
         case .main: return "showMain"
         case .calendar: return "showCalendar"
         case .mealPlanner: return "showMealPlanner"
+        case .recipeList: return "showRecipeList"
         case .shoppingList: return "showShoppingList"
         case .choreChart: return "showChoreChart"
         }

@@ -9,6 +9,7 @@
 import UIKit
 
 class ChoreChartVC: UIViewController {
+    private let identifier = "showChoreChart"
 
     override func viewDidLoad() {
         super.viewDidLoad()

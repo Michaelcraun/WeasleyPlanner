@@ -40,9 +40,7 @@ class TitleBar: UIView {
         titleLabel.anchor(bottom: subtitleLabel.topAnchor,
                           centerX: self.centerXAnchor)
         
-        if let _ = delegate as? MainVC {
-            layoutSettingsButton()
-        }
+        layoutSettingsButton()
     }
     
     func layoutSettingsButton() {

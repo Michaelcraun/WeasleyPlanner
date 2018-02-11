@@ -118,7 +118,7 @@ extension FirebaseLoginVC {
     }
     
     func uploadImage(with name: String) {
-        guard let uploadData = UIImagePNGRepresentation(iconPicker.image!) else {
+        guard let uploadData = UIImagePNGRepresentation(iconPicker.image!.resizeImage(CGSize(width: 100, height: 100))) else {
             print("FIREBASE: There was an error converting image to data...")
             return
         }

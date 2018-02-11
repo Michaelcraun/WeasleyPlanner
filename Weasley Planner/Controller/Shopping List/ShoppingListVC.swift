@@ -9,6 +9,8 @@
 import UIKit
 
 class ShoppingListVC: UIViewController {
+    private let identifier = "showShoppingList"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

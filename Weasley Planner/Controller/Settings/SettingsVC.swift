@@ -1,16 +1,14 @@
 //
-//  MealPlannerVC.swift
+//  SettingsVC.swift
 //  Weasley Planner
 //
-//  Created by Michael Craun on 2/9/18.
+//  Created by Michael Craun on 2/11/18.
 //  Copyright © 2018 Craunic Productions. All rights reserved.
 //
 
 import UIKit
 
-class MealPlannerVC: UIViewController {
-    private let identifier = "showMealPlanner"
-    
+class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -71,6 +71,8 @@ final class SlideInPresentationController: UIPresentationController {
         coordinator.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 0.0
         })
+        
+        presentingViewController.viewDidAppear(false)
     }
     
     override func containerViewWillLayoutSubviews() {

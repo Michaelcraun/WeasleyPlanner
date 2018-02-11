@@ -14,6 +14,8 @@
 		9B644D37202FC6C1003B6A50 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D36202FC6C1003B6A50 /* User.swift */; };
 		9B644D39203063DD003B6A50 /* MainFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D38203063DD003B6A50 /* MainFirebase.swift */; };
 		9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D3A20308BD6003B6A50 /* UserCell.swift */; };
+		9BA7B0DA2030A07E002886DF /* RecipeListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0D92030A07E002886DF /* RecipeListVC.swift */; };
+		9BA7B0DD2030A11F002886DF /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DC2030A11F002886DF /* SettingsVC.swift */; };
 		9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */; };
 		9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15C202CE8BF000B8E15 /* MainVC.swift */; };
 		9BC2E160202CE8BF000B8E15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E15E202CE8BF000B8E15 /* Main.storyboard */; };
@@ -49,6 +51,8 @@
 		9B644D36202FC6C1003B6A50 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9B644D38203063DD003B6A50 /* MainFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFirebase.swift; sourceTree = "<group>"; };
 		9B644D3A20308BD6003B6A50 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		9BA7B0D92030A07E002886DF /* RecipeListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListVC.swift; sourceTree = "<group>"; };
+		9BA7B0DC2030A11F002886DF /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9BC2E157202CE8BF000B8E15 /* Weasley Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weasley Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BC2E15C202CE8BF000B8E15 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -97,6 +101,22 @@
 				A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		9BA7B0D82030A064002886DF /* Recipe List */ = {
+			isa = PBXGroup;
+			children = (
+				9BA7B0D92030A07E002886DF /* RecipeListVC.swift */,
+			);
+			path = "Recipe List";
+			sourceTree = "<group>";
+		};
+		9BA7B0DB2030A10A002886DF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9BA7B0DC2030A11F002886DF /* SettingsVC.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		9BC2E14E202CE8BF000B8E15 = {
@@ -148,9 +168,11 @@
 			children = (
 				9BC2E170202CE979000B8E15 /* Main */,
 				9BC2E175202CE9F7000B8E15 /* SidePane */,
+				9BA7B0DB2030A10A002886DF /* Settings */,
 				9BC2E192202DCA07000B8E15 /* Calendar */,
 				9BC2E193202DCA11000B8E15 /* Chore Chart */,
 				9BC2E194202DCA19000B8E15 /* Meal Planner */,
+				9BA7B0D82030A064002886DF /* Recipe List */,
 				9BC2E195202DCA1F000B8E15 /* Shopping List */,
 				9BCF3875202DF3F000617558 /* Firebase Login */,
 			);
@@ -418,6 +440,8 @@
 				9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */,
 				9BC2E197202DCA70000B8E15 /* CalendarVC.swift in Sources */,
 				9BC2E19F202DCB0F000B8E15 /* UserPane.swift in Sources */,
+				9BA7B0DD2030A11F002886DF /* SettingsVC.swift in Sources */,
+				9BA7B0DA2030A07E002886DF /* RecipeListVC.swift in Sources */,
 				9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */,
 				9BC2E18F202CFB89000B8E15 /* SlideInPresentationManager.swift in Sources */,
 				9BC2E19B202DCA89000B8E15 /* MealPlannerVC.swift in Sources */,

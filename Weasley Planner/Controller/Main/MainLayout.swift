@@ -41,6 +41,7 @@ extension MainVC {
         familyTable.dataSource = self
         familyTable.delegate = self
         familyTable.backgroundColor = .clear
+        familyTable.separatorStyle = .none
         familyTable.register(UserCell.self, forCellReuseIdentifier: "userCell")
         familyTable.anchor(top: mapView.bottomAnchor,
                            leading: familyView.leadingAnchor,
