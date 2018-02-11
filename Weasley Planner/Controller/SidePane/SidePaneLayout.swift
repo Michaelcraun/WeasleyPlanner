@@ -34,29 +34,20 @@ extension SidePaneVC {
         view.addSubview(selfPane)
         view.addSubview(vcTable)
         bottomPane.addSubview(settingsButton)
-        bottomPane.addSubview(familyButton)
+        bottomPane.addSubview(logOutButton)
         
-        //TODO: Finish layout of bottomPane ?
         bottomPane.backgroundColor = primaryColor
         bottomPane.anchor(leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           size: .init(width: 0, height: 50))
         
-        //MARK: Test variables
-        selfPane.userLocation = "770 N State Road 9, Columbia City, IN, 46725"
-        selfPane.userName = "Michael Craun"
-        selfPane.userStatus = true
-        selfPane.anchor(leading: view.leadingAnchor,
-                        trailing: view.trailingAnchor,
-                        bottom: bottomPane.topAnchor,
-                        size: .init(width: 0, height: 60))
-        
         //TODO: Finish layout of vcTable
         vcTable.dataSource = self
         vcTable.delegate = self
         vcTable.backgroundColor = .clear
         vcTable.isScrollEnabled = false
+        vcTable.separatorStyle = .none
         vcTable.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                        leading: view.leadingAnchor,
                        trailing: view.trailingAnchor,
@@ -71,15 +62,36 @@ extension SidePaneVC {
                               bottom: bottomPane.bottomAnchor,
                               padding: .init(top: 5, left: 5, bottom: 5, right: 0),
                               size: .init(width: 40, height: 0))
+    }
+    
+    func layoutSelfPane() {
+        if DataHandler.instance.currentUserID == nil {
+            selfPane.layoutForLogin()
+            selfPane.loginPanel.addTarget(self, action: #selector(loginPressed(_:)), for: .touchUpInside)
+        } else {
+            bottomPane.addSubview(logOutButton)
+            
+            //MARK: Test data
+            selfPane.userLocation = "770 N State Road 9, Columbia City, IN, 46725"
+            selfPane.userName = "Michael Craun"
+            selfPane.userStatus = true
+            
+            selfPane.layoutForUser(with: 60)
+            
+            //TODO: Create an image for this button
+            logOutButton.setTitle("Log Out", for: .normal)
+            logOutButton.addTarget(self, action: #selector(sidePaneButtonPressed(_:)), for: .touchUpInside)
+            logOutButton.anchor(top: bottomPane.topAnchor,
+                                trailing: bottomPane.trailingAnchor,
+                                bottom: bottomPane.bottomAnchor,
+                                padding: .init(top: 5, left: 0, bottom: 5, right: 5),
+                                size: .init(width: 40, height: 0))
+        }
         
-        //TODO: Create an image for this button
-        familyButton.setTitle("Family", for: .normal)
-        familyButton.addTarget(self, action: #selector(sidePaneButtonPressed(_:)), for: .touchUpInside)
-        familyButton.anchor(top: bottomPane.topAnchor,
-                            trailing: bottomPane.trailingAnchor,
-                            bottom: bottomPane.bottomAnchor,
-                            padding: .init(top: 5, left: 0, bottom: 5, right: 5),
-                            size: .init(width: 40, height: 0))
+        selfPane.anchor(leading: view.leadingAnchor,
+                        trailing: view.trailingAnchor,
+                        bottom: bottomPane.topAnchor,
+                        size: .init(width: 0, height: 60))
     }
 }
 

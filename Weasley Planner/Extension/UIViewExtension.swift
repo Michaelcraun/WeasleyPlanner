@@ -25,4 +25,30 @@ extension UIView {
         if size.width != 0 { widthAnchor.constraint(equalToConstant: size.width).isActive = true }
         if size.height != 0 { heightAnchor.constraint(equalToConstant: size.height).isActive = true }
     }
+    
+    func bindToKeyboard() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let offset = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        if self.frame.origin.y == UIScreen.main.bounds.height * (2.0 / 3.0) {
+            self.frame.origin.y -= offset.height
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.frame.origin.y != UIScreen.main.bounds.height * (2.0 / 3.0) {
+                self.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
 }

@@ -48,5 +48,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
 </dict>
 </plist>
