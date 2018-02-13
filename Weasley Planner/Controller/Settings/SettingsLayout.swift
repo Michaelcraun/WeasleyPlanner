@@ -94,7 +94,7 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if familyUsers.count > 0 {
-                return familyUsers.count
+                return DataHandler.instance.familyUsers.count
             }
         } else {
             if nearbyUsers.count > 0 {
@@ -108,7 +108,7 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! UserCell
         if indexPath.section == 0 {
             if familyUsers.count > 0 {
-                cell.layoutCellForUser(familyUsers[indexPath.row])
+                cell.layoutCellForUser(DataHandler.instance.familyUsers[indexPath.row])
             } else {
                 cell.layoutNoUserCell()
             }

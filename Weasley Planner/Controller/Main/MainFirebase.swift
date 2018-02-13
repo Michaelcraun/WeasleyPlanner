@@ -11,7 +11,7 @@ import CoreLocation
 import Firebase
 
 extension MainVC {
-    func updateUserLocation(with location: CLLocation) {
+    func updateUserLocation(_ location: CLLocation) {
         guard let uid = DataHandler.instance.currentUserID else { return }
         let coordinate = [location.coordinate.latitude, location.coordinate.longitude]
         var addressString = ""
@@ -65,6 +65,7 @@ extension MainVC {
     }
     
     func initializeCurrentUser() {
+        selfUser = User(status: true)
         DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
@@ -77,17 +78,23 @@ extension MainVC {
                     self.selfUser.name = name
                     
                     DataHandler.instance.REF_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
-                        if let error = error {
-                            print("FIREBASE: There was an error loading the image...", error)
-                            return
-                        }
-                        
+                        if let _ = error { return }
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }
-                        self.selfUser.icon = image
                         
+                        self.selfUser.icon = image
                         self.initializeFamilyUsers()
                     })
+                }
+            }
+        })
+        
+        DataHandler.instance.REF_USER.observe(.value, with: { (snapshot) in
+            guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for user in userSnapshot {
+                if user.key == DataHandler.instance.currentUserID {
+                    guard let location = user.childSnapshot(forPath: "location").value as? String else { return }
+                    self.selfUser.location = location
                 }
             }
         })
@@ -95,8 +102,7 @@ extension MainVC {
     
     func initializeFamilyUsers() {
         guard let familyName = selfUser.family, familyName != "" else { return }
-        print("FAMILY: in initializeFamilyUsers: familyName: \(familyName)")
-        familyUsers = []
+        DataHandler.instance.familyUsers = []
         
         DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
@@ -108,21 +114,14 @@ extension MainVC {
                     guard let userLocation = user.childSnapshot(forPath: "location").value as? String else { return }
                     guard let userStatus = user.childSnapshot(forPath: "status").value as? Bool else { return }
                     
-                    print("FAMILY: in initializeFamilUsers: newFamilyUserInfo: \(userImageName, userName, userLocation, userStatus)")
-                    
                     DataHandler.instance.REF_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
-                        if let error = error {
-                            print("FIREBASE: There was an error loading the image...", error)
-                            return
-                        }
-                        
+                        if let _ = error { return }
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }
+                        
                         let newFamilyUser = User(family: familyName, icon: image, name: userName, location: userLocation, status: userStatus, uid: user.key)
-                        
-                        self.familyUsers.append(newFamilyUser)
-                        
-                        self.observeFamilyUsers()
+                        DataHandler.instance.familyUsers.append(newFamilyUser)
+                        self.familyTable.reloadData()
                     })
                 }
             }
@@ -130,33 +129,67 @@ extension MainVC {
     }
     
     func observeFamilyUsers() {
-        guard let familyName = selfUser.family, familyName != "" else { return }
         var userToEdit: User?
         
         DataHandler.instance.REF_USER.observe(.value, with: { (snapshot) in
+            guard let familyName = self.selfUser.family, familyName != "" else { return }
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
                 guard let userFamily = user.childSnapshot(forPath: "family").value as? String else { return }
                 if userFamily == familyName {
                     guard let userName = user.childSnapshot(forPath: "name").value as? String else { return }
                     var i = 0
-                    for familyUser in self.familyUsers {
+                    for familyUser in DataHandler.instance.familyUsers {
                         if userName == familyUser.name {
                             userToEdit = familyUser
-                            
-                            guard let userLocation = user.childSnapshot(forPath: "location").value as? String else { return }
-                            guard let userStatus = user.childSnapshot(forPath: "status").value as? Bool else { return }
-                            
-                            userToEdit?.location = userLocation
-                            userToEdit?.status = userStatus
-                            
-                            self.familyUsers[i] = userToEdit!
+                            break
                         } else {
                             i += 1
                         }
                     }
+                    
+                    if userToEdit != nil {
+                        guard let userCoordinates = user.childSnapshot(forPath: "coordinate").value as? [CLLocationDegrees] else { return }
+                        guard let userLocation = user.childSnapshot(forPath: "location").value as? String else { return }
+                        guard let userStatus = user.childSnapshot(forPath: "status").value as? Bool else { return }
+                        let userCoordinate = CLLocationCoordinate2D(latitude: userCoordinates[0], longitude: userCoordinates[1])
+                        
+                        userToEdit?.coordinate = userCoordinate
+                        userToEdit?.location = userLocation
+                        userToEdit?.status = userStatus
+                        
+                        DataHandler.instance.familyUsers[i] = userToEdit!
+                        self.familyTable.reloadData()
+                        userToEdit = nil
+                    }
                 }
             }
+            self.loadUserAnnotations()
         })
+    }
+    
+    func loadUserAnnotations() {
+        guard let familyName = selfUser.family, familyName != "" else { return }
+        
+        for user in DataHandler.instance.familyUsers {
+            if let coordinate = user.coordinate {
+                let annotation = UserAnnotaion(coordinate: coordinate, user: user)
+                var userIsVisible: Bool {
+                    return self.mapView.annotations.contains(where: { (annotation) -> Bool in
+                        if let userAnnotation = annotation as? UserAnnotaion {
+                            if userAnnotation.user.name == user.name {
+                                userAnnotation.update(userAnnotation, withCoordinate: coordinate)
+                                return true
+                            }
+                        }
+                        return false
+                    })
+                }
+                
+                if !userIsVisible {
+                    self.mapView.addAnnotation(annotation)
+                }
+            }
+        }
     }
 }

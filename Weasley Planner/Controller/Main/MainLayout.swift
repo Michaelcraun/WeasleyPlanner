@@ -31,7 +31,7 @@ extension MainVC {
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           padding: .init(top: -5, left: 5, bottom: 5, right: 5))
         
-        mapView.delegate = self
+        mapView.delegate = mapManager
         mapView.anchor(top: familyView.topAnchor,
                        leading: familyView.leadingAnchor,
                        trailing: familyView.trailingAnchor,
@@ -53,13 +53,13 @@ extension MainVC {
 
 extension MainVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return familyUsers.count
+        return DataHandler.instance.familyUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
         cell.clearCell()
-        cell.layoutCellForUser(familyUsers[indexPath.row])
+        cell.layoutCellForUser(DataHandler.instance.familyUsers[indexPath.row])
         return cell
     }
     

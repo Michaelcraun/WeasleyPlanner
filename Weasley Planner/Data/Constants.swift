@@ -26,3 +26,7 @@ var topBannerHeight: CGFloat {
     default: return 70
     }
 }
+
+//MARK: Data Variables
+let ad = UIApplication.shared.delegate as! AppDelegate
+let mapManager = MapDelegate()

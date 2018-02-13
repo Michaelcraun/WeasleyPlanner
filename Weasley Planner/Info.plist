@@ -20,9 +20,23 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Harry P.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -45,15 +59,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please let Weasley Planner use your beautiful mug to display to your family!</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please let Weasley Planner use your location to let your family know where you are!</string>
 </dict>
 </plist>

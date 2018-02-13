@@ -101,7 +101,6 @@ private extension SlideInPresentationController {
     }
     
     @objc dynamic func handleTap(recognizer: UITapGestureRecognizer) {
-        presentingViewController.viewWillAppear(false)
         presentingViewController.dismiss(animated: true)
     }
 }

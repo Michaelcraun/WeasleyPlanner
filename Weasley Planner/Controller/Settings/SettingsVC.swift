@@ -25,12 +25,7 @@ class SettingsVC: UIViewController {
     let creditsString = "Harry P Font|_____"
     var user: User?
     var userToAddToFamily: User?
-    var familyUsers = [User] () {
-        didSet {
-            familyTable.reloadData()
-            print("FAMILY: familyUsers: \(familyUsers)")
-        }
-    }
+    var familyUsers = [User]()
     
     var nearbyUsers = [User]() {
         didSet {

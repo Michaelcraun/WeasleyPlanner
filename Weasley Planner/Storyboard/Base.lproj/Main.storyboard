@@ -72,8 +72,6 @@
                     <connections>
                         <segue destination="2UN-Yd-Uof" kind="show" identifier="showSidePane" id="foS-3u-WZP"/>
                         <segue destination="ShT-UD-QDP" kind="show" identifier="showCalendar" id="NhP-ca-gkf"/>
-                        <segue destination="b1W-Y6-Ynp" kind="show" identifier="showChoreChart" id="Bot-jd-6MP"/>
-                        <segue destination="0gn-TL-J5j" kind="show" identifier="showMealPlanner" id="8Jc-oe-19a"/>
                         <segue destination="Vxw-ay-Xwy" kind="show" identifier="showShoppingList" id="4aK-LQ-sTZ"/>
                         <segue destination="iK1-kA-nag" kind="show" identifier="showRecipeList" id="08g-3Q-jpZ"/>
                     </connections>
@@ -81,36 +79,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="198" y="50"/>
-        </scene>
-        <!--Chore ChartVC-->
-        <scene sceneID="P8T-qI-yUO">
-            <objects>
-                <viewController id="b1W-Y6-Ynp" customClass="ChoreChartVC" customModule="Weasley_Planner" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Rmb-HJ-e20">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="Ch1-Bz-Htn"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cGs-Og-p9O" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1196" y="-752"/>
-        </scene>
-        <!--Meal PlannerVC-->
-        <scene sceneID="nsj-ni-te8">
-            <objects>
-                <viewController id="0gn-TL-J5j" customClass="MealPlannerVC" customModule="Weasley_Planner" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="p4b-kB-0XF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="dAa-5l-Erp"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="a3z-XD-Ca3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1196" y="50"/>
         </scene>
         <!--Recipe ListVC-->
         <scene sceneID="eXg-vX-iiu">
