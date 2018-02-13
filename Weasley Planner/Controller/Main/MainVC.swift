@@ -25,6 +25,7 @@ class MainVC: UIViewController {
     var selfUser = User()
     var familyUsers = [User]() {
         didSet {
+            print("FAMILY: familyUsers: \(familyUsers)")
             familyTable.reloadData()
         }
     }
@@ -43,7 +44,12 @@ class MainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         titleBar.delegate = self
         
-        observeCurrentUser()
+        initializeCurrentUser()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            print("FAMILY: user.family: \(self.selfUser.family)")
+//            self.initializeFamilyUsers()
+//            self.observeFamilyUsers()
+//        }
         
         if DataHandler.instance.currentUserID == nil {
             familyUsers = []

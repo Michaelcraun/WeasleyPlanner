@@ -64,15 +64,14 @@ extension MainVC {
         }
     }
     
-    func observeCurrentUser() {
+    func initializeCurrentUser() {
         DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
                 if user.key == DataHandler.instance.currentUserID {
-                    guard let userDict = user.value as? Dictionary<String,Any> else { return }
-                    guard let family = userDict["family"] as? String else { return }
-                    guard let name = userDict["name"] as? String else { return }
-                    guard let imageName = userDict["imageName"] as? String else { return }
+                    guard let family = user.childSnapshot(forPath: "family").value as? String else { return }
+                    guard let name = user.childSnapshot(forPath: "name").value as? String else { return }
+                    guard let imageName = user.childSnapshot(forPath: "imageName").value as? String else { return }
                     
                     self.selfUser.family = family
                     self.selfUser.name = name
@@ -86,25 +85,78 @@ extension MainVC {
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }
                         self.selfUser.icon = image
+                        
+                        self.initializeFamilyUsers()
                     })
                 }
             }
-            self.familyUsers = [self.selfUser]
         })
+    }
+    
+    func initializeFamilyUsers() {
+        guard let familyName = selfUser.family, familyName != "" else { return }
+        print("FAMILY: in initializeFamilyUsers: familyName: \(familyName)")
+        familyUsers = []
+        
+        DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for user in userSnapshot {
+                guard let userFamily = user.childSnapshot(forPath: "family").value as? String else { return }
+                if userFamily == familyName {
+                    guard let userImageName = user.childSnapshot(forPath: "imageName").value as? String else { return }
+                    guard let userName = user.childSnapshot(forPath: "name").value as? String else { return }
+                    guard let userLocation = user.childSnapshot(forPath: "location").value as? String else { return }
+                    guard let userStatus = user.childSnapshot(forPath: "status").value as? Bool else { return }
+                    
+                    print("FAMILY: in initializeFamilUsers: newFamilyUserInfo: \(userImageName, userName, userLocation, userStatus)")
+                    
+                    DataHandler.instance.REF_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
+                        if let error = error {
+                            print("FIREBASE: There was an error loading the image...", error)
+                            return
+                        }
+                        
+                        guard let imageData = data else { return }
+                        guard let image = UIImage(data: imageData) else { return }
+                        let newFamilyUser = User(family: familyName, icon: image, name: userName, location: userLocation, status: userStatus, uid: user.key)
+                        
+                        self.familyUsers.append(newFamilyUser)
+                        
+                        self.observeFamilyUsers()
+                    })
+                }
+            }
+        })
+    }
+    
+    func observeFamilyUsers() {
+        guard let familyName = selfUser.family, familyName != "" else { return }
+        var userToEdit: User?
         
         DataHandler.instance.REF_USER.observe(.value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
-                if user.key == DataHandler.instance.currentUserID {
-                    guard let userDict = user.value as? Dictionary<String,Any> else { return }
-                    guard let location = userDict["location"] as? String else { return }
-                    guard let status = userDict["status"] as? Bool else { return }
-                    
-                    self.selfUser.location = location
-                    self.selfUser.status = status
+                guard let userFamily = user.childSnapshot(forPath: "family").value as? String else { return }
+                if userFamily == familyName {
+                    guard let userName = user.childSnapshot(forPath: "name").value as? String else { return }
+                    var i = 0
+                    for familyUser in self.familyUsers {
+                        if userName == familyUser.name {
+                            userToEdit = familyUser
+                            
+                            guard let userLocation = user.childSnapshot(forPath: "location").value as? String else { return }
+                            guard let userStatus = user.childSnapshot(forPath: "status").value as? Bool else { return }
+                            
+                            userToEdit?.location = userLocation
+                            userToEdit?.status = userStatus
+                            
+                            self.familyUsers[i] = userToEdit!
+                        } else {
+                            i += 1
+                        }
+                    }
                 }
             }
-            self.familyUsers = [self.selfUser]
         })
     }
 }
