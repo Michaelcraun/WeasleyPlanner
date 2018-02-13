@@ -10,15 +10,21 @@ import UIKit
 
 extension MainVC {
     func layoutView() {
-        view.backgroundColor = secondaryColor
-        
         let familyView = UIView()
-        //TODO: Add blur effect to background ?
         
         familyView.addSubview(mapView)
+        familyView.addSubview(centerButton)
         familyView.addSubview(familyTable)
         view.addSubview(familyView)
         view.addSubview(titleBar)
+        view.backgroundColor = secondaryColor
+        
+        centerButton.setTitle("Family", for: .normal)
+        centerButton.addTarget(self, action: #selector(centerButtonPressed(_:)), for: .touchUpInside)
+        centerButton.anchor(trailing: mapView.trailingAnchor,
+                            bottom: mapView.bottomAnchor,
+                            padding: .init(top: 0, left: 0, bottom: 5, right: 5),
+                            size: .init(width: 50, height: 50))
         
         titleBar.anchor(top: view.topAnchor,
                         leading: view.leadingAnchor,
@@ -47,7 +53,7 @@ extension MainVC {
                            leading: familyView.leadingAnchor,
                            trailing: familyView.trailingAnchor,
                            bottom: familyView.bottomAnchor,
-                           padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+                           padding: .init(top: 0, left: 5, bottom: 5, right: 5))
     }
 }
 
@@ -63,8 +69,32 @@ extension MainVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let familyName = selfUser.family, familyName != "" else { return nil }
+        let headerLabel = UILabel()
+        headerLabel.backgroundColor = primaryColor
+        headerLabel.font = UIFont(name: fontName, size: largeFontSize)
+        headerLabel.textAlignment = .center
+        headerLabel.textColor = primaryTextColor
+        headerLabel.text = familyName
+        return headerLabel
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mapIsCenteredOnCurrentUser = false
+        mapIsCenteredOnFamily = false
+        userToCenterMapOn = DataHandler.instance.familyUsers[indexPath.row]
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let familyName = selfUser.family, familyName != "" else { return 0 }
+        return 40
     }
 }
 

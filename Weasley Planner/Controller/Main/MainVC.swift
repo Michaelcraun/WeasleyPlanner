@@ -14,6 +14,7 @@ class MainVC: UIViewController {
     //MARK: UI Variables
     let titleBar = TitleBar()
     let mapView = MKMapView()
+    let centerButton = UIButton()
     let familyTable = UITableView()
     lazy var slideInTransitionManager = SlideInPresentationManager()
     
@@ -21,6 +22,8 @@ class MainVC: UIViewController {
     let regionRadius: CLLocationDistance = 1000
     var needsToSegue = false
     var mapIsCenteredOnCurrentUser = true
+    var mapIsCenteredOnFamily = false
+    var userToCenterMapOn: User?
     var selfUser = User()
     
     override func viewDidLoad() {
@@ -90,5 +93,25 @@ class MainVC: UIViewController {
             }
         }
         DataHandler.instance.REF_USER.removeAllObservers()
+    }
+    
+    @objc func centerButtonPressed(_ sender: UIButton) {
+        userToCenterMapOn = nil
+        
+        switch sender.title(for: .normal)! {
+        case "Family":
+            mapIsCenteredOnCurrentUser = false
+            mapIsCenteredOnFamily = true
+            centerButton.setTitle("User", for: .normal)
+            mapManager.zoom(toFitAnnotationOn: mapView)
+        case "User":
+            mapIsCenteredOnCurrentUser = true
+            mapIsCenteredOnFamily = false
+            centerButton.setTitle("Family", for: .normal)
+            if let coordinate = mapManager.locationManager.location?.coordinate {
+                mapManager.centerMapOnLocation(coordinate)
+            }
+        default: break
+        }
     }
 }

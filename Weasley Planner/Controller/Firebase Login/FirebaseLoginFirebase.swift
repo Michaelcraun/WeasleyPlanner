@@ -80,7 +80,9 @@ extension FirebaseLoginVC {
     }
     
     func uploadImage(with name: String) {
-        guard let uploadData = UIImagePNGRepresentation(iconPicker.image!.resizeImage(CGSize(width: 100, height: 100))) else {
+        let croppedImage = iconPicker.image?.cropSquare()
+        let resizedImage = croppedImage?.resizeImage(CGSize(width: 100, height: 100))
+        guard let uploadData = UIImagePNGRepresentation(resizedImage!) else {
             showAlert(.imageError)
             return
         }

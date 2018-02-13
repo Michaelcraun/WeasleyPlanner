@@ -156,6 +156,34 @@ extension UITableViewCell {
 }
 
 extension UIImage {
+    func cropSquare() -> UIImage {
+        guard let cgImage = self.cgImage else { return self }
+        let contextSize: CGSize = self.size
+        
+        var posX: CGFloat = 0.0
+        var posY: CGFloat = 0.0
+        var cgWidth: CGFloat = contextSize.width
+        var cgHeight: CGFloat = contextSize.height
+        
+        if contextSize.width > contextSize.height {
+            posX = ((contextSize.width - contextSize.height) / 2)
+            posY = 0
+            cgWidth = contextSize.height
+            cgHeight = contextSize.height
+        } else {
+            posX = 0
+            posY = ((contextSize.height - contextSize.width) / 2)
+            cgWidth = contextSize.width
+            cgHeight = contextSize.width
+        }
+        
+        let rect = CGRect(x: posX, y: posY, width: cgWidth, height: cgHeight)
+        let imageRef = cgImage.cropping(to: rect)
+        let image = UIImage(cgImage: imageRef!)
+        
+        return image
+    }
+    
     func resizeImage(_ targetSize: CGSize) -> UIImage {
         let size = self.size
         

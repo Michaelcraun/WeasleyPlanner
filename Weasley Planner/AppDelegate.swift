@@ -25,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {  }
     func applicationWillEnterForeground(_ application: UIApplication) {  }
     func applicationDidBecomeActive(_ application: UIApplication) {  }
-    func applicationWillTerminate(_ application: UIApplication) {  }
+    func applicationWillTerminate(_ application: UIApplication) {
+        guard let uid = DataHandler.instance.currentUserID else { return }
+        let userData = ["status" : false]
+        
+        DataHandler.instance.updateFirebaseUser(uid: uid, userData: userData)
+    }
 }
 

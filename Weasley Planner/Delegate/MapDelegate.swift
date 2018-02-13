@@ -42,7 +42,14 @@ class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         guard let userLocation = locations.last else { return }
         
         if let main = delegate as? MainVC {
-            if main.mapIsCenteredOnCurrentUser { centerMapOnLocation(userLocation.coordinate) }
+            main.updateUserLocation(userLocation)
+            if main.mapIsCenteredOnCurrentUser {
+                centerMapOnLocation(userLocation.coordinate)
+            } else {
+                if let coordinate = main.userToCenterMapOn?.coordinate {
+                    centerMapOnLocation(coordinate)
+                }
+            }
         }
     }
     
@@ -53,5 +60,30 @@ class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
             main.mapView.setRegion(coordinateRegion, animated: true)
             main.mapView.showsUserLocation = true
         }
+    }
+    
+    func zoom(toFitAnnotationOn mapView: MKMapView) {
+        if mapView.annotations.count == 0 { return }
+        
+        var topLeftCoordinate = CLLocationCoordinate2D(latitude: -90, longitude: 180)
+        var bottomRightCoordinate = CLLocationCoordinate2D(latitude: 90, longitude: -180)
+        
+        for annotation in mapView.annotations {
+            topLeftCoordinate.longitude = fmin(topLeftCoordinate.longitude, annotation.coordinate.longitude)
+            topLeftCoordinate.latitude = fmax(topLeftCoordinate.latitude, annotation.coordinate.latitude)
+            bottomRightCoordinate.longitude = fmax(bottomRightCoordinate.longitude, annotation.coordinate.longitude)
+            bottomRightCoordinate.latitude = fmin(bottomRightCoordinate.latitude, annotation.coordinate.latitude)
+        }
+        
+        let latitude = topLeftCoordinate.latitude - (topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 0.5
+        let longitude = topLeftCoordinate.longitude + (bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 0.5
+        let center = CLLocationCoordinate2DMake(latitude, longitude)
+        let latitudeDelta = fabs((topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 2.0)
+        let longitudeDelta = fabs((bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 2.0)
+        let span = MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+        
+        var region = MKCoordinateRegion(center: center, span: span)
+        region = mapView.regionThatFits(region)
+        mapView.setRegion(region, animated: true)
     }
 }

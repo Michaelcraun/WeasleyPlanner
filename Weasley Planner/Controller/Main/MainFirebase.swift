@@ -165,6 +165,13 @@ extension MainVC {
                 }
             }
             self.loadUserAnnotations()
+            if self.mapIsCenteredOnFamily {
+                mapManager.zoom(toFitAnnotationOn: self.mapView)
+            } else if self.userToCenterMapOn != nil {
+                if let coordinate = self.userToCenterMapOn?.coordinate {
+                    mapManager.centerMapOnLocation(coordinate)
+                }
+            }
         })
     }
     
