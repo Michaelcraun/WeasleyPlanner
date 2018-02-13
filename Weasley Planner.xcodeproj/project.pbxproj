@@ -23,7 +23,6 @@
 		9BA7B0EA20313748002886DF /* CalendarFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0E920313748002886DF /* CalendarFirebase.swift */; };
 		9BA7B0EC2031FC63002886DF /* SettingsFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0EB2031FC63002886DF /* SettingsFirebase.swift */; };
 		9BA7B0F020332E35002886DF /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0EF20332E35002886DF /* MapDelegate.swift */; };
-		9BA7B0F7203339C9002886DF /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0F6203339C9002886DF /* FoundationExtension.swift */; };
 		9BC2E15B202CE8BF000B8E15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */; };
 		9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC2E15C202CE8BF000B8E15 /* MainVC.swift */; };
 		9BC2E160202CE8BF000B8E15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BC2E15E202CE8BF000B8E15 /* Main.storyboard */; };
@@ -67,7 +66,6 @@
 		9BA7B0EB2031FC63002886DF /* SettingsFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFirebase.swift; sourceTree = "<group>"; };
 		9BA7B0ED20332A52002886DF /* Weasley Planner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Weasley Planner.entitlements"; sourceTree = "<group>"; };
 		9BA7B0EF20332E35002886DF /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
-		9BA7B0F6203339C9002886DF /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
 		9BC2E157202CE8BF000B8E15 /* Weasley Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weasley Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC2E15A202CE8BF000B8E15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BC2E15C202CE8BF000B8E15 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -257,7 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				9BCF3873202DEA2500617558 /* UIKitExtensions.swift */,
-				9BA7B0F6203339C9002886DF /* FoundationExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -488,7 +485,6 @@
 				9BCF3877202DF42A00617558 /* FirebaseLoginVC.swift in Sources */,
 				9BCF3879202DF4B000617558 /* InputView.swift in Sources */,
 				9B644D39203063DD003B6A50 /* MainFirebase.swift in Sources */,
-				9BA7B0F7203339C9002886DF /* FoundationExtension.swift in Sources */,
 				9BC2E16F202CE973000B8E15 /* MainLayout.swift in Sources */,
 				9BC2E191202DC781000B8E15 /* DataHandler.swift in Sources */,
 				9BC2E18D202CFB7F000B8E15 /* SlideInPresentationController.swift in Sources */,
