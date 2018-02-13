@@ -50,7 +50,11 @@ class MainVC: UIViewController {
         }
         
         if DataHandler.instance.segueIdentifier != nil {
-            needsToSegue = true
+            if DataHandler.instance.segueIdentifier == Controller.main.segueIdentifier {
+                DataHandler.instance.segueIdentifier = nil
+            } else {
+                needsToSegue = true
+            }
         }
     }
     
@@ -111,6 +115,7 @@ class MainVC: UIViewController {
                 destination.modalPresentationStyle = .custom
             }
         }
+        DataHandler.instance.REF_USER.removeAllObservers()
     }
 }
 

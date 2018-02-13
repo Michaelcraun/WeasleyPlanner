@@ -14,12 +14,14 @@ class User {
     var name: String?
     var location: String?
     var status: Bool
+    var uid: String?
     
-    init(family: String? = nil, icon: UIImage? = nil, name: String? = nil, location: String? = nil, status: Bool = false) {
+    init(family: String? = nil, icon: UIImage? = nil, name: String? = nil, location: String? = nil, status: Bool = false, uid: String? = nil) {
         self.icon = icon
         self.name = name
         self.location = location
         self.status = status
         self.family = family
+        self.uid = uid
     }
 }

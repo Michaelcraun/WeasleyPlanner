@@ -40,11 +40,15 @@ class TitleBar: UIView {
         titleLabel.anchor(bottom: subtitleLabel.topAnchor,
                           centerX: self.centerXAnchor)
         
-        layoutSettingsButton()
+        if let _ = delegate as? MainVC {
+            layoutSettingsButton()
+        } else {
+            layoutBackButton()
+        }
     }
     
     func layoutSettingsButton() {
-        let settingsButton = UIButton(type: .custom)
+        let settingsButton = UIButton()
         //TODO: Create an image for this button
         settingsButton.setTitle("SETTINGS", for: .normal)
         settingsButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
@@ -57,9 +61,25 @@ class TitleBar: UIView {
                               padding: .init(top: 0, left: 10, bottom: 5, right: 0))
     }
     
+    func layoutBackButton() {
+        let backButton = UIButton()
+        //TODO: Create an image for this button
+        backButton.setTitle("BACK", for: .normal)
+        backButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
+        backButton.sizeToFit()
+        
+        self.addSubview(backButton)
+        
+        backButton.anchor(leading: self.leadingAnchor,
+                          bottom: self.bottomAnchor,
+                          padding: .init(top: 0, left: 10, bottom: 5, right: 0))
+    }
+    
     @objc func titleButtonPressed(_ sender: UIButton) {
         if let _ = delegate as? MainVC {
             delegate.performSegue(withIdentifier: "showSidePane", sender: nil)
+        } else {
+            delegate.dismiss(animated: true, completion: nil)
         }
     }
 }

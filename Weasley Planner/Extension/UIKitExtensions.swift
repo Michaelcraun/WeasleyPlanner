@@ -8,6 +8,8 @@
 
 import UIKit
 
+extension UIViewController: Alertable {  }
+
 extension UIButton {
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -75,6 +77,32 @@ public extension UIDevice {
 }
 
 extension UIView {
+    //MARK: Animation methods
+    func addBlurEffect(tag: Int) {
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.bounds
+        blurEffectView.tag = tag
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        self.addSubview(blurEffectView)
+    }
+    
+    func fadeAlphaOut() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.alpha = 0
+        }, completion: { (finished) in
+            self.removeFromSuperview()
+        })
+    }
+    
+    func fadeAlphaTo(_ alpha: CGFloat) {
+        UIView.animate(withDuration: 0.2) {
+            self.alpha = alpha
+        }
+    }
+    
+    //MARK: Layout methods
     func anchor(top: NSLayoutYAxisAnchor? = nil, leading: NSLayoutXAxisAnchor? = nil, trailing: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil,
                 centerX: NSLayoutXAxisAnchor? = nil, centerY: NSLayoutYAxisAnchor? = nil,
                 padding: UIEdgeInsets = .zero, size: CGSize = .zero) {

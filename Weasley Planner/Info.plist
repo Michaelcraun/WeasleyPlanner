@@ -23,9 +23,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Harry P.ttf</string>
-		<string>Wizards Magic.ttf</string>
-		<string>MagicSchoolOne.ttf</string>
-		<string>Starjedi.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -41,6 +41,15 @@ class SidePaneVC: UIViewController {
                 
                 destination.view.bindToKeyboard()
             }
+        } else if segue.identifier == "showSettings" {
+            if let destination = segue.destination as? SettingsVC {
+                slideInTransitionManager.direction = .right
+                slideInTransitionManager.disableCompactHeight = false
+                destination.transitioningDelegate = slideInTransitionManager
+                destination.modalPresentationStyle = .custom
+                
+                destination.user = user
+            }
         }
     }
     
@@ -56,8 +65,10 @@ class SidePaneVC: UIViewController {
                 DataHandler.instance.currentUserID = nil
                 dismiss(animated: true, completion: nil)
             } catch {
-                print("FIREBASE: Error logging out!")
+                showAlert(.logoutError)
+                break
             }
+        case "Settings": performSegue(withIdentifier: "showSettings", sender: nil)
         default: break
         }
     }

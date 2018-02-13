@@ -15,6 +15,7 @@ let STORAGE_BASE = FIRStorage.storage().reference()
 class DataHandler {
     static let instance = DataHandler()
     
+    var familyUsers = [User]()
     var segueIdentifier: String!
     
     //MARK: Firebase Variables
@@ -35,15 +36,15 @@ class DataHandler {
     var REF_IMAGE: FIRStorageReference { return _REF_IMAGE }
     
     //MARK: Firebase Family Methods
-    func createFamilyIDString() -> String {
-        var familyID = ""
+    func createFamilyIDString(with familyName: String) -> String {
+        var familyID = familyName
         //TODO: Configure ID String
-        familyID = ""
+        familyID += "|"
         return familyID
     }
     
-    func addFirebaseUserToFamily(uid: String, family: String) {
-        
+    func updateFirebaseFamily(id: String, familyData: Dictionary<String,Any>) {
+        REF_FAMILY.child(id).updateChildValues(familyData)
     }
     
     //MARK: Firebase Recipe Methods

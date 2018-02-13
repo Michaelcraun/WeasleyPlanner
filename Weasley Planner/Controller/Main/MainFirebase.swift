@@ -18,11 +18,7 @@ extension MainVC {
         
         let geoCoder = CLGeocoder()
         geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if let error = error {
-                print("LOCATION: There was an error creating the user's location.", error)
-                return
-            }
-            
+            if let _ = error { return }
             guard let placemarks = placemarks else { return }
             let placemark = placemarks[0]
             
@@ -69,25 +65,21 @@ extension MainVC {
     }
     
     func observeCurrentUser() {
-        DataHandler.instance.REF_USER.observe(.value, with: { (snapshot) in
+        DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
                 if user.key == DataHandler.instance.currentUserID {
                     guard let userDict = user.value as? Dictionary<String,Any> else { return }
                     guard let family = userDict["family"] as? String else { return }
                     guard let name = userDict["name"] as? String else { return }
-                    guard let location = userDict["location"] as? String else { return }
                     guard let imageName = userDict["imageName"] as? String else { return }
-                    guard let status = userDict["status"] as? Bool else { return }
                     
                     self.selfUser.family = family
                     self.selfUser.name = name
-                    self.selfUser.location = location
-                    self.selfUser.status = status
                     
-                    DataHandler.instance.REF_IMAGE.child("\(imageName).png").data(withMaxSize: 99999999, completion: { (data, error) in
+                    DataHandler.instance.REF_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
                         if let error = error {
-                            print("FIREBASE: There was an error loading image: ", error.localizedDescription)
+                            print("FIREBASE: There was an error loading the image...", error)
                             return
                         }
                         
@@ -95,6 +87,21 @@ extension MainVC {
                         guard let image = UIImage(data: imageData) else { return }
                         self.selfUser.icon = image
                     })
+                }
+            }
+            self.familyUsers = [self.selfUser]
+        })
+        
+        DataHandler.instance.REF_USER.observe(.value, with: { (snapshot) in
+            guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for user in userSnapshot {
+                if user.key == DataHandler.instance.currentUserID {
+                    guard let userDict = user.value as? Dictionary<String,Any> else { return }
+                    guard let location = userDict["location"] as? String else { return }
+                    guard let status = userDict["status"] as? Bool else { return }
+                    
+                    self.selfUser.location = location
+                    self.selfUser.status = status
                 }
             }
             self.familyUsers = [self.selfUser]
