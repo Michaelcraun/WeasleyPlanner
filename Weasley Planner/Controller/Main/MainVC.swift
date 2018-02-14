@@ -42,6 +42,12 @@ class MainVC: UIViewController {
             DataHandler.instance.familyUsers = []
             familyTable.reloadData()
             selfUser = User()
+            mapIsCenteredOnCurrentUser = true
+            mapIsCenteredOnFamily = false
+            userToCenterMapOn = nil
+            centerButton.fadeAlphaTo(0)
+        } else {
+            centerButton.fadeAlphaTo(1)
         }
         
         initializeCurrentUser()

@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 
 class FirebaseLoginVC: UIViewController {
+    //MARK: UI Variables
+    let firebaseSegmentedControl = UISegmentedControl()
     let firstNameField = InputView()
     let emailField = InputView()
     let iconPicker = UIImageView()
@@ -18,15 +20,45 @@ class FirebaseLoginVC: UIViewController {
     let lastNameField = InputView()
     let loginRegisterButton = TextButton()
     
+    //MARK: Data Variables
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         layoutView()
     }
     
-    @objc func registerButtonPressed(_ sender: UIButton?) {
+    func loadUserInfo() {
+        if let userImage = user?.icon { iconPicker.image = userImage }
+        if let userName = user?.name {
+            let nameSegments = userName.split(separator: " ")
+            let firstName = nameSegments[0]
+            let lastName = nameSegments[1]
+            
+            firstNameField.inputField.text = "\(firstName)"
+            lastNameField.inputField.text = "\(lastName)"
+        }
+    }
+    
+    @objc func registerButtonPressed(_ sender: TextButton?) {
         view.endEditing(true)
-        loginWithFirebase()
+        if let title = sender?.title {
+            switch title {
+            case "LOGIN": loginWithFirebase()
+            case "REGISTER": registerWithFirebase()
+            case "SAVE": updateUser()
+            default: break
+            }
+        }
+    }
+    
+    @objc func firebaseSegmentChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0: layoutForRegister()
+        case 1: layoutForLogin()
+        default: break
+        }
     }
 }
 
@@ -39,7 +71,11 @@ extension FirebaseLoginVC: UITextFieldDelegate {
 
 extension FirebaseLoginVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage { iconPicker.image = image }
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            iconPicker.image = image
+        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            iconPicker.image = image
+        }
         
         iconPicker.contentMode = .scaleAspectFill
         picker.dismiss(animated: true, completion: nil)

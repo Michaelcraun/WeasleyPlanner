@@ -43,6 +43,7 @@ class SidePaneVC: UIViewController {
                 destination.transitioningDelegate = slideInTransitionManager
                 destination.modalPresentationStyle = .custom
                 
+                if let sender = sender as? User { destination.user = sender }
                 destination.view.bindToKeyboard()
             }
         } else if segue.identifier == "showSettings" {
@@ -64,6 +65,9 @@ class SidePaneVC: UIViewController {
     @objc func logoutPressed(_ sender: TextButton) {
         do {
             try FIRAuth.auth()?.signOut()
+            if let uid = DataHandler.instance.currentUserID {
+                DataHandler.instance.updateFirebaseUser(uid: uid, userData: ["status" : false])
+            }
             DataHandler.instance.currentUserID = nil
             dismiss(animated: true, completion: nil)
         } catch {
@@ -77,6 +81,6 @@ class SidePaneVC: UIViewController {
     
     @objc func selfPaneTapped(_ sender: UITapGestureRecognizer) {
         print("EDIT PROFILE: selfPane Tapped")
-        //TODO: Layout editProfilePane
+        performSegue(withIdentifier: "showLogin", sender: user)
     }
 }
