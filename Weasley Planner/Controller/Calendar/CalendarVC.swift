@@ -13,7 +13,7 @@ class CalendarVC: UIViewController {
     
     //MARK: UI Variables
     let titleBar = TitleBar()
-    let dateCollection = UICollectionView()
+//    let dateCollection = UICollectionView()
     let eventTable = UITableView()
     
     //MARK: Data Variables

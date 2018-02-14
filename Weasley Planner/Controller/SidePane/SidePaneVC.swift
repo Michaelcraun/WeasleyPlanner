@@ -14,7 +14,7 @@ class SidePaneVC: UIViewController {
     let vcTable = UITableView()
     let selfPane = UserPane()
     let settingsButton = UIButton()
-    let logOutButton = UIButton()
+    let logOutButton = TextButton()
     let bottomPane = UIView()
     lazy var slideInTransitionManager = SlideInPresentationManager()
     
@@ -61,20 +61,18 @@ class SidePaneVC: UIViewController {
         performSegue(withIdentifier: "showLogin", sender: nil)
     }
     
-    @objc func sidePaneButtonPressed(_ sender: UIButton) {
-        switch sender.title(for: .normal)! {
-        case "Log Out":
-            do {
-                try FIRAuth.auth()?.signOut()
-                DataHandler.instance.currentUserID = nil
-                dismiss(animated: true, completion: nil)
-            } catch {
-                showAlert(.logoutError)
-                break
-            }
-        case "Settings": performSegue(withIdentifier: "showSettings", sender: nil)
-        default: break
+    @objc func logoutPressed(_ sender: TextButton) {
+        do {
+            try FIRAuth.auth()?.signOut()
+            DataHandler.instance.currentUserID = nil
+            dismiss(animated: true, completion: nil)
+        } catch {
+            showAlert(.logoutError)
         }
+    }
+    
+    @objc func familyButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showSettings", sender: nil)
     }
     
     @objc func selfPaneTapped(_ sender: UITapGestureRecognizer) {

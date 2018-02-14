@@ -49,8 +49,7 @@ class TitleBar: UIView {
     
     func layoutSettingsButton() {
         let settingsButton = UIButton()
-        //TODO: Create an image for this button
-        settingsButton.setTitle("SETTINGS", for: .normal)
+        settingsButton.setImage(#imageLiteral(resourceName: "settingsIcon"), for: .normal)
         settingsButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
         settingsButton.sizeToFit()
         
@@ -58,7 +57,8 @@ class TitleBar: UIView {
         
         settingsButton.anchor(leading: self.leadingAnchor,
                               bottom: self.bottomAnchor,
-                              padding: .init(top: 0, left: 10, bottom: 5, right: 0))
+                              padding: .init(top: 0, left: 10, bottom: 5, right: 0),
+                              size: .init(width: 30, height: 30))
     }
     
     func layoutBackButton() {
@@ -72,7 +72,8 @@ class TitleBar: UIView {
         
         backButton.anchor(leading: self.leadingAnchor,
                           bottom: self.bottomAnchor,
-                          padding: .init(top: 0, left: 10, bottom: 5, right: 0))
+                          padding: .init(top: 0, left: 10, bottom: 5, right: 0),
+                          size: .init(width: 30, height: 30))
     }
     
     @objc func titleButtonPressed(_ sender: UIButton) {

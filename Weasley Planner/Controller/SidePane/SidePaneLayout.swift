@@ -52,9 +52,8 @@ extension SidePaneVC {
                        bottom: selfPane.topAnchor,
                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
         
-        //TODO: Create an image for this button
-        settingsButton.setTitle("Settings", for: .normal)
-        settingsButton.addTarget(self, action: #selector(sidePaneButtonPressed(_:)), for: .touchUpInside)
+        settingsButton.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(familyButtonPressed(_:)), for: .touchUpInside)
         settingsButton.sizeToFit()
         settingsButton.anchor(top: bottomPane.topAnchor,
                               leading: bottomPane.leadingAnchor,
@@ -81,9 +80,8 @@ extension SidePaneVC {
             selfPane.addGestureRecognizer(tapGesture)
             selfPane.layoutForUser(with: 60)
             
-            //TODO: Create an image for this button
-            logOutButton.setTitle("Log Out", for: .normal)
-            logOutButton.addTarget(self, action: #selector(sidePaneButtonPressed(_:)), for: .touchUpInside)
+            logOutButton.title = "Log Out"
+            logOutButton.addTarget(self, action: #selector(logoutPressed(_:)), for: .touchUpInside)
             logOutButton.sizeToFit()
             logOutButton.anchor(top: bottomPane.topAnchor,
                                 trailing: bottomPane.trailingAnchor,
