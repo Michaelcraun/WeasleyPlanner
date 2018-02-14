@@ -13,14 +13,16 @@ class User {
     var coordinate: CLLocationCoordinate2D?
     var family: String?
     var icon: UIImage?
+    var isFamilyCreator: Bool
     var name: String?
     var location: String?
     var status: Bool
     var uid: String?
     
-    init(coordinate: CLLocationCoordinate2D? = nil, family: String? = nil, icon: UIImage? = nil, name: String? = nil, location: String? = nil, status: Bool = false, uid: String? = nil) {
+    init(coordinate: CLLocationCoordinate2D? = nil, family: String? = nil, icon: UIImage? = nil, isFamilyCreator: Bool = false, name: String? = nil, location: String? = nil, status: Bool = false, uid: String? = nil) {
         self.coordinate = coordinate
         self.icon = icon
+        self.isFamilyCreator = isFamilyCreator
         self.name = name
         self.location = location
         self.status = status

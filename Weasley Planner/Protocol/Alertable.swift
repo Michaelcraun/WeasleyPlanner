@@ -28,6 +28,7 @@ enum Alert {
     case noLastName
     case noNearbyUsers
     case noPassword
+    case removeUserFromFamily
     case startFamily
     case userDisabled
     case weakPassword
@@ -47,6 +48,7 @@ enum Alert {
         case .noLastName: return "No Last Name!"
         case .noNearbyUsers: return "No Nearby Users!"
         case .noPassword: return "No Password!"
+        case .removeUserFromFamily: return "Remove User?"
         case .startFamily: return "Start a Family"
         case .weakPassword: return Alert.generalFirebaseError.title
         case .wrongPassword: return Alert.generalFirebaseError.title
@@ -69,6 +71,7 @@ enum Alert {
         case .noLastName: return "Please input your last name and try again."
         case .noNearbyUsers: return "We couldn't find any Weasley Planner users within 1 mile of you. Would you like to try again?"
         case .noPassword: return "Please input a valid password and try again."
+        case .removeUserFromFamily: return "Are you sure you want to remove this user from your family?"
         case .startFamily: return "You're starting a family. Please enter your family's name:"
         case .weakPassword: return "Your password must be at least 6 characters long. Please try again."
         case .wrongPassword: return "The password you've entered is incorrect. Please try again."
@@ -79,6 +82,7 @@ enum Alert {
     var notificationType: NotificationType {
         switch self {
         case .addUserToFamily: return .warning
+        case .removeUserFromFamily: return .warning
         case .startFamily: return .warning
         default: return .error
         }
@@ -88,6 +92,7 @@ enum Alert {
         switch self {
         case .addUserToFamily: return true
         case .noNearbyUsers: return true
+        case .removeUserFromFamily: return true
         default: return false
         }
     }
@@ -151,6 +156,10 @@ extension Alertable where Self: UIViewController {
                 if let settings = self as? SettingsVC {
                     settings.familyButtonPressed(nil)
                 }
+            } else if alert == .removeUserFromFamily {
+                if let settings = self as? SettingsVC {
+                    settings.removeSelectedUserFromFirebaseFamily()
+                }
             }
         }
         
@@ -160,7 +169,7 @@ extension Alertable where Self: UIViewController {
         
         if alert.needsTextField {
             alertController.addTextField(configurationHandler: { (familyNameField) in
-                
+                familyNameField.textAlignment = .center
             })
         }
         

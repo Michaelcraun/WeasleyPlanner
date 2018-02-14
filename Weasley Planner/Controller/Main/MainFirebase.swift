@@ -66,6 +66,7 @@ extension MainVC {
     
     func initializeCurrentUser() {
         selfUser = User(status: true)
+        
         DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
@@ -77,13 +78,17 @@ extension MainVC {
                     self.selfUser.family = family
                     self.selfUser.name = name
                     
+                    if family != "" {
+                        self.checkForFamilyCreator()
+                        self.initializeFamilyUsers()
+                    }
+                    
                     DataHandler.instance.REF_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
                         if let _ = error { return }
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }
                         
                         self.selfUser.icon = image
-                        self.initializeFamilyUsers()
                     })
                 }
             }
@@ -95,6 +100,28 @@ extension MainVC {
                 if user.key == DataHandler.instance.currentUserID {
                     guard let location = user.childSnapshot(forPath: "location").value as? String else { return }
                     self.selfUser.location = location
+                    
+                    if self.selfUser.family == "" {
+                        DataHandler.instance.familyUsers = [self.selfUser]
+                        self.familyTable.reloadData()
+                    }
+                }
+            }
+        })
+    }
+    
+    func checkForFamilyCreator() {
+        guard let familyName = selfUser.family, familyName != "" else { return }
+        
+        DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for family in familySnapshot {
+                guard let name = family.childSnapshot(forPath: "name").value as? String else { return }
+                if name == familyName {
+                    guard let creator = family.childSnapshot(forPath: "creator").value as? String else { return }
+                    if creator == self.selfUser.name {
+                        self.selfUser.isFamilyCreator = true
+                    }
                 }
             }
         })

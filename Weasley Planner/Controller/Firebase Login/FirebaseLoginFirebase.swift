@@ -75,6 +75,7 @@ extension FirebaseLoginVC {
                 }
             }
             DataHandler.instance.currentUserID = FIRAuth.auth()?.currentUser?.uid
+            DataHandler.instance.segueIdentifier = "dismiss"
             self.dismiss(animated: true, completion: nil)
         })
     }

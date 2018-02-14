@@ -29,6 +29,10 @@ class SidePaneVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         layoutSelfPane()
+        
+        if DataHandler.instance.segueIdentifier == "dismiss" {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,5 +75,10 @@ class SidePaneVC: UIViewController {
         case "Settings": performSegue(withIdentifier: "showSettings", sender: nil)
         default: break
         }
+    }
+    
+    @objc func selfPaneTapped(_ sender: UITapGestureRecognizer) {
+        print("EDIT PROFILE: selfPane Tapped")
+        //TODO: Layout editProfilePane
     }
 }

@@ -37,11 +37,18 @@ class MainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         titleBar.delegate = self
         
+        if DataHandler.instance.currentUserID == nil {
+            mapView.removeAnnotations(mapView.annotations)
+            DataHandler.instance.familyUsers = []
+            familyTable.reloadData()
+            selfUser = User()
+        }
+        
         initializeCurrentUser()
         observeFamilyUsers()
         
         if DataHandler.instance.segueIdentifier != nil {
-            if DataHandler.instance.segueIdentifier == Controller.main.segueIdentifier {
+            if DataHandler.instance.segueIdentifier == Controller.main.segueIdentifier || DataHandler.instance.segueIdentifier == "dismiss" {
                 DataHandler.instance.segueIdentifier = nil
             } else {
                 needsToSegue = true

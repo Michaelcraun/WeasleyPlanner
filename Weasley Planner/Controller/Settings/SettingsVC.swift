@@ -25,12 +25,11 @@ class SettingsVC: UIViewController {
     let creditsString = "Harry P Font|_____"
     var user: User?
     var userToAddToFamily: User?
-    var familyUsers = [User]()
+    var userToRemoveFromFamily: User?
     
     var nearbyUsers = [User]() {
         didSet {
             familyTable.reloadData()
-            print("FAMILY: nearbyUsers: \(nearbyUsers)")
         }
     }
     
@@ -49,10 +48,7 @@ class SettingsVC: UIViewController {
     @objc func familyButtonPressed(_ sender: TextButton?) {
         layoutFamilyView()
         familyView.fadeAlphaTo(1)
-        if let currentLocation = locationManager.location, let familyName = user?.family {
-            observeForNearbyUsers(withUserLocation: currentLocation)
-            observeForUsersInFamily(familyName)
-        }
+        observeForNearbyUsers()
     }
     
     @objc func saveButtonPressed(_ sender: TextButton) {

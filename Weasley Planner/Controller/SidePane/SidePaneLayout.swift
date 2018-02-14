@@ -67,6 +67,8 @@ extension SidePaneVC {
             selfPane.layoutForLogin()
             selfPane.loginPanel.addTarget(self, action: #selector(loginPressed(_:)), for: .touchUpInside)
         } else {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selfPaneTapped(_:)))
+            
             bottomPane.addSubview(logOutButton)
             
             if let user = user {
@@ -76,6 +78,7 @@ extension SidePaneVC {
                 selfPane.userStatus = user.status
             }
             
+            selfPane.addGestureRecognizer(tapGesture)
             selfPane.layoutForUser(with: 60)
             
             //TODO: Create an image for this button

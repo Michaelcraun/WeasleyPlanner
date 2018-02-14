@@ -11,8 +11,10 @@ import CoreLocation
 import Firebase
 
 extension SettingsVC {
-    func observeForNearbyUsers(withUserLocation location: CLLocation) {
+    func observeForNearbyUsers() {
         nearbyUsers = []
+        guard let location = mapManager.locationManager.location else { return }
+        
         DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
@@ -45,38 +47,13 @@ extension SettingsVC {
         })
     }
     
-    func observeForUsersInFamily(_ familyName: String) {
-        familyUsers = []
-        DataHandler.instance.REF_USER.observeSingleEvent(of: .value) { (snapshot) in
-            guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
-            for user in userSnapshot {
-                guard let userFamily = user.childSnapshot(forPath: "family").value as? String else { return }
-                if familyName == userFamily {
-                    guard let userDict = user.value as? Dictionary<String,Any> else { return }
-                    guard let userName = userDict["name"] as? String else { return }
-                    guard let userImageName = userDict["imageName"] as? String else { return }
-                    guard let userLocation = userDict["location"] as? String else { return }
-                    guard let userStatus = userDict["status"] as? Bool else { return }
-                    
-                    DataHandler.instance.REF_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
-                        if let _ = error { return }
-                        guard let userImageData = data else { return }
-                        guard let userImage = UIImage(data: userImageData) else { return }
-                        
-                        let familyUser = User(family: userFamily, icon: userImage, name: userName, location: userLocation, status: userStatus, uid: user.key)
-                        self.familyUsers.append(familyUser)
-                    })
-                }
-            }
-        }
-    }
-    
     func createFirebaseFamily(with familyName: String) {
         guard let uid = DataHandler.instance.currentUserID else { return }
         let familyIdentifier = DataHandler.instance.createFamilyIDString(with: familyName)
         let userData: Dictionary<String,Any> = ["family" : familyName,
                                                 "familyIdentifier" : familyIdentifier]
-        let familyData: Dictionary<String,Any> = ["name" : familyName,
+        let familyData: Dictionary<String,Any> = ["creator" : user?.name as Any,
+                                                  "name" : familyName,
                                                   "users" : [user?.name]]
         
         user?.family = familyName
@@ -98,9 +75,27 @@ extension SettingsVC {
                     var newFamilyUsers = familyUsers
                     newFamilyUsers.append(selectedUserName)
                     
+                    DataHandler.instance.familyUsers.append(self.userToAddToFamily!)
                     DataHandler.instance.updateFirebaseFamily(id: familyID, familyData: ["users" : newFamilyUsers])
                     self.updateSelectedUserWithFamily(userFamilyName)
                 }
+            }
+        }
+    }
+    
+    func removeSelectedUserFromFirebaseFamily() {
+        guard let selectedUserID = userToRemoveFromFamily?.uid else { return }
+        var i = 0
+        
+        for user in DataHandler.instance.familyUsers {
+            if user.uid == selectedUserID {
+                let userData = ["family" : "", "familyIdentifier" : ""]
+                
+                DataHandler.instance.familyUsers.remove(at: i)
+                DataHandler.instance.updateFirebaseUser(uid: selectedUserID, userData: userData)
+                self.observeForNearbyUsers()
+            } else {
+                i += 1
             }
         }
     }
@@ -117,6 +112,7 @@ extension SettingsVC {
                                     "familyIdentifier" : familyID]
                     
                     DataHandler.instance.updateFirebaseUser(uid: selectedUserUID, userData: userData)
+                    self.observeForNearbyUsers()
                 }
             }
         }

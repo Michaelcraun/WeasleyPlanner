@@ -16,7 +16,11 @@ extension SettingsVC {
         view.addSubview(creditsView)
         
         if let family = user?.family, family != "" {
-            familyButton.title = "Edit Family"
+            if let isCreator = user?.isFamilyCreator, isCreator == true {
+                familyButton.title = "Edit Family"
+            } else {
+                familyButton.title = "View Family"
+            }
         } else {
             familyButton.title = "Start Family"
         }
@@ -93,7 +97,7 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if familyUsers.count > 0 {
+            if DataHandler.instance.familyUsers.count > 0 {
                 return DataHandler.instance.familyUsers.count
             }
         } else {
@@ -107,7 +111,7 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! UserCell
         if indexPath.section == 0 {
-            if familyUsers.count > 0 {
+            if DataHandler.instance.familyUsers.count > 0 {
                 cell.layoutCellForUser(DataHandler.instance.familyUsers[indexPath.row])
             } else {
                 cell.layoutNoUserCell()
@@ -131,13 +135,21 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            if user?.family == "" {
-                showAlert(.startFamily)
-            } else {
+        if indexPath.section == 0 {
+            if let isCreator = user?.isFamilyCreator, isCreator == true {
                 let cell = tableView.cellForRow(at: indexPath) as! UserCell
-                userToAddToFamily = cell.user
-                showAlert(.addUserToFamily)
+                userToRemoveFromFamily = cell.user
+                showAlert(.removeUserFromFamily)
+            }
+        } else if indexPath.section == 1 {
+            if let isCreator = user?.isFamilyCreator, isCreator == true {
+                if user?.family == "" {
+                    showAlert(.startFamily)
+                } else {
+                    let cell = tableView.cellForRow(at: indexPath) as! UserCell
+                    userToAddToFamily = cell.user
+                    showAlert(.addUserToFamily)
+                }
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
