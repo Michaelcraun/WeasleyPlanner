@@ -105,16 +105,16 @@ class MainVC: UIViewController {
     @objc func centerButtonPressed(_ sender: UIButton) {
         userToCenterMapOn = nil
         
-        switch sender.title(for: .normal)! {
-        case "Family":
+        switch sender.image(for: .normal)! {
+        case #imageLiteral(resourceName: "familyIcon"):
             mapIsCenteredOnCurrentUser = false
             mapIsCenteredOnFamily = true
-            centerButton.setTitle("User", for: .normal)
+            centerButton.setImage(#imageLiteral(resourceName: "defaultProfileImage"), for: .normal)
             mapManager.zoom(toFitAnnotationOn: mapView)
-        case "User":
+        case #imageLiteral(resourceName: "defaultProfileImage"):
             mapIsCenteredOnCurrentUser = true
             mapIsCenteredOnFamily = false
-            centerButton.setTitle("Family", for: .normal)
+            centerButton.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
             if let coordinate = mapManager.locationManager.location?.coordinate {
                 mapManager.centerMapOnLocation(coordinate)
             }

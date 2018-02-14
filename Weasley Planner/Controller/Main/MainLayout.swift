@@ -19,7 +19,7 @@ extension MainVC {
         view.addSubview(titleBar)
         view.backgroundColor = secondaryColor
         
-        centerButton.setTitle("Family", for: .normal)
+        centerButton.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
         centerButton.addTarget(self, action: #selector(centerButtonPressed(_:)), for: .touchUpInside)
         centerButton.anchor(trailing: mapView.trailingAnchor,
                             bottom: mapView.bottomAnchor,
