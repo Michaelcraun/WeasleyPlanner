@@ -11,7 +11,12 @@ import CoreLocation
 
 class SettingsVC: UIViewController {
     //MARK: UI Variables
-    let titleBar = TitleBar()
+    let titleBar: TitleBar = {
+        let bar = TitleBar()
+        bar.subtitleLabel.text = "Settings"
+        return bar
+    }()
+    
     let familyButton = TextButton()
     let creditsView = UITextView()
     let locationManager = CLLocationManager()

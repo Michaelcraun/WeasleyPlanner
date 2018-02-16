@@ -10,6 +10,7 @@ import UIKit
 
 class TitleBar: UIView {
     var delegate: UIViewController!
+    let subtitleLabel = UILabel()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -19,7 +20,6 @@ class TitleBar: UIView {
         self.layer.shadowOffset = CGSize(width: 0, height: 10)
         self.layer.shadowOpacity = 0.5
         
-        let subtitleLabel = UILabel()
         subtitleLabel.font = UIFont(name: fontName, size: smallFontSize)
         subtitleLabel.text = "Family"
         subtitleLabel.textColor = primaryTextColor

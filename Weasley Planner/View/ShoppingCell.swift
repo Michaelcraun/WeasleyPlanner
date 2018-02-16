@@ -131,6 +131,8 @@ class ShoppingCell: UITableViewCell {
             return label
         }()
         
+        self.addSubview(itemLabel)
+        
         itemLabel.anchor(top: self.topAnchor,
                          leading: self.leadingAnchor,
                          trailing: self.trailingAnchor,

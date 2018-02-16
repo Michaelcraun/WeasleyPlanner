@@ -78,10 +78,10 @@ extension ShoppingListVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "previousItemCell") as! ShoppingCell
             
-            if filteredEntries.count == 0 {
+            if indexPath.row == 0 {
                 cell.layoutCellForAddItem()
             } else {
-                cell.layoutCellForPrevious(entry: filteredEntries[indexPath.row])
+                cell.layoutCellForPrevious(entry: filteredEntries[indexPath.row - 1])
             }
             return cell
         }
@@ -95,7 +95,7 @@ extension ShoppingListVC: UITableViewDataSource, UITableViewDelegate {
                 return 30
             }
         } else {
-            if filteredEntries.count == 0 {
+            if indexPath.row == 0 {
                 return 50
             } else {
                 return 30
@@ -114,8 +114,12 @@ extension ShoppingListVC: UITableViewDataSource, UITableViewDelegate {
                     let itemName = text.trimmingQunatity(itemQuantity)
                     
                     let newItem = Item(quanity: itemQuantity, name: itemName, obtained: false)
-                    shoppingItems.append(newItem)
-                    updateShoppingList()
+                    searchShoppingListForDuplicate(newItem)
+//                    shoppingItems.append(newItem)
+//                    updateShoppingList()
+                    
+                    saveNewPreviousEntry(withText: text)
+                    loadPreviousEntries()
                 }
             } else {
                 
@@ -131,14 +135,14 @@ extension ShoppingListVC: UISearchBarDelegate {
     //TODO: Handle TextFeilds
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         layoutPreviousEntriesTable()
+        
+        if let searchText = searchBar.text {
+            searchPreviousEntries(withSearchText: searchText)
+        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
+        searchPreviousEntries(withSearchText: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
