@@ -47,6 +47,20 @@ class TitleBar: UIView {
         }
     }
     
+    func layoutBackButton() {
+        let backButton = UIButton()
+        backButton.setImage(#imageLiteral(resourceName: "backIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
+        backButton.sizeToFit()
+        
+        self.addSubview(backButton)
+        
+        backButton.anchor(leading: self.leadingAnchor,
+                          bottom: self.bottomAnchor,
+                          padding: .init(top: 0, left: 10, bottom: 5, right: 0),
+                          size: .init(width: 30, height: 30))
+    }
+    
     func layoutSettingsButton() {
         let settingsButton = UIButton()
         settingsButton.setImage(#imageLiteral(resourceName: "settingsIcon"), for: .normal)
@@ -59,21 +73,6 @@ class TitleBar: UIView {
                               bottom: self.bottomAnchor,
                               padding: .init(top: 0, left: 10, bottom: 5, right: 0),
                               size: .init(width: 30, height: 30))
-    }
-    
-    func layoutBackButton() {
-        let backButton = UIButton()
-        //TODO: Create an image for this button
-        backButton.setTitle("BACK", for: .normal)
-        backButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
-        backButton.sizeToFit()
-        
-        self.addSubview(backButton)
-        
-        backButton.anchor(leading: self.leadingAnchor,
-                          bottom: self.bottomAnchor,
-                          padding: .init(top: 0, left: 10, bottom: 5, right: 0),
-                          size: .init(width: 30, height: 30))
     }
     
     @objc func titleButtonPressed(_ sender: UIButton) {

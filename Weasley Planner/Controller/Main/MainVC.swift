@@ -103,6 +103,8 @@ class MainVC: UIViewController {
                 slideInTransitionManager.disableCompactHeight = false
                 destination.transitioningDelegate = slideInTransitionManager
                 destination.modalPresentationStyle = .custom
+                
+                destination.user = selfUser
             }
         }
         DataHandler.instance.REF_USER.removeAllObservers()
