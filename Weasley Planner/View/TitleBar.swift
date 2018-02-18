@@ -10,29 +10,35 @@ import UIKit
 
 class TitleBar: UIView {
     var delegate: UIViewController!
-    let subtitleLabel = UILabel()
+    var subtitle: String!
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        let subtitleLabel: UILabel = {
+            let label = UILabel()
+            label.font = UIFont(name: fontName, size: smallFontSize)
+            label.text = subtitle
+            label.textColor = primaryTextColor
+            label.sizeToFit()
+            return label
+        }()
+        
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.font = UIFont(name: fontName, size: largeFontSize)
+            label.text = "Weasley Planner"
+            label.textColor = primaryTextColor
+            label.sizeToFit()
+            return label
+        }()
+        
+        self.addSubview(subtitleLabel)
+        self.addSubview(titleLabel)
         self.backgroundColor = primaryColor
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 10)
         self.layer.shadowOpacity = 0.5
-        
-        subtitleLabel.font = UIFont(name: fontName, size: smallFontSize)
-        subtitleLabel.text = "Family"
-        subtitleLabel.textColor = primaryTextColor
-        subtitleLabel.sizeToFit()
-        
-        let titleLabel = UILabel()
-        titleLabel.font = UIFont(name: fontName, size: largeFontSize)
-        titleLabel.text = "Weasley Planner"
-        titleLabel.textColor = primaryTextColor
-        titleLabel.sizeToFit()
-        
-        self.addSubview(subtitleLabel)
-        self.addSubview(titleLabel)
         
         subtitleLabel.anchor(bottom: self.bottomAnchor,
                              centerX: self.centerXAnchor)

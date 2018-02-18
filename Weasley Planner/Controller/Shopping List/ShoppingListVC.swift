@@ -12,10 +12,30 @@ class ShoppingListVC: UIViewController {
     private let identifier = "showShoppingList"
     
     //MARK: UI Variables
-    let titleBar = TitleBar()
+    let titleBar: TitleBar = {
+        let bar = TitleBar()
+        bar.subtitle = "Shopping List"
+        return bar
+    }()
+    
+//    let addEntryField: UISearchBar()
+    let addEntryField: ModernSearchBar = {
+        let bar = ModernSearchBar()
+
+        //TODO: Create a better image for this
+        bar.searchImage = #imageLiteral(resourceName: "defaultProfileImage")
+        bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
+        bar.searchLabel_textColor = primaryTextColor
+        bar.searchLabel_backgroundColor = primaryColor
+
+        bar.suggestionsView_maxHeight = 180
+        bar.suggestionsView_separatorStyle = .none
+        bar.suggestionsView_contentViewColor = primaryColor
+
+        return bar
+    }()
+    
     let shoppingList = UITableView()
-    let addEntryView = UIView()
-    let addEntryField = UISearchBar()
     let previousEntriesTable = UITableView()
     
     //MARK: Data Variables
@@ -36,14 +56,14 @@ class ShoppingListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        layoutView()
         loadPreviousEntries()
         observeFamilyShoppingList()
+        layoutView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         titleBar.delegate = self
-        
+        addEntryField.delegateModernSearchBar = self
         
     }
     
@@ -59,10 +79,21 @@ class ShoppingListVC: UIViewController {
     }
     
     func saveNewPreviousEntry(withText text: String) {
-        let defaults = UserDefaults.standard
+        var shouldSave = true
         
-        previousEntries.append(text)
-        defaults.set(previousEntries, forKey: "previousEntries")
+        for entry in previousEntries {
+            if text == entry {
+                shouldSave = false
+                break
+            }
+        }
+        
+        if shouldSave {
+            let defaults = UserDefaults.standard
+            
+            previousEntries.append(text)
+            defaults.set(previousEntries, forKey: "previousEntries")
+        }
     }
     
     func searchPreviousEntries(withSearchText text: String) {
@@ -78,7 +109,6 @@ class ShoppingListVC: UIViewController {
     }
     
     func searchShoppingListForDuplicate(_ item: Item) {
-        print("SEARCH: in searchShoppingListForDuplicate(_:)")
         var i = 0
         var itemToEdit: Item? {
             let itemName = item.name
@@ -98,12 +128,9 @@ class ShoppingListVC: UIViewController {
         }
         
         if itemToEdit == nil {
-            print("SEARCH: no matching items found.")
             shoppingItems.append(item)
             updateShoppingList()
         } else {
-            print("SEARCH: matching item found! updating...")
-            print("SEARCH: shoppintItemQuantity: \(shoppingItems[i].quantity)")
             if item.quantity == 0 {
                 if shoppingItems[i].quantity == 0 {
                     shoppingItems[i].quantity += 2
@@ -113,8 +140,20 @@ class ShoppingListVC: UIViewController {
             } else {
                 shoppingItems[i].quantity += item.quantity
             }
-            print("SEARCH: shoppintItemQuantity: \(shoppingItems[i].quantity)")
             updateShoppingList()
         }
+    }
+    
+    func clearList() {
+        shoppingItems = []
+        updateShoppingList()
+    }
+    
+    @objc func clearListPressed(_ sender: TextButton?) {
+        showAlert(.clearShoppingList)
+    }
+    
+    @objc func addItemPressed(_ sender: TextButton) {
+        
     }
 }

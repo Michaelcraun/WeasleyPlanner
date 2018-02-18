@@ -57,10 +57,24 @@ class ShoppingCell: UITableViewCell {
     func layoutCellForAddItem() {
         clearCell()
         
-        let addButton: TextButton = {
-            let button = TextButton()
-            button.title = "ADD ITEM"
-            return button
+        let addButton: UIView = {
+            let view = UIView()
+            let label = UILabel()
+            
+            view.addSubview(label)
+            view.backgroundColor = primaryColor
+            
+            label.font = UIFont(name: fontName, size: largeFontSize)
+            label.text = "ADD ITEM"
+            label.textAlignment = .center
+            label.textColor = primaryTextColor
+            label.anchor(top: view.topAnchor,
+                         leading: view.leadingAnchor,
+                         trailing: view.trailingAnchor,
+                         bottom: view.bottomAnchor,
+                         padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+            
+            return view
         }()
         
         self.addSubview(addButton)
@@ -70,54 +84,6 @@ class ShoppingCell: UITableViewCell {
                          trailing: self.trailingAnchor,
                          bottom: self.bottomAnchor,
                          padding: .init(top: 5, left: 5, bottom: 5, right: 5))
-    }
-    
-    func layoutCellForItem(_ item: Item) {
-        clearCell()
-        
-        self.item = item
-        let obtainedIndicator: UIView = {
-            let indicator = UIView()
-            indicator.layer.cornerRadius = 5
-            indicator.layer.borderColor = primaryColor.cgColor
-            indicator.layer.borderWidth = 1
-            indicator.backgroundColor = {
-                switch item.obtained {
-                case true: return UIColor.green
-                case false: return UIColor.red
-                }
-            }()
-            return indicator
-        }()
-        
-        let itemLabel: UILabel = {
-            let label = UILabel()
-            label.font = UIFont(name: fontName, size: smallFontSize)
-            label.text = {
-                if item.quantity == 0 {
-                    return item.name
-                } else {
-                    return "\(item.quantity) \(item.name)"
-                }
-            }()
-            label.textColor = secondaryTextColor
-            return label
-        }()
-        
-        self.addSubview(obtainedIndicator)
-        self.addSubview(itemLabel)
-        
-        obtainedIndicator.anchor(top: self.topAnchor,
-                                 leading: self.leadingAnchor,
-                                 bottom: self.bottomAnchor,
-                                 padding: .init(top: 10, left: 5, bottom: 10, right: 0),
-                                 size: .init(width: 10, height: 0))
-        
-        itemLabel.anchor(top: self.topAnchor,
-                         leading: obtainedIndicator.trailingAnchor,
-                         trailing: self.trailingAnchor,
-                         bottom: self.bottomAnchor,
-                         padding: .init(top: 0, left: 5, bottom: 0, right: 0))
     }
     
     func layoutCellForPrevious(entry: String) {
@@ -137,5 +103,73 @@ class ShoppingCell: UITableViewCell {
                          leading: self.leadingAnchor,
                          trailing: self.trailingAnchor,
                          bottom: self.bottomAnchor)
+    }
+    
+    func layoutCellForItem(_ item: Item) {
+        clearCell()
+        self.item = item
+        
+        let itemView: UIView = {
+            let view = UIView()
+            view.backgroundColor = secondaryColor
+            view.layer.borderColor = primaryColor.cgColor
+            view.layer.borderWidth = 1
+            view.layer.cornerRadius = 5
+            view.layer.shadowColor = UIColor.black.cgColor
+            view.layer.shadowOffset = CGSize(width: 0, height: 2)
+            view.layer.shadowOpacity = 0.75
+            
+            let obtainedIndicator: UIView = {
+                let indicator = UIView()
+                indicator.layer.borderColor = primaryColor.cgColor
+                indicator.layer.borderWidth = 1
+                indicator.layer.cornerRadius = 5
+                indicator.backgroundColor = {
+                    switch item.obtained {
+                    case true: return .green
+                    case false: return .red
+                    }
+                }()
+                return indicator
+            }()
+            
+            let itemLabel: UILabel = {
+                let label = UILabel()
+                label.font = UIFont(name: fontName, size: smallFontSize)
+                label.textColor = secondaryTextColor
+                label.text = {
+                    if item.quantity == 0 {
+                        return item.name
+                    } else {
+                        return "\(item.quantity) \(item.name)"
+                    }
+                }()
+                return label
+            }()
+            
+            view.addSubview(obtainedIndicator)
+            view.addSubview(itemLabel)
+            
+            obtainedIndicator.anchor(leading: view.leadingAnchor,
+                                     centerY: view.centerYAnchor,
+                                     padding: .init(top: 0, left: 5, bottom: 0, right: 0),
+                                     size: .init(width: 15, height: 15))
+            
+            itemLabel.anchor(top: view.topAnchor,
+                             leading: obtainedIndicator.trailingAnchor,
+                             trailing: view.trailingAnchor,
+                             bottom: view.bottomAnchor,
+                             padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+            
+            return view
+        }()
+        
+        self.addSubview(itemView)
+        
+        itemView.anchor(top: self.topAnchor,
+                        leading: self.leadingAnchor,
+                        trailing: self.trailingAnchor,
+                        bottom: self.bottomAnchor,
+                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 }

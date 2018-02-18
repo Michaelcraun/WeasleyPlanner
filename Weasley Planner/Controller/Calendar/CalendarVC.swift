@@ -12,7 +12,12 @@ class CalendarVC: UIViewController {
     private let identifier = "showCalendar"
     
     //MARK: UI Variables
-    let titleBar = TitleBar()
+    let titleBar: TitleBar = {
+        let bar = TitleBar()
+        bar.subtitle = "Calendar"
+        return bar
+    }()
+    
 //    let dateCollection = UICollectionView()
     let eventTable = UITableView()
     

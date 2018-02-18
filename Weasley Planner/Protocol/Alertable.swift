@@ -16,6 +16,7 @@ enum Alert {
     case generalFirebaseError
     
     case addUserToFamily
+    case clearShoppingList
     case emailInUse
     case imageError
     case internalError
@@ -38,6 +39,7 @@ enum Alert {
         switch self {
         case .generalFirebaseError: return "Firebase Error:"
         case .addUserToFamily: return "Add User?"
+        case .clearShoppingList: return "Clear List?"
         case .emailInUse: return Alert.generalFirebaseError.title
         case .imageError: return Alert.generalFirebaseError.title
         case .internalError: return Alert.generalFirebaseError.title
@@ -60,6 +62,7 @@ enum Alert {
         switch self {
         case .generalFirebaseError: return "An unexpected error occured in Firebase. Please try again."
         case .addUserToFamily: return "Are you sure you want to add this user to your family?"
+        case .clearShoppingList: return "You're about to clear your family's entire shopping list. Are you sure you want to do that?"
         case .emailInUse: return "The email you've entered is already in use. Please try again."
         case .imageError: return "There was an error storing your image on Firebase. Please try again, later."
         case .internalError: return Alert.generalFirebaseError.message
@@ -82,6 +85,7 @@ enum Alert {
     var notificationType: NotificationType {
         switch self {
         case .addUserToFamily: return .warning
+        case .clearShoppingList: return .warning
         case .removeUserFromFamily: return .warning
         case .startFamily: return .warning
         default: return .error
@@ -91,6 +95,7 @@ enum Alert {
     var needsOptions: Bool {
         switch self {
         case .addUserToFamily: return true
+        case .clearShoppingList: return true
         case .noNearbyUsers: return true
         case .removeUserFromFamily: return true
         default: return false
@@ -151,6 +156,10 @@ extension Alertable where Self: UIViewController {
             if alert == .addUserToFamily {
                 if let settings = self as? SettingsVC {
                     settings.updateFirebaseFamilyWithSelectedUser()
+                }
+            } else if alert == .clearShoppingList {
+                if let shoppingList = self as? ShoppingListVC {
+                    shoppingList.clearList()
                 }
             } else if alert == .noNearbyUsers {
                 if let settings = self as? SettingsVC {

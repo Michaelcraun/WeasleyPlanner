@@ -13,13 +13,12 @@ class SettingsVC: UIViewController {
     //MARK: UI Variables
     let titleBar: TitleBar = {
         let bar = TitleBar()
-        bar.subtitleLabel.text = "Settings"
+        bar.subtitle = "Settings"
         return bar
     }()
     
     let familyButton = TextButton()
     let creditsView = UITextView()
-    let locationManager = CLLocationManager()
     //TODO: Possibly allow user to set their own meal times?
     
     let familyView = UIView()
@@ -31,6 +30,7 @@ class SettingsVC: UIViewController {
     var user: User?
     var userToAddToFamily: User?
     var userToRemoveFromFamily: User?
+//    let locationManager = CLLocationManager()
     
     var nearbyUsers = [User]() {
         didSet {

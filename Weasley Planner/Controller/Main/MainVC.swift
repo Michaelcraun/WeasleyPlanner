@@ -12,7 +12,12 @@ import CoreLocation
 
 class MainVC: UIViewController {
     //MARK: UI Variables
-    let titleBar = TitleBar()
+    let titleBar: TitleBar = {
+        let bar = TitleBar()
+        bar.subtitle = "Family Tracker"
+        return bar
+    }()
+    
     let mapView = MKMapView()
     let centerButton = UIButton()
     let familyTable = UITableView()
