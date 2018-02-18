@@ -23,7 +23,7 @@ class ShoppingListVC: UIViewController {
         let bar = ModernSearchBar()
 
         //TODO: Create a better image for this
-        bar.searchImage = #imageLiteral(resourceName: "defaultProfileImage")
+        bar.searchImage = #imageLiteral(resourceName: "addIcon")
         bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
         bar.searchLabel_textColor = primaryTextColor
         bar.searchLabel_backgroundColor = primaryColor
@@ -54,9 +54,8 @@ class ShoppingListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadPreviousEntries()
-        observeFamilyShoppingList()
         layoutView()
+        beginConnectionTest()
     }
     
     override func viewWillAppear(_ animated: Bool) {

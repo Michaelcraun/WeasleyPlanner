@@ -49,36 +49,51 @@ class TitleBar: UIView {
         if let _ = delegate as? MainVC {
             layoutSettingsButton()
         } else {
+            if let _ = delegate as? RecipeListVC {
+                layoutAddButton()
+            }
+            
             layoutBackButton()
         }
     }
     
+    func layoutAddButton() {
+        let addButton: UIButton = {
+            let button = UIButton()
+            button.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
+            button.setImage(#imageLiteral(resourceName: "addIcon"), for: .normal)
+            button.sizeToFit()
+            return button
+        }()
+        
+        self.addSubview(addButton)
+        anchorButtonRight(addButton)
+    }
+    
     func layoutBackButton() {
-        let backButton = UIButton()
-        backButton.setImage(#imageLiteral(resourceName: "backIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
-        backButton.sizeToFit()
+        let backButton: UIButton = {
+            let button = UIButton()
+            button.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
+            button.setImage(#imageLiteral(resourceName: "backIcon"), for: .normal)
+            button.sizeToFit()
+            return button
+        }()
         
         self.addSubview(backButton)
-        
-        backButton.anchor(leading: self.leadingAnchor,
-                          bottom: self.bottomAnchor,
-                          padding: .init(top: 0, left: 10, bottom: 5, right: 0),
-                          size: .init(width: 30, height: 30))
+        anchorButtonLeft(backButton)
     }
     
     func layoutSettingsButton() {
-        let settingsButton = UIButton()
-        settingsButton.setImage(#imageLiteral(resourceName: "settingsIcon"), for: .normal)
-        settingsButton.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
-        settingsButton.sizeToFit()
+        let settingsButton: UIButton = {
+            let button = UIButton()
+            button.addTarget(self, action: #selector(titleButtonPressed(_:)), for: .touchUpInside)
+            button.setImage(#imageLiteral(resourceName: "settingsIcon"), for: .normal)
+            button.sizeToFit()
+            return button
+        }()
         
         self.addSubview(settingsButton)
-        
-        settingsButton.anchor(leading: self.leadingAnchor,
-                              bottom: self.bottomAnchor,
-                              padding: .init(top: 0, left: 10, bottom: 5, right: 0),
-                              size: .init(width: 30, height: 30))
+        anchorButtonLeft(settingsButton)
     }
     
     @objc func titleButtonPressed(_ sender: UIButton) {
@@ -87,5 +102,19 @@ class TitleBar: UIView {
         } else {
             delegate.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    func anchorButtonLeft(_ button: UIButton) {
+        button.anchor(leading: self.leadingAnchor,
+                      bottom: self.bottomAnchor,
+                      padding: .init(top: 0, left: 10, bottom: 5, right: 0),
+                      size: .init(width: 30, height: 30))
+    }
+    
+    func anchorButtonRight(_ button: UIButton) {
+        button.anchor(trailing: self.trailingAnchor,
+                      bottom: self.bottomAnchor,
+                      padding: .init(top: 0, left: 10, bottom: 5, right: 10),
+                      size: .init(width: 30, height: 30))
     }
 }

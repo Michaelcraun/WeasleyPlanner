@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController: Alertable {  }
+extension UIViewController: Alertable, Connection {  }
 
 extension UIButton {
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -96,8 +96,8 @@ extension UIView {
         })
     }
     
-    func fadeAlphaTo(_ alpha: CGFloat) {
-        UIView.animate(withDuration: 0.2) {
+    func fadeAlphaTo(_ alpha: CGFloat, withDuration duration: TimeInterval = 0.2) {
+        UIView.animate(withDuration: duration) {
             self.alpha = alpha
         }
     }

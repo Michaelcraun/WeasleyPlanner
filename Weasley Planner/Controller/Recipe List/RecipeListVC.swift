@@ -12,6 +12,7 @@ class RecipeListVC: UIViewController {
     private let identifier = "showRecipeList"
     
     //MARK: UI Variables
+    let recipeList = UITableView()
     let titleBar: TitleBar = {
         let bar = TitleBar()
         bar.subtitle = "Recipe List"
@@ -19,12 +20,13 @@ class RecipeListVC: UIViewController {
     }()
     
     //MARK: Data Variables
-    
+    var recipes = [Recipe]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         layoutView()
+        beginConnectionTest()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -37,6 +37,7 @@ class MainVC: UIViewController {
         mapManager.delegate = self
         
         layoutView()
+        beginConnectionTest()
     }
     
     override func viewWillAppear(_ animated: Bool) {

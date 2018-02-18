@@ -11,6 +11,7 @@ import UIKit
 extension RecipeListVC {
     func layoutView() {
         view.backgroundColor = secondaryColor
+        view.addSubview(recipeList)
         view.addSubview(titleBar)
         
         titleBar.anchor(top: view.topAnchor,
