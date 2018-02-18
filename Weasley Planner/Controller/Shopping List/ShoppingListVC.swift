@@ -36,20 +36,18 @@ class ShoppingListVC: UIViewController {
     }()
     
     let shoppingList = UITableView()
-    let previousEntriesTable = UITableView()
     
     //MARK: Data Variables
     var user: User?
-    var previousEntries = [String]()
-    var shoppingItems = [Item]() {
+    var previousEntries = [String]() {
         didSet {
-            shoppingList.reloadData()
+            addEntryField.setDatas(datas: previousEntries)
         }
     }
     
-    var filteredEntries = [String]() {
+    var shoppingItems = [Item]() {
         didSet {
-            previousEntriesTable.reloadData()
+            shoppingList.reloadData()
         }
     }
     
@@ -96,18 +94,6 @@ class ShoppingListVC: UIViewController {
         }
     }
     
-    func searchPreviousEntries(withSearchText text: String) {
-        filteredEntries = []
-        
-        let plainText = text.lowercased()
-        for entry in previousEntries {
-            let plainEntry = entry.lowercased()
-            if plainEntry.contains(plainText) {
-                filteredEntries.append(entry)
-            }
-        }
-    }
-    
     func searchShoppingListForDuplicate(_ item: Item) {
         var i = 0
         var itemToEdit: Item? {
@@ -149,11 +135,17 @@ class ShoppingListVC: UIViewController {
         updateShoppingList()
     }
     
-    @objc func clearListPressed(_ sender: TextButton?) {
-        showAlert(.clearShoppingList)
+    func addNewItem() {
+        if let text = addEntryField.text {
+            let newItem = createItemFromText(text)
+            searchShoppingListForDuplicate(newItem)
+            addEntryField.text = ""
+            
+            saveNewPreviousEntry(withText: text)
+        }
     }
     
-    @objc func addItemPressed(_ sender: TextButton) {
-        
+    @objc func clearListPressed(_ sender: TextButton?) {
+        showAlert(.clearShoppingList)
     }
 }

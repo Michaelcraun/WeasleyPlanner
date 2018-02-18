@@ -58,7 +58,6 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
     
     public var suggestionsView_spaceWithKeyboard:CGFloat = 3
     
-    
     //MARK: INITIALISERS
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -83,8 +82,7 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
     }
     
     private func configureViews(){
-        
-        ///Configure suggestionsView (TableView)
+       ///Configure suggestionsView (TableView)
         self.suggestionsView = UITableView(frame: CGRect(x: getSuggestionsViewX(), y: getSuggestionsViewY(), width: getSuggestionsViewWidth(), height: 0))
         self.suggestionsView.delegate = self
         self.suggestionsView.dataSource = self
@@ -143,6 +141,10 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
     public func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         self.closeSuggestionsView()
         self.delegateModernSearchBar?.searchBarTextDidEndEditing?(searchBar)
+        
+        if let shoppingList = delegateModernSearchBar as? ShoppingListVC {
+            shoppingList.addNewItem()
+        }
     }
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -331,14 +333,22 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
                 self.addViewToParent(view: self.suggestionsView)
                 self.isSuggestionsViewOpened = true
                 self.suggestionsView.reloadData()
+                
+                if let shoppingList = delegateModernSearchBar as? ShoppingListVC {
+                    shoppingList.layoutAddItemButton()
+                }
             }
         }
     }
     
-    private func closeSuggestionsView(){
+    func closeSuggestionsView(){
         if (self.isSuggestionsViewOpened == true){
             self.animationClosing()
             self.isSuggestionsViewOpened = false
+            
+            if let shoppingList = delegateModernSearchBar as? ShoppingListVC {
+                shoppingList.removeAddItemButton()
+            }
         }
     }
     
@@ -385,7 +395,7 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
     }
     
     private func getShadowHeight() -> CGFloat {
-        return (self.getTopViewController()?.view.frame.height)!
+        return (self.getTopViewController()?.view.frame.height)! - 50
     }
     
     private func getShadowWidth() -> CGFloat {

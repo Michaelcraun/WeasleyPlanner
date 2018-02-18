@@ -13,4 +13,3 @@ import UIKit
     @objc optional func onClickItemSuggestionsView(item: String)
     @objc optional func onClickItemWithUrlSuggestionsView(item: ModernSearchBarModel)
 }
-
