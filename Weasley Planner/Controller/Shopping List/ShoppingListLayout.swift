@@ -63,6 +63,9 @@ extension ShoppingListVC {
                                trailing: bottomPanel.trailingAnchor,
                                bottom: bottomPanel.bottomAnchor,
                                padding: .init(top: 5, left: 0, bottom: 5, right: 5))
+        
+        loadPreviousEntries()
+        observeFamilyShoppingList()
     }
 }
 

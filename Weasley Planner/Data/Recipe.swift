@@ -22,12 +22,13 @@ class Recipe {
     var url: String
     var notes: String
     var image: UIImage
+    var imageName: String
     var ingredients: String
     var instructions: String
     
     init(title: String, description: String = "", yield: String = "", activeHours: Int = 0, activeMinutes: Int = 0, totalHours: Int = 0,
          totalMinutes: Int = 0, isFavorite: Bool = false, source: String = "", url: String = "", notes: String = "", image: UIImage = #imageLiteral(resourceName: "defaultProfileImage"),
-         ingredients: String = "", instructions: String = "") {
+         imageName: String = "", ingredients: String = "", instructions: String = "") {
         self.title = title
         self.description = description
         self.yield = yield
@@ -40,10 +41,28 @@ class Recipe {
         self.url = url
         self.notes = notes
         self.image = image
+        self.imageName = imageName
         self.ingredients = ingredients
         self.instructions = instructions
     }
     
+    func convertIntoFirebaseRecipeDictionary() -> Dictionary<String,Any> {
+        var pushedDictionary = Dictionary<String,Any>()
+        pushedDictionary["activeHours"] = self.activeHours
+        pushedDictionary["activeMinutes"] = self.activeMinutes
+        pushedDictionary["description"] = self.description
+        pushedDictionary["imageName"] = self.imageName
+        pushedDictionary["ingredients"] = self.ingredients
+        pushedDictionary["instructions"] = self.instructions
+        pushedDictionary["isFavorite"] = self.isFavorite
+        pushedDictionary["notes"] = self.notes
+        pushedDictionary["source"] = self.source
+        pushedDictionary["title"] = self.title
+        pushedDictionary["totalHours"] = self.totalHours
+        pushedDictionary["totalMinutes"] = self.totalMinutes
+        pushedDictionary["url"] = self.url
+        return pushedDictionary
+    }
     //function for getting list of ingredients?
     //function for getting list of instructions
 }

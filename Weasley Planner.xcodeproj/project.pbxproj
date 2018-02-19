@@ -61,6 +61,7 @@
 		9BCF3879202DF4B000617558 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF3878202DF4B000617558 /* InputView.swift */; };
 		9BF398BB2039EB0D0009FC33 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398BA2039EB0D0009FC33 /* Connection.swift */; };
 		9BF398BD2039F67F0009FC33 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398BC2039F67F0009FC33 /* Recipe.swift */; };
+		9BF398BF2039FB940009FC33 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398BE2039FB940009FC33 /* RecipeCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +123,7 @@
 		9BCF3878202DF4B000617558 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		9BF398BA2039EB0D0009FC33 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		9BF398BC2039F67F0009FC33 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		9BF398BE2039FB940009FC33 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weasley Planner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -291,6 +293,7 @@
 			children = (
 				9B124ED52038F3CA007D34BC /* ModernSearchBar */,
 				9BCF3878202DF4B000617558 /* InputView.swift */,
+				9BF398BE2039FB940009FC33 /* RecipeCell.swift */,
 				9BA7B104203517F7002886DF /* ShoppingCell.swift */,
 				9B644D2F202F4C7B003B6A50 /* TextButton.swift */,
 				9BC2E177202CEA1C000B8E15 /* TitleBar.swift */,
@@ -526,6 +529,7 @@
 				9B644D37202FC6C1003B6A50 /* User.swift in Sources */,
 				9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */,
 				9B124EE92038F4B8007D34BC /* ModernSearchBarModel.swift in Sources */,
+				9BF398BF2039FB940009FC33 /* RecipeCell.swift in Sources */,
 				9BF398BB2039EB0D0009FC33 /* Connection.swift in Sources */,
 				9BA7B1032035147E002886DF /* Item.swift in Sources */,
 				9BF398BD2039F67F0009FC33 /* Recipe.swift in Sources */,

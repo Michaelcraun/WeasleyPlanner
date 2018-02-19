@@ -21,17 +21,13 @@ class ShoppingListVC: UIViewController {
 //    let addEntryField: UISearchBar()
     let addEntryField: ModernSearchBar = {
         let bar = ModernSearchBar()
-
-        //TODO: Create a better image for this
         bar.searchImage = #imageLiteral(resourceName: "addIcon")
         bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
         bar.searchLabel_textColor = primaryTextColor
         bar.searchLabel_backgroundColor = primaryColor
-
         bar.suggestionsView_maxHeight = 180
         bar.suggestionsView_separatorStyle = .none
         bar.suggestionsView_contentViewColor = primaryColor
-
         return bar
     }()
     

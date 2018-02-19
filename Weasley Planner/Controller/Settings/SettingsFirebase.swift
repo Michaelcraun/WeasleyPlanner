@@ -33,7 +33,7 @@ extension SettingsVC {
                         guard let userLocation = userDict["location"] as? String else { return }
                         guard let userStatus = userDict["status"] as? Bool else { return }
                         
-                        DataHandler.instance.REF_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
+                        DataHandler.instance.REF_PROFILE_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
                             if let _ = error { return }
                             guard let userImageData = data else { return }
                             guard let userImage = UIImage(data: userImageData) else { return }

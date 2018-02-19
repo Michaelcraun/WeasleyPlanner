@@ -9,7 +9,18 @@
 import UIKit
 
 class AddRecipeVC: UIViewController {
-
+    //MARK: UI Variables
+    
+    
+    //MARK: DataVariables
+    var user: User?
+    var isAddingFirebaseRecipe = false
+    var firebaseRecipes = [Recipe]() {
+        didSet {
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

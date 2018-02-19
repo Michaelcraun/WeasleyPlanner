@@ -42,6 +42,7 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
 
         layoutView()
+        beginConnectionTest()
     }
     
     override func viewWillAppear(_ animated: Bool) {

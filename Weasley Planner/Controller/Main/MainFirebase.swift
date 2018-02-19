@@ -83,7 +83,7 @@ extension MainVC {
                         self.initializeFamilyUsers()
                     }
                     
-                    DataHandler.instance.REF_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
+                    DataHandler.instance.REF_PROFILE_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
                         if let _ = error { return }
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }
@@ -141,7 +141,7 @@ extension MainVC {
                     guard let userLocation = user.childSnapshot(forPath: "location").value as? String else { return }
                     guard let userStatus = user.childSnapshot(forPath: "status").value as? Bool else { return }
                     
-                    DataHandler.instance.REF_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
+                    DataHandler.instance.REF_PROFILE_IMAGE.child("\(userImageName).png").data(withMaxSize: 50000, completion: { (data, error) in
                         if let _ = error { return }
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }

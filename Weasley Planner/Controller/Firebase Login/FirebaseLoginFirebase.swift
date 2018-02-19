@@ -120,7 +120,7 @@ extension FirebaseLoginVC {
             return
         }
         
-        DataHandler.instance.REF_IMAGE.child("\(name).png").put(uploadData, metadata: nil, completion: { (metadata, error) in
+        DataHandler.instance.REF_PROFILE_IMAGE.child("\(name).png").put(uploadData, metadata: nil, completion: { (metadata, error) in
             if let _ = error {
                 self.showAlert(.imageError)
                 return

@@ -27,6 +27,7 @@ class FirebaseLoginVC: UIViewController {
         super.viewDidLoad()
 
         layoutView()
+        beginConnectionTest()
     }
     
     func loadUserInfo() {

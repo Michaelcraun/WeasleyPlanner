@@ -102,6 +102,8 @@ class MainVC: UIViewController {
                 slideInTransitionManager.disableCompactHeight = false
                 destination.transitioningDelegate = slideInTransitionManager
                 destination.modalPresentationStyle = .custom
+                
+                destination.user = selfUser
             }
         } else if segue.identifier == Controller.shoppingList.segueIdentifier {
             if let destination = segue.destination as? ShoppingListVC {

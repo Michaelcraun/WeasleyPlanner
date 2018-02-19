@@ -26,14 +26,16 @@ class DataHandler {
     private var _REF_RECIPE = DB_BASE.child("recipe")
     private var _REF_USER = DB_BASE.child("user")
     private var _REF_STORAGE = STORAGE_BASE
-    private var _REF_IMAGE = STORAGE_BASE.child("profileImage")
+    private var _REF_PROFILE_IMAGE = STORAGE_BASE.child("profileImage")
+    private var _REF_RECIPE_IMAGE = STORAGE_BASE.child("recipeImage")
     
     var REF_BASE: FIRDatabaseReference { return _REF_BASE }
     var REF_FAMILY: FIRDatabaseReference { return _REF_FAMILY }
     var REF_RECIPE: FIRDatabaseReference { return _REF_RECIPE }
     var REF_USER: FIRDatabaseReference { return _REF_USER }
     var REF_STORAGE: FIRStorageReference { return _REF_STORAGE }
-    var REF_IMAGE: FIRStorageReference { return _REF_IMAGE }
+    var REF_PROFILE_IMAGE: FIRStorageReference { return _REF_PROFILE_IMAGE }
+    var REF_RECIPE_IMAGE: FIRStorageReference { return _REF_RECIPE_IMAGE }
     
     //MARK: Firebase Family Methods
     func createFamilyIDString(with familyName: String) -> String {

@@ -100,7 +100,16 @@ class TitleBar: UIView {
         if let _ = delegate as? MainVC {
             delegate.performSegue(withIdentifier: "showSidePane", sender: nil)
         } else {
-            delegate.dismiss(animated: true, completion: nil)
+            switch sender.image(for: .normal)! {
+            case #imageLiteral(resourceName: "backIcon"): delegate.dismiss(animated: true, completion: nil)
+            case #imageLiteral(resourceName: "addIcon"):
+                if let recipeVC = delegate as? RecipeListVC {
+                    recipeVC.showAddRecipeActionSheet()
+                } else if let _ = delegate as? CalendarVC {
+                    delegate.performSegue(withIdentifier: "showAddEvent", sender: nil)
+                }
+            default: break
+            }
         }
     }
     
