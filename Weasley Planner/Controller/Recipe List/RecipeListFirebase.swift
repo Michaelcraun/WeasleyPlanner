@@ -64,14 +64,16 @@ extension RecipeListVC {
         if let url = dictionary["url"] as? String { fetchedRecipe.url = url }
         if let imageName = dictionary["imageName"] as? String {
             fetchedRecipe.imageName = imageName
-            DataHandler.instance.REF_RECIPE_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
-                if let _ = error { return }
-                guard let recipeImageData = data else { return }
-                guard let recipeImage = UIImage(data: recipeImageData) else { return }
-                
-                fetchedRecipe.image = recipeImage
-                self.recipes.append(fetchedRecipe)
-            })
+            if imageName != "" {
+                DataHandler.instance.REF_RECIPE_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
+                    if let _ = error { return }
+                    guard let recipeImageData = data else { return }
+                    guard let recipeImage = UIImage(data: recipeImageData) else { return }
+                    
+                    fetchedRecipe.image = recipeImage
+                    self.recipes.append(fetchedRecipe)
+                })
+            }
         }
     }
 }

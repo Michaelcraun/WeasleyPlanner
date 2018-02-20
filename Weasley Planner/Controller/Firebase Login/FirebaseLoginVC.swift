@@ -61,44 +61,20 @@ class FirebaseLoginVC: UIViewController {
         default: break
         }
     }
+    
+    @objc func imagePickerPressed(_ sender: UIButton) {
+        photoManager.delegate = self
+        photoManager.displayImageController()
+    }
+    
+    func setSelectedImage(_ image: UIImage) {
+        iconPicker.image = image
+    }
 }
 
 extension FirebaseLoginVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         registerButtonPressed(nil)
         return true
-    }
-}
-
-extension FirebaseLoginVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            iconPicker.image = image
-        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            iconPicker.image = image
-        }
-        
-        iconPicker.contentMode = .scaleAspectFill
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func imagePickerPressed(_ sender: UIButton) {
-        let imageController = UIImagePickerController()
-        imageController.delegate = self
-        imageController.allowsEditing = true
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imageController.sourceType = .camera
-            imageController.cameraCaptureMode = .photo
-            imageController.cameraDevice = .front
-//            imageController.cameraOverlayView
-        } else {
-            imageController.sourceType = .photoLibrary
-        }
-
-        present(imageController, animated: true, completion: nil)
     }
 }

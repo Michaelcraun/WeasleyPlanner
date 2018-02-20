@@ -62,6 +62,10 @@
 		9BF398BB2039EB0D0009FC33 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398BA2039EB0D0009FC33 /* Connection.swift */; };
 		9BF398BD2039F67F0009FC33 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398BC2039F67F0009FC33 /* Recipe.swift */; };
 		9BF398BF2039FB940009FC33 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398BE2039FB940009FC33 /* RecipeCell.swift */; };
+		9BF398C1203B18130009FC33 /* AddRecipeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398C0203B18130009FC33 /* AddRecipeLayout.swift */; };
+		9BF398C3203B18460009FC33 /* AddRecipeFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398C2203B18460009FC33 /* AddRecipeFirebase.swift */; };
+		9BF398C5203B93C40009FC33 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398C4203B93C40009FC33 /* PickerView.swift */; };
+		9BF398C7203BCBB60009FC33 /* PhotoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF398C6203BCBB60009FC33 /* PhotoDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +128,10 @@
 		9BF398BA2039EB0D0009FC33 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		9BF398BC2039F67F0009FC33 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		9BF398BE2039FB940009FC33 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		9BF398C0203B18130009FC33 /* AddRecipeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeLayout.swift; sourceTree = "<group>"; };
+		9BF398C2203B18460009FC33 /* AddRecipeFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeFirebase.swift; sourceTree = "<group>"; };
+		9BF398C4203B93C40009FC33 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
+		9BF398C6203BCBB60009FC33 /* PhotoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDelegate.swift; sourceTree = "<group>"; };
 		A16AA48C25D42BEB215907D7 /* Pods-Weasley Planner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weasley Planner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				9B124EAF2037B338007D34BC /* AddRecipeVC.swift */,
+				9BF398C0203B18130009FC33 /* AddRecipeLayout.swift */,
+				9BF398C2203B18460009FC33 /* AddRecipeFirebase.swift */,
 			);
 			path = "Add Recipe";
 			sourceTree = "<group>";
@@ -203,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				9BA7B0EF20332E35002886DF /* MapDelegate.swift */,
+				9BF398C6203BCBB60009FC33 /* PhotoDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -293,6 +304,7 @@
 			children = (
 				9B124ED52038F3CA007D34BC /* ModernSearchBar */,
 				9BCF3878202DF4B000617558 /* InputView.swift */,
+				9BF398C4203B93C40009FC33 /* PickerView.swift */,
 				9BF398BE2039FB940009FC33 /* RecipeCell.swift */,
 				9BA7B104203517F7002886DF /* ShoppingCell.swift */,
 				9B644D2F202F4C7B003B6A50 /* TextButton.swift */,
@@ -528,6 +540,7 @@
 			files = (
 				9B644D37202FC6C1003B6A50 /* User.swift in Sources */,
 				9BC2E15D202CE8BF000B8E15 /* MainVC.swift in Sources */,
+				9BF398C3203B18460009FC33 /* AddRecipeFirebase.swift in Sources */,
 				9B124EE92038F4B8007D34BC /* ModernSearchBarModel.swift in Sources */,
 				9BF398BF2039FB940009FC33 /* RecipeCell.swift in Sources */,
 				9BF398BB2039EB0D0009FC33 /* Connection.swift in Sources */,
@@ -551,10 +564,12 @@
 				9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */,
 				9B124EE32038F447007D34BC /* ModernSearchBarCell.swift in Sources */,
 				9BA7B0EA20313748002886DF /* CalendarFirebase.swift in Sources */,
+				9BF398C5203B93C40009FC33 /* PickerView.swift in Sources */,
 				9BC2E18F202CFB89000B8E15 /* SlideInPresentationManager.swift in Sources */,
 				9BA7B0E8203134B9002886DF /* Event.swift in Sources */,
 				9BA7B101203513FD002886DF /* ShoppingListFirebase.swift in Sources */,
 				9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */,
+				9BF398C7203BCBB60009FC33 /* PhotoDelegate.swift in Sources */,
 				9BA7B0FB203512D0002886DF /* RecipeListLayout.swift in Sources */,
 				9BC2E17A202CEA58000B8E15 /* SidePaneVC.swift in Sources */,
 				9BA7B0DF2030E323002886DF /* CalendarLayout.swift in Sources */,
@@ -569,6 +584,7 @@
 				9B644D39203063DD003B6A50 /* MainFirebase.swift in Sources */,
 				9BC2E16F202CE973000B8E15 /* MainLayout.swift in Sources */,
 				9BC2E191202DC781000B8E15 /* DataHandler.swift in Sources */,
+				9BF398C1203B18130009FC33 /* AddRecipeLayout.swift in Sources */,
 				9BC2E18D202CFB7F000B8E15 /* SlideInPresentationController.swift in Sources */,
 				9BA7B0FD2035131A002886DF /* RecipeListFirebase.swift in Sources */,
 				9B124EE72038F499007D34BC /* ModernSearchBarIcon.swift in Sources */,

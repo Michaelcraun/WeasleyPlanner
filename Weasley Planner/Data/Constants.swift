@@ -30,3 +30,6 @@ var topBannerHeight: CGFloat {
 //MARK: Data Variables
 let ad = UIApplication.shared.delegate as! AppDelegate
 let mapManager = MapDelegate()
+
+//MARK: Delegate Constants
+let photoManager = PhotoDelegate()

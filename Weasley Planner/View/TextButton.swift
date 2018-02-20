@@ -9,8 +9,11 @@
 import UIKit
 
 class TextButton: UIButton {
-    private let label = UILabel()
-    var title: String?
+    var title: String? {
+        didSet {
+            updateTitle()
+        }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -19,6 +22,7 @@ class TextButton: UIButton {
         let label: UILabel = {
             let label = UILabel()
             label.font = UIFont(name: fontName, size: largeFontSize)
+            label.tag = 1005
             label.text = title
             label.textColor = primaryTextColor
             label.textAlignment = .center
@@ -31,5 +35,14 @@ class TextButton: UIButton {
                      leading: self.leadingAnchor,
                      trailing: self.trailingAnchor,
                      bottom: self.bottomAnchor)
+    }
+    
+    func updateTitle() {
+        for subview in self.subviews {
+            if subview.tag == 1005 {
+                guard let label = subview as? UILabel else { return }
+                label.text = title
+            }
+        }
     }
 }
