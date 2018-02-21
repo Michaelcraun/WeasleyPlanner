@@ -10,6 +10,7 @@ import UIKit
 
 class AddRecipeVC: UIViewController {
     //MARK: UI Variables
+    var isBoundToKeyboard = false
     let firebaseRecipeList = UITableView()
     let titleBar: TitleBar = {
         let bar = TitleBar()
@@ -49,6 +50,7 @@ class AddRecipeVC: UIViewController {
     //-----------------
     let titleField: InputView = {
         let field = InputView()
+        field.inputField.delegate = textManager
         field.inputType = .title
         return field
     }()
@@ -80,54 +82,63 @@ class AddRecipeVC: UIViewController {
     
     let descriptionView: InputView = {
         let field = InputView()
+        field.inputTextView.delegate = textManager
         field.inputType = .description
         return field
     }()
     
     let yieldField: InputView = {
         let field = InputView()
+        field.inputField.delegate = textManager
         field.inputType = .yield
         return field
     }()
     
     let activeTimeField: InputView = {
         let field = InputView()
+        field.inputField.delegate = textManager
         field.inputType = .activeTime
         return field
     }()
     
     let totalTimeField: InputView = {
         let field = InputView()
+        field.inputField.delegate = textManager
         field.inputType = .totalTime
         return field
     }()
     
     let notesView: InputView = {
         let field = InputView()
+        field.inputTextView.delegate = textManager
         field.inputType = .notes
         return field
     }()
     
     let sourceField: InputView = {
         let field = InputView()
+        field.inputField.delegate = textManager
         field.inputType = .source
         return field
     }()
     
     let urlField: InputView = {
         let field = InputView()
+        field.inputField.delegate = textManager
         field.inputType = .url
         return field
     }()
     
     let ingredientsView: InputView = {
         let field = InputView()
+        field.inputTextView.delegate = textManager
         field.inputType = .ingredients
         return field
     }()
     
     let instructionsView: InputView = {
         let field = InputView()
+        field.inputTextView.delegate = textManager
         field.inputType = .instructions
         return field
     }()
@@ -175,8 +186,8 @@ class AddRecipeVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        textManager.delegate = self
         titleBar.delegate = self
-        
         
     }
     
@@ -193,7 +204,12 @@ class AddRecipeVC: UIViewController {
     
     @objc func imageButtonPressed(_ sender: UIButton) {
         print("ADD RECIPE: imageButtonPressed(_:)")
-        
+        photoManager.delegate = self
+        photoManager.displayImageController()
+    }
+    
+    func setSelectedImage(_ image: UIImage) {
+        recipeImageView.image = image
     }
     
     @objc func saveToFirebaseSwitchPressed(_ sender: UISwitch) {
@@ -206,33 +222,33 @@ class AddRecipeVC: UIViewController {
         }
     }
     
-    @objc func saveButtonPressed(_ sender: TextButton) {
+    @objc func saveButtonPressed(_ sender: TextButton?) {
         print("ADD RECIPE: saveButtonPressed(_:)")
+        view.endEditing(true)
+        
         guard let title = titleField.inputField.text, title != "" else {
             showAlert(.missingTitle)
             return
         }
         
-        let newRecipe = Recipe(title: title)
-//         newRecipe.activeHours
-//         newRecipe.activeMinutes
-//         newRecipe.description
-//         newRecipe.image
-//         newRecipe.imageName
-//         newRecipe.ingredients
-//         newRecipe.instructions
-//         newRecipe.isFavorite
-//         newRecipe.notes
-//         newRecipe.source
-//         newRecipe.title
-//         newRecipe.totalHours
-//         newRecipe.totalMinutes
-//         newRecipe.url
-//         newRecipe.yield
-    }
-    
-    @objc func pickerButtonPressed(_ sender: UIButton) {
-        view.endEditing(true)
+        let recipeIdentifier = DataHandler.instance.createRecipeIDString(with: title)
+        let newRecipe = Recipe(identifier: recipeIdentifier, title: title)
+        newRecipe.activeHours = activeTime[0]
+        newRecipe.activeMinutes = activeTime[1]
+        newRecipe.totalHours = totalTime[0]
+        newRecipe.totalMinutes = totalTime[1]
+        newRecipe.isFavorite = recipeIsFavorite
+        newRecipe.imageName = NSUUID().uuidString
+        if let description = descriptionView.inputTextView.text { newRecipe.description = description }
+        if let image = recipeImageView.image { newRecipe.image = image }
+        if let instructions = instructionsView.inputTextView.text { newRecipe.instructions = instructions }
+        if let notes = notesView.inputTextView.text { newRecipe.notes = notes }
+        if let source = sourceField.inputField.text { newRecipe.source = source }
+        if let url = urlField.inputField.text { newRecipe.url = url }
+        if let yield = yieldField.inputField.text { newRecipe.yield = yield }
+        uploadRecipeToFamily(newRecipe)
+        if shareToFirebase { uploadRecipeToFirebase(newRecipe) }
         
+        dismiss(animated: true, completion: nil)
     }
 }

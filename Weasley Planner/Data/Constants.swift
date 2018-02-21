@@ -33,3 +33,4 @@ let mapManager = MapDelegate()
 
 //MARK: Delegate Constants
 let photoManager = PhotoDelegate()
+let textManager = TextDelegate()

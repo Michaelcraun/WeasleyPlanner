@@ -9,6 +9,7 @@
 import UIKit
 
 class Recipe {
+    var identifier: String
     var title: String
     var description: String
     var yield: String
@@ -26,9 +27,10 @@ class Recipe {
     var ingredients: String
     var instructions: String
     
-    init(title: String, description: String = "", yield: String = "", activeHours: Int = 0, activeMinutes: Int = 0, totalHours: Int = 0,
-         totalMinutes: Int = 0, isFavorite: Bool = false, source: String = "", url: String = "", notes: String = "", image: UIImage = #imageLiteral(resourceName: "defaultProfileImage"),
-         imageName: String = "", ingredients: String = "", instructions: String = "") {
+    init(identifier: String, title: String, description: String = "", yield: String = "", activeHours: Int = 0, activeMinutes: Int = 0,
+         totalHours: Int = 0, totalMinutes: Int = 0, isFavorite: Bool = false, source: String = "", url: String = "", notes: String = "",
+         image: UIImage = #imageLiteral(resourceName: "defaultProfileImage"), imageName: String = "", ingredients: String = "", instructions: String = "") {
+        self.identifier = identifier
         self.title = title
         self.description = description
         self.yield = yield
@@ -46,7 +48,7 @@ class Recipe {
         self.instructions = instructions
     }
     
-    func convertIntoFirebaseRecipeDictionary() -> Dictionary<String,Any> {
+    func dictionary() -> Dictionary<String,Any> {
         var pushedDictionary = Dictionary<String,Any>()
         pushedDictionary["activeHours"] = self.activeHours
         pushedDictionary["activeMinutes"] = self.activeMinutes
@@ -61,8 +63,10 @@ class Recipe {
         pushedDictionary["totalHours"] = self.totalHours
         pushedDictionary["totalMinutes"] = self.totalMinutes
         pushedDictionary["url"] = self.url
+        pushedDictionary["yield"] = self.yield
         return pushedDictionary
     }
+    
     //function for getting list of ingredients?
     //function for getting list of instructions
 }

@@ -1,5 +1,5 @@
 //
-//  FoundationExtensions.swift
+//  StringExtension.swift
 //  Weasley Planner
 //
 //  Created by Michael Craun on 2/15/18.

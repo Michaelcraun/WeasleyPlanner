@@ -65,8 +65,6 @@ extension MainVC {
     }
     
     func initializeCurrentUser() {
-        selfUser = User(status: true)
-        
         DataHandler.instance.REF_USER.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {
@@ -75,25 +73,25 @@ extension MainVC {
                     guard let name = user.childSnapshot(forPath: "name").value as? String else { return }
                     guard let imageName = user.childSnapshot(forPath: "imageName").value as? String else { return }
                     
-                    self.selfUser.family = family
-                    self.selfUser.name = name
-                    
-                    if family != "" {
-                        self.checkForFamilyCreator()
-                        self.initializeFamilyUsers()
-                    }
-                    
                     DataHandler.instance.REF_PROFILE_IMAGE.child("\(imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
                         if let _ = error { return }
                         guard let imageData = data else { return }
                         guard let image = UIImage(data: imageData) else { return }
                         
-                        self.selfUser.icon = image
+                        self.selfUser = User(family: family, icon: image, name: name, status: true, uid: user.key)
+                        self.observeCurrentUser()
+                        
+                        if family != "" {
+                            self.checkForFamilyCreator()
+                            self.initializeFamilyUsers()
+                        }
                     })
                 }
             }
         })
-        
+    }
+    
+    func observeCurrentUser() {
         DataHandler.instance.REF_USER.observe(.value, with: { (snapshot) in
             guard let userSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for user in userSnapshot {

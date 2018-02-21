@@ -47,13 +47,14 @@ class RecipeListVC: UIViewController {
         super.viewDidLoad()
 
         layoutView()
-        observeFamilyRecipes()
         beginConnectionTest()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         titleBar.delegate = self
         searchBar.delegateModernSearchBar = self
+        
+        observeFamilyRecipes()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,6 +64,7 @@ class RecipeListVC: UIViewController {
                 destination.modalPresentationStyle = .custom
                 
                 destination.isAddingFirebaseRecipe = isAddingFirebaseRecipe
+                destination.user = user
             }
         }
     }

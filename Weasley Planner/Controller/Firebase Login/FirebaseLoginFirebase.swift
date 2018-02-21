@@ -97,7 +97,6 @@ extension FirebaseLoginVC {
     }
     
     func updateUser() {
-        print("FIREBASE: Save button pressed...")
         let imageName = NSUUID().uuidString
         guard let uid = DataHandler.instance.currentUserID else { return }
         guard let firstName = firstNameField.inputField.text, firstName != "" else { showAlert(.noFirstName); return }

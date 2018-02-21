@@ -333,10 +333,6 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
                 self.addViewToParent(view: self.suggestionsView)
                 self.isSuggestionsViewOpened = true
                 self.suggestionsView.reloadData()
-                
-                if let shoppingList = delegateModernSearchBar as? ShoppingListVC {
-                    shoppingList.layoutAddItemButton()
-                }
             }
         }
     }
@@ -345,10 +341,6 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
         if (self.isSuggestionsViewOpened == true){
             self.animationClosing()
             self.isSuggestionsViewOpened = false
-            
-            if let shoppingList = delegateModernSearchBar as? ShoppingListVC {
-                shoppingList.removeAddItemButton()
-            }
         }
     }
     

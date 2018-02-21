@@ -81,7 +81,6 @@ class SidePaneVC: UIViewController {
     }
     
     @objc func selfPaneTapped(_ sender: UITapGestureRecognizer) {
-        print("EDIT PROFILE: selfPane Tapped")
         performSegue(withIdentifier: "showLogin", sender: user)
     }
 }

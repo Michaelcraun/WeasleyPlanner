@@ -46,7 +46,14 @@ class PhotoDelegate: NSObject, UIImagePickerControllerDelegate, UINavigationCont
             if let selectedImage = selectedImage {
                 firebaseLogin.setSelectedImage(selectedImage)
             }
+        } else if let addRecipe = delegate as? AddRecipeVC {
+            if let selectedImage = selectedImage {
+                addRecipe.setSelectedImage(selectedImage)
+            }
         }
+        
+        selectedImage = nil
+        picker.dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

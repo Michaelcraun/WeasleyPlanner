@@ -25,7 +25,6 @@ class RecipeCell: UITableViewCell {
         let cellView: UIView = {
             let view = UIView()
             view.backgroundColor = secondaryColor
-            view.clipsToBounds = true
             view.layer.borderColor = primaryColor.cgColor
             view.layer.borderWidth = 1
             view.layer.cornerRadius = 5
@@ -47,15 +46,16 @@ class RecipeCell: UITableViewCell {
                 let label = UILabel()
                 label.font = UIFont(name: fontName, size: smallFontSize)
                 label.text = recipe.source
-                label.textColor = primaryTextColor
+                label.textColor = primaryColor
                 return label
             }()
             
             let recipeTitle: UILabel = {
                 let label = UILabel()
                 label.font = UIFont(name: fontName, size: largeFontSize)
+                label.numberOfLines = 0
                 label.text = recipe.title
-                label.textColor = primaryTextColor
+                label.textColor = secondaryTextColor
                 return label
             }()
             
@@ -78,7 +78,7 @@ class RecipeCell: UITableViewCell {
                                leading: recipeImageView.trailingAnchor,
                                trailing: view.trailingAnchor,
                                bottom: view.bottomAnchor,
-                               padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+                               padding: .init(top: 0, left: 5, bottom: 5, right: 5))
             
             return view
         }()

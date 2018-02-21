@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Firebase
 
 class User {
     var coordinate: CLLocationCoordinate2D?

@@ -40,8 +40,8 @@ class DataHandler {
     //MARK: Firebase Family Methods
     func createFamilyIDString(with familyName: String) -> String {
         var familyID = familyName
-        //TODO: Configure ID String
-        familyID += "|"
+        let familyAppendage = NSUUID().uuidString
+        familyID += "-\(familyAppendage)"
         return familyID
     }
     
@@ -52,8 +52,8 @@ class DataHandler {
     //MARK: Firebase Recipe Methods
     func createRecipeIDString(with recipeName: String) -> String {
         var recipeID = recipeName
-        //TODO: Configure ID String
-        recipeID += "|"
+        let recipeAppendage = NSUUID().uuidString
+        recipeID += "-\(recipeAppendage)"
         return recipeID
     }
     

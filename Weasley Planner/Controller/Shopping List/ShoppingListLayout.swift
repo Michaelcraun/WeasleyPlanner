@@ -130,35 +130,6 @@ extension ShoppingListVC: ModernSearchBarDelegate {
         let newItem = createItemFromText(item)
         searchShoppingListForDuplicate(newItem)
         addEntryField.text = ""
-    }
-    
-    @objc func addItemPressed(_ sender: TextButton) {
-        
-    }
-    
-    func layoutAddItemButton() {
-        let addItemButton: TextButton = {
-            let button = TextButton()
-            button.addTarget(self, action: #selector(addItemPressed(_:)), for: .touchUpInside)
-            button.bindToKeyboard()
-            button.tag = 1004
-            button.title = "ADD ITEM"
-            return button
-        }()
-        
-        view.addSubview(addItemButton)
-        
-        addItemButton.anchor(leading: view.leadingAnchor,
-                             trailing: view.trailingAnchor,
-                             bottom: view.bottomAnchor,
-                             size: .init(width: 0, height: 50))
-    }
-    
-    func removeAddItemButton() {
-        for subview in view.subviews {
-            if subview.tag == 1004 {
-                subview.fadeAlphaOut()
-            }
-        }
+        addEntryField.closeSuggestionsView()
     }
 }

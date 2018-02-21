@@ -39,6 +39,8 @@ extension AddRecipeVC {
     
     func configureNewRecipeForm() -> UIScrollView {
         let newRecipeScrollView: UIScrollView = {
+            let textFieldHeight = 30
+            let textViewHeight = 120
             let scrollView = UIScrollView()
             scrollView.alwaysBounceHorizontal = false
             scrollView.showsHorizontalScrollIndicator = false
@@ -68,7 +70,7 @@ extension AddRecipeVC {
                               leading: scrollView.leadingAnchor,
                               trailing: isFavoriteButton.leadingAnchor,
                               padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                              size: .init(width: 0, height: 30))
+                              size: .init(width: 0, height: textFieldHeight))
             
             recipeImageView.anchor(top: titleField.bottomAnchor,
                                    leading: scrollView.leadingAnchor,
@@ -85,63 +87,62 @@ extension AddRecipeVC {
                                    leading: scrollView.leadingAnchor,
                                    trailing: scrollView.trailingAnchor,
                                    padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                                   size: .init(width: 0, height: 90))
+                                   size: .init(width: 0, height: textViewHeight))
             
             notesView.anchor(top: descriptionView.bottomAnchor,
                              leading: scrollView.leadingAnchor,
                              trailing: scrollView.trailingAnchor,
                              padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                             size: .init(width: 0, height: 90))
+                             size: .init(width: 0, height: textViewHeight))
             
             yieldField.anchor(top: notesView.bottomAnchor,
                               leading: scrollView.leadingAnchor,
                               trailing: scrollView.trailingAnchor,
                               padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                              size: .init(width: 0, height: 30))
+                              size: .init(width: 0, height: textFieldHeight))
             
             activeTimeField.inputField.inputView = activeDurationPicker
             activeTimeField.anchor(top: yieldField.bottomAnchor,
                                    leading: scrollView.leadingAnchor,
                                    trailing: scrollView.trailingAnchor,
                                    padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                                   size: .init(width: 0, height: 30))
+                                   size: .init(width: 0, height: textFieldHeight))
             
             totalTimeField.inputField.inputView = totalDurationPicker
             totalTimeField.anchor(top: activeTimeField.bottomAnchor,
                                   leading: scrollView.leadingAnchor,
                                   trailing: scrollView.trailingAnchor,
                                   padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                                  size: .init(width: 0, height: 30))
+                                  size: .init(width: 0, height: textFieldHeight))
             
             sourceField.anchor(top: totalTimeField.bottomAnchor,
                                leading: scrollView.leadingAnchor,
                                trailing: scrollView.trailingAnchor,
                                padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                               size: .init(width: 0, height: 30))
+                               size: .init(width: 0, height: textFieldHeight))
             
             urlField.anchor(top: sourceField.bottomAnchor,
                             leading: scrollView.leadingAnchor,
                             trailing: scrollView.trailingAnchor,
                             padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                            size: .init(width: 0, height: 30))
+                            size: .init(width: 0, height: textFieldHeight))
             
             ingredientsView.anchor(top: urlField.bottomAnchor,
                                    leading: scrollView.leadingAnchor,
                                    trailing: scrollView.trailingAnchor,
                                    padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                                   size: .init(width: 0, height: 90))
+                                   size: .init(width: 0, height: textViewHeight))
             
             instructionsView.anchor(top: ingredientsView.bottomAnchor,
                                     leading: scrollView.leadingAnchor,
                                     trailing: scrollView.trailingAnchor,
                                     padding: .init(top: 5, left: 5, bottom: 0, right: 5),
-                                    size: .init(width: 0, height: 90))
+                                    size: .init(width: 0, height: textViewHeight))
             
-            shareOnFirebaseSwitcher.anchor(top: instructionsView.bottomAnchor,
-                                           trailing: scrollView.trailingAnchor,
-                                           bottom: scrollView.bottomAnchor,
-                                           padding: .init(top: 5, left: 5, bottom: 5, right: 5),
-                                           size: .init(width: 0, height: 30))
+            shareOnFirebaseSwitcher.anchor(trailing: scrollView.trailingAnchor,
+                                           centerY: saveButton.centerYAnchor,
+                                           padding: .init(top: 0, left: 0, bottom: 0, right: 5),
+                                           size: .init(width: 0, height: textFieldHeight))
             
             saveButton.anchor(top: instructionsView.bottomAnchor,
                               leading: scrollView.leadingAnchor,
@@ -234,8 +235,19 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
             default: break
             }
         }
-        print("ADD RECIPE: activeTime: \(activeTime)")
-        print("ADD RECIPE: totalTime: \(totalTime)")
+    }
+    
+    @objc func pickerButtonPressed(_ sender: UIButton) {
+        view.endEditing(true)
+        if sender.title(for: .normal) == "Done" {
+            if sender == activeDurationPicker.doneButton {
+                let activeTimeString = "\(activeTime[0]):\(activeTime[1])"
+                activeTimeField.inputField.text = activeTimeString
+            } else {
+                let totalTimeString = "\(totalTime[0]):\(totalTime[1])"
+                totalTimeField.inputField.text = totalTimeString
+            }
+        }
     }
 }
 

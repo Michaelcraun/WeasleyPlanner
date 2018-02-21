@@ -38,7 +38,7 @@ extension SettingsVC {
                             guard let userImageData = data else { return }
                             guard let userImage = UIImage(data: userImageData) else { return }
                             
-                            let nearbyUser = User(family: userFamily, icon: userImage, name: userName, location: userLocation, status: userStatus, uid: user.key)
+                            let nearbyUser = User(icon: userImage, name: userName, location: userLocation, status: userStatus, uid: user.key)
                             self.nearbyUsers.append(nearbyUser)
                         })
                     }

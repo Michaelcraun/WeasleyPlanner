@@ -11,14 +11,66 @@ import Firebase
 
 class FirebaseLoginVC: UIViewController {
     //MARK: UI Variables
-    let firebaseSegmentedControl = UISegmentedControl()
-    let firstNameField = InputView()
-    let emailField = InputView()
-    let iconPicker = UIImageView()
-    let iconPickerButton = UIButton()
-    let passwordField = InputView()
-    let lastNameField = InputView()
-    let loginRegisterButton = TextButton()
+    let firebaseSegmentedControl: UISegmentedControl = {
+        let segment = UISegmentedControl()
+        segment.addTarget(self, action: #selector(firebaseSegmentChanged(_:)), for: .valueChanged)
+        segment.insertSegment(withTitle: "Register", at: 0, animated: false)
+        segment.insertSegment(withTitle: "Login", at: 1, animated: false)
+        segment.selectedSegmentIndex = 0
+        segment.tintColor = primaryColor
+        return segment
+    }()
+    
+    let firstNameField: InputView = {
+        let field = InputView()
+        field.inputField.delegate = textManager
+        field.inputType = .firstName
+        return field
+    }()
+    
+    let emailField: InputView = {
+        let field = InputView()
+        field.inputField.delegate = textManager
+        field.inputType = .email
+        return field
+    }()
+    
+    let iconPicker: UIImageView = {
+        let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
+        imageView.layer.borderColor = primaryColor.cgColor
+        imageView.layer.borderWidth = 1
+        imageView.layer.cornerRadius = 65 / 2
+        return imageView
+    }()
+    
+    let iconPickerButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(imagePickerPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let passwordField: InputView = {
+        let field = InputView()
+        field.inputField.delegate = textManager
+        field.inputType = .password
+        return field
+    }()
+    
+    let lastNameField: InputView = {
+        let field = InputView()
+        field.inputField.delegate = textManager
+        field.inputType = .lastName
+        return field
+    }()
+    
+    let loginRegisterButton: TextButton = {
+        let button = TextButton()
+        button.title = "REGISTER"
+        button.addTarget(self, action: #selector(registerButtonPressed(_:)), for: .touchUpInside)
+        return button
+    }()
     
     //MARK: Data Variables
     var user: User?
@@ -28,6 +80,11 @@ class FirebaseLoginVC: UIViewController {
 
         layoutView()
         beginConnectionTest()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        textManager.delegate = self
+        
     }
     
     func loadUserInfo() {
@@ -69,12 +126,5 @@ class FirebaseLoginVC: UIViewController {
     
     func setSelectedImage(_ image: UIImage) {
         iconPicker.image = image
-    }
-}
-
-extension FirebaseLoginVC: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        registerButtonPressed(nil)
-        return true
     }
 }
