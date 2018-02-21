@@ -162,11 +162,12 @@ class AddRecipeVC: UIViewController {
     
     //MARK: DataVariables
     var user: User?
+    var recipeToEdit: Recipe?
     var isAddingFirebaseRecipe = false
     var recipeIsFavorite = false
     var shareToFirebase = true
-    var activeTime = [0,0]
-    var totalTime = [0,0]
+    var activeTime = [0,30]
+    var totalTime = [1,0]
     var firebaseRecipes = [Recipe]() {
         didSet {
             firebaseRecipeList.reloadData()
@@ -188,7 +189,31 @@ class AddRecipeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         textManager.delegate = self
         titleBar.delegate = self
+    }
+    
+    func loadRecipeData() {
+        guard let recipe = recipeToEdit else { return }
         
+        recipeIsFavorite = recipe.isFavorite
+        activeTime = [recipe.activeHours, recipe.activeMinutes]
+        totalTime = [recipe.totalHours, recipe.totalMinutes]
+        
+        activeTimeField.inputField.text = "\(activeTime[0]):\(activeTime[1])"
+        titleField.inputField.text = recipe.title
+        descriptionView.inputTextView.text = recipe.description
+        recipeImageView.image = recipe.image
+        ingredientsView.inputTextView.text = recipe.ingredients
+        instructionsView.inputTextView.text = recipe.instructions
+        notesView.inputTextView.text = recipe.notes
+        sourceField.inputField.text = recipe.source
+        totalTimeField.inputField.text = "\(totalTime[0]):\(totalTime[1])"
+        urlField.inputField.text = recipe.url
+        yieldField.inputField.text = recipe.yield
+        
+        switch recipeIsFavorite {
+        case true: isFavoriteButton.setImage(#imageLiteral(resourceName: "isFavoriteIcon"), for: .normal)
+        case false: isFavoriteButton.setImage(#imageLiteral(resourceName: "isNotFavoriteIcon"), for: .normal)
+        }
     }
     
     @objc func isFavoriteButtonPressed(_ sender: UIButton) {
@@ -224,31 +249,57 @@ class AddRecipeVC: UIViewController {
     
     @objc func saveButtonPressed(_ sender: TextButton?) {
         print("ADD RECIPE: saveButtonPressed(_:)")
+        print("ADD RECIPE: recipeToEdit.title: \(recipeToEdit?.identifier)")
         view.endEditing(true)
+        
+        guard let recipe = recipeToEdit else {
+            print("ADD RECIPE: Couldn't find a recipe to edit! Creating a new recipe...")
+            guard let title = titleField.inputField.text, title != "" else {
+                showAlert(.missingTitle)
+                return
+            }
+            
+            let recipeIdentifier = DataHandler.instance.createRecipeIDString(with: title)
+            let newRecipe = Recipe(identifier: recipeIdentifier, title: title)
+            newRecipe.activeHours = activeTime[0]
+            newRecipe.activeMinutes = activeTime[1]
+            newRecipe.totalHours = totalTime[0]
+            newRecipe.totalMinutes = totalTime[1]
+            newRecipe.isFavorite = recipeIsFavorite
+            newRecipe.imageName = NSUUID().uuidString
+            if let description = descriptionView.inputTextView.text { newRecipe.description = description }
+            if let image = recipeImageView.image { newRecipe.image = image }
+            if let instructions = instructionsView.inputTextView.text { newRecipe.instructions = instructions }
+            if let notes = notesView.inputTextView.text { newRecipe.notes = notes }
+            if let source = sourceField.inputField.text { newRecipe.source = source }
+            if let url = urlField.inputField.text { newRecipe.url = url }
+            if let yield = yieldField.inputField.text { newRecipe.yield = yield }
+            updateFamilyRecipe(newRecipe)
+            if shareToFirebase { uploadRecipeToFirebase(newRecipe) }
+            
+            return
+        }
         
         guard let title = titleField.inputField.text, title != "" else {
             showAlert(.missingTitle)
             return
         }
         
-        let recipeIdentifier = DataHandler.instance.createRecipeIDString(with: title)
-        let newRecipe = Recipe(identifier: recipeIdentifier, title: title)
-        newRecipe.activeHours = activeTime[0]
-        newRecipe.activeMinutes = activeTime[1]
-        newRecipe.totalHours = totalTime[0]
-        newRecipe.totalMinutes = totalTime[1]
-        newRecipe.isFavorite = recipeIsFavorite
-        newRecipe.imageName = NSUUID().uuidString
-        if let description = descriptionView.inputTextView.text { newRecipe.description = description }
-        if let image = recipeImageView.image { newRecipe.image = image }
-        if let instructions = instructionsView.inputTextView.text { newRecipe.instructions = instructions }
-        if let notes = notesView.inputTextView.text { newRecipe.notes = notes }
-        if let source = sourceField.inputField.text { newRecipe.source = source }
-        if let url = urlField.inputField.text { newRecipe.url = url }
-        if let yield = yieldField.inputField.text { newRecipe.yield = yield }
-        uploadRecipeToFamily(newRecipe)
-        if shareToFirebase { uploadRecipeToFirebase(newRecipe) }
-        
-        dismiss(animated: true, completion: nil)
+        recipe.title = title
+        recipe.activeHours = activeTime[0]
+        recipe.activeMinutes = activeTime[1]
+        recipe.totalHours = totalTime[0]
+        recipe.totalMinutes = totalTime[1]
+        recipe.isFavorite = recipeIsFavorite
+        recipe.imageName = NSUUID().uuidString
+        if let description = descriptionView.inputTextView.text { recipe.description = description }
+        if let image = recipeImageView.image { recipe.image = image }
+        if let instructions = instructionsView.inputTextView.text { recipe.instructions = instructions }
+        if let notes = notesView.inputTextView.text { recipe.notes = notes }
+        if let source = sourceField.inputField.text { recipe.source = source }
+        if let url = urlField.inputField.text { recipe.url = url }
+        if let yield = yieldField.inputField.text { recipe.yield = yield }
+        updateFamilyRecipe(recipe)
+        if shareToFirebase { uploadRecipeToFirebase(recipe) }
     }
 }

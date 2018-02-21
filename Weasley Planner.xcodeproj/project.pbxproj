@@ -16,6 +16,7 @@
 		9B124EE72038F499007D34BC /* ModernSearchBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B124EE62038F499007D34BC /* ModernSearchBarIcon.swift */; };
 		9B124EE92038F4B8007D34BC /* ModernSearchBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B124EE82038F4B8007D34BC /* ModernSearchBarModel.swift */; };
 		9B124EEB2039D53B007D34BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B124EEA2039D53B007D34BC /* Assets.xcassets */; };
+		9B130EC7203DC83B0022C992 /* ViewFirebaseRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */; };
 		9B644D30202F4C7B003B6A50 /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D2F202F4C7B003B6A50 /* TextButton.swift */; };
 		9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */; };
 		9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */; };
@@ -85,6 +86,7 @@
 		9B124EE62038F499007D34BC /* ModernSearchBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernSearchBarIcon.swift; sourceTree = "<group>"; };
 		9B124EE82038F4B8007D34BC /* ModernSearchBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernSearchBarModel.swift; sourceTree = "<group>"; };
 		9B124EEA2039D53B007D34BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFirebaseRecipeVC.swift; sourceTree = "<group>"; };
 		9B644D2F202F4C7B003B6A50 /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
 		9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginLayout.swift; sourceTree = "<group>"; };
 		9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginFirebase.swift; sourceTree = "<group>"; };
@@ -192,6 +194,14 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		9B130EC5203DC8160022C992 /* View Firebase Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */,
+			);
+			path = "View Firebase Recipe";
+			sourceTree = "<group>";
+		};
 		9BA7B0D82030A064002886DF /* Recipe List */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,6 +297,7 @@
 				9BC2E192202DCA07000B8E15 /* Calendar */,
 				9BA7B0D82030A064002886DF /* Recipe List */,
 				9B124EAE2037B2B8007D34BC /* Add Recipe */,
+				9B130EC5203DC8160022C992 /* View Firebase Recipe */,
 				9BC2E195202DCA1F000B8E15 /* Shopping List */,
 				9BCF3875202DF3F000617558 /* Firebase Login */,
 			);
@@ -601,6 +612,7 @@
 				9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */,
 				9BF398CB203C69130009FC33 /* UIDeviceExtension.swift in Sources */,
 				9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */,
+				9B130EC7203DC83B0022C992 /* ViewFirebaseRecipeVC.swift in Sources */,
 				9BCF3877202DF42A00617558 /* FirebaseLoginVC.swift in Sources */,
 				9BCF3879202DF4B000617558 /* InputView.swift in Sources */,
 				9B124EE12038F424007D34BC /* ModernSearchBar.swift in Sources */,

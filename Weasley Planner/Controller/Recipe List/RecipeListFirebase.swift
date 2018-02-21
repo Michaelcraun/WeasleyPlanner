@@ -16,16 +16,18 @@ extension RecipeListVC {
         
         DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
-            print("ADD RECIPE: familySnapshot found!")
             for family in familySnapshot {
                 guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
-                print("ADDRECIPE: familyName: \(familyName)")
                 if familyName == userFamily {
-                    guard let familyRecipes = family.childSnapshot(forPath: "recipes").value as? [Dictionary<String,Any>] else { return }
-                    for recipe in familyRecipes {
-                        guard let familyRecipe = recipe.toRecipe() else { return }
-                        self.downloadImage(forRecipe: familyRecipe)
-                        print("ADD RECIPE: familyRecipe.title: \(familyRecipe.title)")
+                    if family.hasChild("recipes") {
+                        let familyRecipes = family.childSnapshot(forPath: "recipes")
+                        guard let recipeSnapshot = familyRecipes.children.allObjects as? [FIRDataSnapshot] else { return }
+                        for recipe in recipeSnapshot {
+                            guard let recipeData = recipe.value as? Dictionary<String,Any> else { return }
+                            guard let familyRecipe = recipeData.toRecipe() else { return }
+                            familyRecipe.identifier = recipe.key
+                            self.downloadImage(forRecipe: familyRecipe)
+                        }
                     }
                 }
             }
@@ -33,17 +35,30 @@ extension RecipeListVC {
     }
     
     func downloadImage(forRecipe recipe: Recipe) {
-        print("ADD RECIPE: imageName: \(recipe.imageName)")
         if recipe.imageName != "" {
-            DataHandler.instance.REF_RECIPE_IMAGE.child("\(recipe.imageName).png").data(withMaxSize: 50000, completion: { (data, error) in
+            DataHandler.instance.REF_RECIPE_IMAGE.child("\(recipe.imageName).png").data(withMaxSize: 1000000, completion: { (data, error) in
                 if let _ = error { return }
                 guard let recipeImageData = data else { return }
                 guard let recipeImage = UIImage(data: recipeImageData) else { return }
-                print("ADD RECIPE: no errors encountered while downloading recipe image!")
                 
                 recipe.image = recipeImage
                 self.recipes.append(recipe)
             })
         }
+    }
+    
+    func removeRecipeFromFamily(_ recipe: Recipe) {
+        guard let userFamily = user?.family else { return }
+        
+        DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for family in familySnapshot {
+                guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
+                if familyName == userFamily {
+                    DataHandler.instance.removeFirebaseFamilyRecipe(familyID: family.key, recipeID: recipe.identifier)
+                    self.observeFamilyRecipes()
+                }
+            }
+        })
     }
 }

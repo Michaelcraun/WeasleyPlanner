@@ -49,6 +49,14 @@ class DataHandler {
         REF_FAMILY.child(id).updateChildValues(familyData)
     }
     
+    func updateFirebaseFamilyRecipe(familyID: String, recipeID: String, recipeData: Dictionary<String,Any>) {
+        REF_FAMILY.child(familyID).child("recipes").child(recipeID).updateChildValues(recipeData)
+    }
+    
+    func removeFirebaseFamilyRecipe(familyID: String, recipeID: String) {
+        REF_FAMILY.child(familyID).child("recipes").child(recipeID).removeValue()
+    }
+    
     //MARK: Firebase Recipe Methods
     func createRecipeIDString(with recipeName: String) -> String {
         var recipeID = recipeName

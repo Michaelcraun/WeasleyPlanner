@@ -52,7 +52,7 @@ class RecipeCell: UITableViewCell {
             
             let recipeTitle: UILabel = {
                 let label = UILabel()
-                label.font = UIFont(name: fontName, size: largeFontSize)
+                label.font = UIFont(name: fontName, size: smallFontSize)
                 label.numberOfLines = 0
                 label.text = recipe.title
                 label.textColor = secondaryTextColor

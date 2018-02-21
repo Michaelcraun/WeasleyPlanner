@@ -19,7 +19,28 @@ extension AddRecipeVC {
                         size: .init(width: 0, height: topBannerHeight))
         
         if isAddingFirebaseRecipe {
-            layoutForFirebaseRecipes()
+            view.addSubview(searchBar)
+            view.addSubview(firebaseRecipeList)
+            
+            searchBar.delegateModernSearchBar = self
+            searchBar.anchor(top: titleBar.bottomAnchor,
+                             leading: view.leadingAnchor,
+                             trailing: view.trailingAnchor,
+                             padding: .init(top: 0, left: 5, bottom: 0, right: 5),
+                             size: .init(width: 0, height: 30))
+            
+            firebaseRecipeList.backgroundColor = .clear
+            firebaseRecipeList.dataSource = self
+            firebaseRecipeList.delegate = self
+            firebaseRecipeList.register(RecipeCell.self, forCellReuseIdentifier: "firebaseRecipeCell")
+            firebaseRecipeList.separatorStyle = .none
+            firebaseRecipeList.anchor(top: searchBar.bottomAnchor,
+                                      leading: view.leadingAnchor,
+                                      trailing: view.trailingAnchor,
+                                      bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                      padding: .init(top: 0, left: 5, bottom: 5, right: 5))
+            
+            observeFirebaseRecipes()
         } else {
             let recipeForm = configureNewRecipeForm()
             
@@ -30,11 +51,9 @@ extension AddRecipeVC {
                               trailing: view.trailingAnchor,
                               bottom: view.safeAreaLayoutGuide.bottomAnchor,
                               padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+            
+            if recipeToEdit != nil { loadRecipeData() }
         }
-    }
-    
-    func layoutForFirebaseRecipes() {
-        
     }
     
     func configureNewRecipeForm() -> UIScrollView {
@@ -170,7 +189,7 @@ extension AddRecipeVC: ModernSearchBarDelegate {
     }
     
     func onClickItemSuggestionsView(item: String) {
-        
+        //TODO: Filter firebaseRecipeList on click
     }
 }
 
@@ -183,6 +202,17 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "firebaseRecipeCell") as! RecipeCell
         cell.layoutCellForRecipe(firebaseRecipes[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! RecipeCell
+        guard let recipeToView = cell.recipe else { return }
+        
+        performSegue(withIdentifier: "showFirebaseRecipe", sender: recipeToView)
     }
 }
 
@@ -249,8 +279,4 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
             }
         }
     }
-}
-
-extension AddRecipeVC: UITextFieldDelegate {
-    //TODO: TextField Delegate... Duh!
 }

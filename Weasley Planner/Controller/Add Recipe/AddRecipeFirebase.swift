@@ -11,29 +11,32 @@ import Firebase
 
 extension AddRecipeVC {
     func observeFirebaseRecipes() {
-        
+        DataHandler.instance.REF_RECIPE.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let recipeSnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for recipe in recipeSnapshot {
+                guard let recipeData = recipe.value as? Dictionary<String,Any> else { return }
+                if let firebaseRecipe = recipeData.toRecipe() {
+                    if firebaseRecipe.imageName == "" {
+                        self.firebaseRecipes.append(firebaseRecipe)
+                    } else {
+                        self.downloadImage(withRecipe: firebaseRecipe)
+                    }
+                }
+            }
+        })
     }
     
-    func uploadRecipeToFamily(_ recipe: Recipe) {
+    func updateFamilyRecipe(_ recipe: Recipe) {
         guard let userFamily = user?.family else { return }
-        print("ADD RECIPE: found userFamily: \(userFamily)")
         
         DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
             for family in familySnapshot {
                 guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
-                print("ADD RECIPE: found familyName: \(familyName)")
                 if familyName == userFamily {
-                    let recipeDictionary = recipe.dictionary()
+                    let recipeData = recipe.dictionary()
                     self.uploadImage(withName: recipe.imageName, andImage: recipe.image)
-                    if var familyRecipes = family.childSnapshot(forPath: "recipes").value as? [Dictionary<String,Any>] {
-                        print("ADD RECIPE: Found existing recipes! Adding new one...")
-                        familyRecipes.append(recipeDictionary)
-                        DataHandler.instance.updateFirebaseFamily(id: family.key, familyData: ["recipes" : familyRecipes])
-                    } else {
-                        print("ADD RECIPE: Couldn't find any existing recipes. Adding new one...")
-                        DataHandler.instance.updateFirebaseFamily(id: family.key, familyData: ["recipes" : [recipeDictionary]])
-                    }
+                    DataHandler.instance.updateFirebaseFamilyRecipe(familyID: family.key, recipeID: recipe.identifier, recipeData: recipeData)
                 }
             }
         })
@@ -44,9 +47,20 @@ extension AddRecipeVC {
         DataHandler.instance.updateFirebaseRecipe(id: recipe.identifier, recipeData: recipeData)
     }
     
+    func downloadImage(withRecipe recipe: Recipe) {
+        DataHandler.instance.REF_RECIPE_IMAGE.child("\(recipe.imageName).png").data(withMaxSize: 1000000, completion: { (data, error) in
+            if let _ = error { return }
+            guard let recipeImageData = data else { return }
+            guard let recipeImage = UIImage(data: recipeImageData) else { return }
+            
+            recipe.image = recipeImage
+            self.firebaseRecipes.append(recipe)
+        })
+    }
+    
     func uploadImage(withName name: String, andImage image: UIImage) {
         let croppedImage = image.cropSquare()
-        let resizedImage = croppedImage.resizeImage(CGSize(width: 100, height: 100))
+        let resizedImage = croppedImage.resizeImage(CGSize(width: 500, height: 500))
         guard let uploadData = UIImagePNGRepresentation(resizedImage) else {
             showAlert(.imageError)
             return
@@ -57,6 +71,8 @@ extension AddRecipeVC {
                 self.showAlert(.imageError)
                 return
             }
+            
+            self.dismiss(animated: true, completion: nil)
         })
     }
 }

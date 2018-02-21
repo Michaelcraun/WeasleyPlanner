@@ -62,6 +62,28 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
         }
         return 70
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath) as! RecipeCell
+        if let selectedRecipe = selectedCell.recipe {
+            showOptionSheetForFamilyRecipe(selectedRecipe, atIndex: indexPath.row)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //TODO: Make an image for this action
+        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, handler) in
+            let cell = tableView.cellForRow(at: indexPath) as! RecipeCell
+            guard let recipeToDelete = cell.recipe else { return }
+            
+            self.removeRecipeFromFamily(recipeToDelete)
+        }
+        delete.image = #imageLiteral(resourceName: "familyIcon")
+        
+        let configuration = UISwipeActionsConfiguration.init(actions: [delete])
+        return configuration
+    }
 }
 
 extension RecipeListVC: ModernSearchBarDelegate {

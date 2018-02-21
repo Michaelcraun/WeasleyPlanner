@@ -40,6 +40,9 @@ class RecipeListVC: UIViewController {
         didSet {
             recipeList.reloadData()
             searchBar.setDatas(datas: getSearchableData())
+            for recipe in recipes {
+                print("ADD RECIPE: recipe.title: \(recipe.title)")
+            }
         }
     }
 
@@ -65,6 +68,10 @@ class RecipeListVC: UIViewController {
                 
                 destination.isAddingFirebaseRecipe = isAddingFirebaseRecipe
                 destination.user = user
+                
+                if let recipeToEdit = sender as? Recipe {
+                    destination.recipeToEdit = recipeToEdit
+                }
             }
         }
     }
@@ -81,8 +88,39 @@ class RecipeListVC: UIViewController {
             self.performSegue(withIdentifier: "showAddRecipe", sender: nil)
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
+            optionSheet.dismiss(animated: true, completion: nil)
+        }
+        
         optionSheet.addAction(newRecipeAction)
         optionSheet.addAction(firebaseRecipeAction)
+        optionSheet.addAction(cancelAction)
+        
+        present(optionSheet, animated: true, completion: nil)
+    }
+    
+    func showOptionSheetForFamilyRecipe(_ recipe: Recipe, atIndex index: Int) {
+        let optionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let editRecipe = UIAlertAction(title: "Edit Recipe", style: .default) { (action) in
+            self.performSegue(withIdentifier: "showAddRecipe", sender: recipe)
+        }
+        
+        let addIngredientsAction = UIAlertAction(title: "Add To Shopping List", style: .default) { (action) in
+            
+        }
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
+            optionSheet.dismiss(animated: true, completion: nil)
+        }
+        
+        optionSheet.addAction(editRecipe)
+        optionSheet.addAction(addIngredientsAction)
+        optionSheet.addAction(deleteAction)
+        optionSheet.addAction(cancelAction)
         
         present(optionSheet, animated: true, completion: nil)
     }
