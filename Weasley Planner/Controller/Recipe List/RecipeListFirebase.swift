@@ -61,4 +61,8 @@ extension RecipeListVC {
             }
         })
     }
+    
+    func addRecipeIngredientToShoppingList(_ ingredient: String) {
+        
+    }
 }

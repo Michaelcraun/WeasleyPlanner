@@ -21,7 +21,7 @@ extension ShoppingListVC {
                 if name == familyName {
                     guard let shoppingList = family.childSnapshot(forPath: "shoppingList").value as? [Dictionary<String,Any>] else { return }
                     for item in shoppingList {
-                        guard let quantity = item["quantity"] as? Int else { return }
+                        guard let quantity = item["quantity"] as? String else { return }
                         guard let name = item["name"] as? String else { return }
                         guard let obtained = item["obtained"] as? Bool else { return }
                         

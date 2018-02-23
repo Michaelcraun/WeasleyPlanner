@@ -10,14 +10,17 @@ import UIKit
 
 class AddRecipeVC: UIViewController {
     //MARK: UI Variables
-    var isBoundToKeyboard = false
-    let firebaseRecipeList = UITableView()
     let titleBar: TitleBar = {
         let bar = TitleBar()
         bar.subtitle = "Add Recipe"
         return bar
     }()
     
+    //------------------//
+    // FIREBASE RECIPES //
+    //------------------//
+    
+    let firebaseRecipeList = UITableView()
     let searchBar: ModernSearchBar = {
         let bar = ModernSearchBar()
         bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
@@ -29,25 +32,38 @@ class AddRecipeVC: UIViewController {
         return bar
     }()
     
-    let activeDurationPicker: DurationPicker = {
-        let picker = DurationPicker()
+    let activeDurationPicker: DataPicker = {
+        let picker = DataPicker()
         picker.anchor()
         picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
         picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
         return picker
     }()
     
-    let totalDurationPicker: DurationPicker = {
-        let picker = DurationPicker()
+    let measurementPicker: DataPicker = {
+        let picker = DataPicker()
         picker.anchor()
         picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
         picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
         return picker
     }()
     
-    //-----------------
-    // NEW RECIPE FORM
-    //-----------------
+    let totalDurationPicker: DataPicker = {
+        let picker = DataPicker()
+        picker.anchor()
+        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+        return picker
+    }()
+    
+    //----------------------//
+    // NEW/EDIT RECIPE FORM //
+    //----------------------//
+    
+    var ingredientsListHeight: NSLayoutConstraint!
+    var instructionsListHeight: NSLayoutConstraint!
+    let ingredientsList = UITableView()
+    let instructionsList = UITableView()
     let titleField: InputView = {
         let field = InputView()
         field.inputField.delegate = textManager
@@ -129,20 +145,6 @@ class AddRecipeVC: UIViewController {
         return field
     }()
     
-    let ingredientsView: InputView = {
-        let field = InputView()
-        field.inputTextView.delegate = textManager
-        field.inputType = .ingredients
-        return field
-    }()
-    
-    let instructionsView: InputView = {
-        let field = InputView()
-        field.inputTextView.delegate = textManager
-        field.inputType = .instructions
-        return field
-    }()
-    
     let shareOnFirebaseSwitcher: UISwitch = {
         let switcher = UISwitch()
         switcher.addTarget(self, action: #selector(saveToFirebaseSwitchPressed(_:)), for: .valueChanged)
@@ -158,20 +160,42 @@ class AddRecipeVC: UIViewController {
         button.title = "SAVE AND SHARE RECIPE"
         return button
     }()
-    //-----------------
     
     //MARK: DataVariables
     var user: User?
-    var recipeToEdit: Recipe?
+    
+    //------------------//
+    // FIREBASE RECIPES //
+    //------------------//
     var isAddingFirebaseRecipe = false
-    var recipeIsFavorite = false
-    var shareToFirebase = true
-    var activeTime = [0,30]
-    var totalTime = [1,0]
     var firebaseRecipes = [Recipe]() {
         didSet {
             firebaseRecipeList.reloadData()
             searchBar.setDatas(datas: getSearchableData())
+        }
+    }
+    
+    //-----------------//
+    // NEW/EDIT RECIPE //
+    //-----------------//
+    var recipeToEdit: Recipe?
+    var recipeIsFavorite = false
+    var shareToFirebase = true
+    var activeTime = [0,30]
+    var totalTime = [1,0]
+    var ingredientCount = 0
+    var instructionCount = 0
+    var recipeIngredients = [RecipeIngredient]() {
+        didSet {
+            ingredientCount = recipeIngredients.count
+            ingredientsList.reloadData()
+        }
+    }
+    
+    var recipeInstructions = [String]() {
+        didSet {
+            instructionCount = recipeInstructions.count
+            instructionsList.reloadData()
         }
     }
     
@@ -180,6 +204,8 @@ class AddRecipeVC: UIViewController {
         
         activeDurationPicker.dataPicker.dataSource = self
         activeDurationPicker.dataPicker.delegate = self
+        measurementPicker.dataPicker.dataSource = self
+        measurementPicker.dataPicker.delegate = self
         totalDurationPicker.dataPicker.dataSource = self
         totalDurationPicker.dataPicker.delegate = self
 
@@ -202,8 +228,8 @@ class AddRecipeVC: UIViewController {
         titleField.inputField.text = recipe.title
         descriptionView.inputTextView.text = recipe.description
         recipeImageView.image = recipe.image
-        ingredientsView.inputTextView.text = recipe.ingredients
-        instructionsView.inputTextView.text = recipe.instructions
+//        ingredientsView.inputTextView.text = recipe.ingredients
+//        instructionsView.inputTextView.text = recipe.instructions
         notesView.inputTextView.text = recipe.notes
         sourceField.inputField.text = recipe.source
         totalTimeField.inputField.text = "\(totalTime[0]):\(totalTime[1])"
@@ -217,7 +243,6 @@ class AddRecipeVC: UIViewController {
     }
     
     @objc func isFavoriteButtonPressed(_ sender: UIButton) {
-        print("ADD RECIPE: isFvoriteButtonPressed(_:)")
         recipeIsFavorite = !recipeIsFavorite
         
         switch sender.image(for: .normal)! {
@@ -228,7 +253,6 @@ class AddRecipeVC: UIViewController {
     }
     
     @objc func imageButtonPressed(_ sender: UIButton) {
-        print("ADD RECIPE: imageButtonPressed(_:)")
         photoManager.delegate = self
         photoManager.displayImageController()
     }
@@ -238,7 +262,6 @@ class AddRecipeVC: UIViewController {
     }
     
     @objc func saveToFirebaseSwitchPressed(_ sender: UISwitch) {
-        print("ADD RECIPE: saveToFirebaseSwitchPressed(_:)")
         shareToFirebase = !shareToFirebase
         if shareToFirebase {
             saveButton.title = "SAVE AND SHARE RECIPE"
@@ -248,12 +271,9 @@ class AddRecipeVC: UIViewController {
     }
     
     @objc func saveButtonPressed(_ sender: TextButton?) {
-        print("ADD RECIPE: saveButtonPressed(_:)")
-        print("ADD RECIPE: recipeToEdit.title: \(recipeToEdit?.identifier)")
         view.endEditing(true)
         
         guard let recipe = recipeToEdit else {
-            print("ADD RECIPE: Couldn't find a recipe to edit! Creating a new recipe...")
             guard let title = titleField.inputField.text, title != "" else {
                 showAlert(.missingTitle)
                 return
@@ -269,7 +289,7 @@ class AddRecipeVC: UIViewController {
             newRecipe.imageName = NSUUID().uuidString
             if let description = descriptionView.inputTextView.text { newRecipe.description = description }
             if let image = recipeImageView.image { newRecipe.image = image }
-            if let instructions = instructionsView.inputTextView.text { newRecipe.instructions = instructions }
+//            if let instructions = instructionsView.inputTextView.text { newRecipe.instructions = instructions }
             if let notes = notesView.inputTextView.text { newRecipe.notes = notes }
             if let source = sourceField.inputField.text { newRecipe.source = source }
             if let url = urlField.inputField.text { newRecipe.url = url }
@@ -294,7 +314,7 @@ class AddRecipeVC: UIViewController {
         recipe.imageName = NSUUID().uuidString
         if let description = descriptionView.inputTextView.text { recipe.description = description }
         if let image = recipeImageView.image { recipe.image = image }
-        if let instructions = instructionsView.inputTextView.text { recipe.instructions = instructions }
+//        if let instructions = instructionsView.inputTextView.text { recipe.instructions = instructions }
         if let notes = notesView.inputTextView.text { recipe.notes = notes }
         if let source = sourceField.inputField.text { recipe.source = source }
         if let url = urlField.inputField.text { recipe.url = url }

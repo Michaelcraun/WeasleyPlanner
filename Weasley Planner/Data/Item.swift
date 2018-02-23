@@ -9,11 +9,11 @@
 import Foundation
 
 class Item {
-    var quantity: Int
+    var quantity: String
     var name: String
     var obtained: Bool
     
-    init(quanity: Int = 0, name: String, obtained: Bool = false) {
+    init(quanity: String = "", name: String, obtained: Bool = false) {
         self.quantity = quanity
         self.name = name
         self.obtained = obtained

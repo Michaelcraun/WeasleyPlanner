@@ -112,11 +112,11 @@ class ShoppingListVC: UIViewController {
             shoppingItems.append(item)
             updateShoppingList()
         } else {
-            if item.quantity == 0 {
-                if shoppingItems[i].quantity == 0 {
-                    shoppingItems[i].quantity += 2
+            if item.quantity == "" {
+                if shoppingItems[i].quantity == "" {
+                    shoppingItems[i].quantity = "2"
                 } else {
-                    shoppingItems[i].quantity += 1
+                    shoppingItems[i].quantity = "1"
                 }
             } else {
                 shoppingItems[i].quantity += item.quantity

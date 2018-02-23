@@ -96,6 +96,8 @@ extension UIView {
     @objc func keyboardWillHide(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
         self.frame.origin.y += keyboardSize.height
-        self.detachFromKeyboard()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.detachFromKeyboard()
+        }
     }
 }

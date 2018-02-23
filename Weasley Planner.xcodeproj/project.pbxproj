@@ -17,6 +17,7 @@
 		9B124EE92038F4B8007D34BC /* ModernSearchBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B124EE82038F4B8007D34BC /* ModernSearchBarModel.swift */; };
 		9B124EEB2039D53B007D34BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B124EEA2039D53B007D34BC /* Assets.xcassets */; };
 		9B130EC7203DC83B0022C992 /* ViewFirebaseRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */; };
+		9B130EC9203DF8560022C992 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B130EC8203DF8560022C992 /* ArrayExtension.swift */; };
 		9B644D30202F4C7B003B6A50 /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D2F202F4C7B003B6A50 /* TextButton.swift */; };
 		9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */; };
 		9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */; };
@@ -87,6 +88,7 @@
 		9B124EE82038F4B8007D34BC /* ModernSearchBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernSearchBarModel.swift; sourceTree = "<group>"; };
 		9B124EEA2039D53B007D34BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFirebaseRecipeVC.swift; sourceTree = "<group>"; };
+		9B130EC8203DF8560022C992 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		9B644D2F202F4C7B003B6A50 /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
 		9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginLayout.swift; sourceTree = "<group>"; };
 		9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginFirebase.swift; sourceTree = "<group>"; };
@@ -332,8 +334,8 @@
 				9BF398BE2039FB940009FC33 /* RecipeCell.swift */,
 				9BA7B104203517F7002886DF /* ShoppingCell.swift */,
 				9B644D2F202F4C7B003B6A50 /* TextButton.swift */,
-				9BC2E177202CEA1C000B8E15 /* TitleBar.swift */,
 				9B644D3A20308BD6003B6A50 /* UserCell.swift */,
+				9BC2E177202CEA1C000B8E15 /* TitleBar.swift */,
 				9BC2E19E202DCB0F000B8E15 /* UserPane.swift */,
 			);
 			path = View;
@@ -356,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				9BF398D2203CC1D30009FC33 /* DictionaryExtension.swift */,
+				9B130EC8203DF8560022C992 /* ArrayExtension.swift */,
 				9BA7B1062035AA34002886DF /* StringExtension.swift */,
 				9BCF3873202DEA2500617558 /* UIButtonExtension.swift */,
 				9BF398CA203C69130009FC33 /* UIDeviceExtension.swift */,
@@ -582,6 +585,7 @@
 				9BA7B0EC2031FC63002886DF /* SettingsFirebase.swift in Sources */,
 				9BA7B0F020332E35002886DF /* MapDelegate.swift in Sources */,
 				9B124EE52038F480007D34BC /* ModernSearchBarDelegate.swift in Sources */,
+				9B130EC9203DF8560022C992 /* ArrayExtension.swift in Sources */,
 				9BA7B0E420312783002886DF /* SettingsLayout.swift in Sources */,
 				9BA7B105203517F7002886DF /* ShoppingCell.swift in Sources */,
 				9BC2E174202CE9F3000B8E15 /* SidePaneLayout.swift in Sources */,

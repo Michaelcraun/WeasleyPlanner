@@ -24,12 +24,12 @@ class Recipe {
     var notes: String
     var image: UIImage
     var imageName: String
-    var ingredients: String
-    var instructions: String
+    var ingredients: [RecipeIngredient]
+    var instructions: [String]
     
     init(identifier: String, title: String, description: String = "", yield: String = "", activeHours: Int = 0, activeMinutes: Int = 0,
          totalHours: Int = 0, totalMinutes: Int = 0, isFavorite: Bool = false, source: String = "", url: String = "", notes: String = "",
-         image: UIImage = #imageLiteral(resourceName: "defaultProfileImage"), imageName: String = "", ingredients: String = "", instructions: String = "") {
+         image: UIImage = #imageLiteral(resourceName: "defaultProfileImage"), imageName: String = "", ingredients: [RecipeIngredient] = [], instructions: [String] = [""]) {
         self.identifier = identifier
         self.title = title
         self.description = description
@@ -66,7 +66,36 @@ class Recipe {
         pushedDictionary["yield"] = self.yield
         return pushedDictionary
     }
+}
+
+struct RecipeIngredient {
+    var quantity: String
+    var unitOfMeasurement: UnitOfMeasurement
+    var item: String
+    var stringRepresentation: String {
+        return "\(quantity) \(unitOfMeasurement.rawValue) \(item)"
+    }
+}
+
+enum UnitOfMeasurement: String {
+    case cup
+    case dash
+    case pinch
+    case pound
+    case tablespoon
+    case teaspoon
+    case whole
+    static var allUnits: [UnitOfMeasurement] = [.cup, .dash, .pinch, .pound, .tablespoon, .teaspoon, .whole]
     
-    //function for getting list of ingredients?
-    //function for getting list of instructions
+    var shortHandNotation: String {
+        switch self {
+        case .cup: return "c."
+        case .dash: return "dash"
+        case .pinch: return "pinch"
+        case .pound: return "lb."
+        case .tablespoon: return "tbsp."
+        case .teaspoon: return "tsp."
+        case .whole: return "whole"
+        }
+    }
 }

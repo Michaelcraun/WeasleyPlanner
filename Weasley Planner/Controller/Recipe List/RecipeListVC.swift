@@ -38,11 +38,9 @@ class RecipeListVC: UIViewController {
     
     var recipes = [Recipe]() {
         didSet {
+            recipes = recipes.sortByTitle()
             recipeList.reloadData()
             searchBar.setDatas(datas: getSearchableData())
-            for recipe in recipes {
-                print("ADD RECIPE: recipe.title: \(recipe.title)")
-            }
         }
     }
 
@@ -102,6 +100,7 @@ class RecipeListVC: UIViewController {
     func showOptionSheetForFamilyRecipe(_ recipe: Recipe, atIndex index: Int) {
         let optionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editRecipe = UIAlertAction(title: "Edit Recipe", style: .default) { (action) in
+            self.isAddingFirebaseRecipe = false
             self.performSegue(withIdentifier: "showAddRecipe", sender: recipe)
         }
         
@@ -110,7 +109,7 @@ class RecipeListVC: UIViewController {
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-            
+            self.removeRecipeFromFamily(recipe)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in

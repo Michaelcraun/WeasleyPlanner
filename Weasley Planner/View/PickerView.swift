@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DurationPicker: UIView {
+class DataPicker: UIView {
     let cancelButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(dismissPicker(_:)), for: .touchUpInside)

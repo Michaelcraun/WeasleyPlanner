@@ -138,7 +138,7 @@ class ShoppingCell: UITableViewCell {
                 label.font = UIFont(name: fontName, size: smallFontSize)
                 label.textColor = secondaryTextColor
                 label.text = {
-                    if item.quantity == 0 {
+                    if item.quantity == "" {
                         return item.name
                     } else {
                         return "\(item.quantity) \(item.name)"
