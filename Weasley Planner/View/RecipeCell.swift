@@ -286,7 +286,7 @@ class RecipeCell: UITableViewCell {
         return ingredientHeaderView
     }
     
-    func layoutIngredientCell() {
+    func layoutIngredientCell(withPicker picker: DataPicker) {
         clearCell()
         
         let ingredientStack: UIStackView = {
@@ -303,10 +303,7 @@ class RecipeCell: UITableViewCell {
             return stackView
         }()
         
-//        measurementPicker.anchor()
-//        measurementPicker.dataPicker.dataSource = self
-//        measurementPicker.dataPicker.delegate = self
-//        measurementField.inputView = measurementPicker
+        measurementField.inputView = picker
         
         self.addSubview(ingredientStack)
         

@@ -9,8 +9,6 @@
 import UIKit
 
 class RecipeListVC: UIViewController {
-    private let identifier = "showRecipeList"
-    
     //MARK: UI Variables
     let recipeList = UITableView()
     

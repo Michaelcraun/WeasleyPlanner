@@ -24,11 +24,7 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate.view.addTapToDismissKeyboard()
         
-        if let addRecipe = delegate as? AddRecipeVC {
-            addRecipe.activeDurationPicker.dataPicker.reloadAllComponents()
-            addRecipe.measurementPicker.dataPicker.reloadAllComponents()
-            addRecipe.totalDurationPicker.dataPicker.reloadAllComponents()
-        }
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

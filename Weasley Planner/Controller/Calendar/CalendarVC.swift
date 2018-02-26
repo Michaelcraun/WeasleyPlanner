@@ -7,10 +7,9 @@
 //
 
 import UIKit
+import JTAppleCalendar
 
 class CalendarVC: UIViewController {
-    private let identifier = "showCalendar"
-    
     //MARK: UI Variables
     let titleBar: TitleBar = {
         let bar = TitleBar()
@@ -18,16 +17,33 @@ class CalendarVC: UIViewController {
         return bar
     }()
     
-//    let dateCollection = UICollectionView()
+    let calendarView: JTAppleCalendarView = {
+        let view = JTAppleCalendarView()
+        view.backgroundColor = .clear
+        view.isPagingEnabled = true
+        view.minimumLineSpacing = 0
+        view.minimumInteritemSpacing = 0
+        view.register(CalendarCell.self, forCellWithReuseIdentifier: "calendarCell")
+        view.scrollDirection = .horizontal
+        return view
+    }()
+    
     let eventTable = UITableView()
     
     //MARK: Data Variables
+    var formatter = DateFormatter()
     var shouldDismiss = false
     var eventList = [Event]()
     var eventsForSelectedDay = [Event]()
+    var appointments = [Event]()
+    var chores = [Event]()
+    var meals = [Event]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        calendarView.calendarDataSource = self
+        calendarView.calendarDelegate = self
 
         layoutView()
         beginConnectionTest()

@@ -286,10 +286,8 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
         } else if tableView == ingredientsList {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientsCell") as! RecipeCell
             switch indexPath.row {
-            case ingredientCount:
-                cell.layoutIngredientAddCell()
-                cell.measurementField.inputView = measurementPicker
-            default: cell.layoutIngredientCell()
+            case ingredientCount: cell.layoutIngredientAddCell()
+            default: cell.layoutIngredientCell(withPicker: measurementPicker)
             }
             return cell
         } else {

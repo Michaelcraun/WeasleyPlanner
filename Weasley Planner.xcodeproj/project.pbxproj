@@ -18,6 +18,8 @@
 		9B124EEB2039D53B007D34BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B124EEA2039D53B007D34BC /* Assets.xcassets */; };
 		9B130EC7203DC83B0022C992 /* ViewFirebaseRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */; };
 		9B130EC9203DF8560022C992 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B130EC8203DF8560022C992 /* ArrayExtension.swift */; };
+		9B1E98D52040A29900A23118 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1E98D42040A29900A23118 /* DateExtension.swift */; };
+		9B1E98D72040A5EE00A23118 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1E98D62040A5EE00A23118 /* EventCell.swift */; };
 		9B644D30202F4C7B003B6A50 /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D2F202F4C7B003B6A50 /* TextButton.swift */; };
 		9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */; };
 		9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */; };
@@ -89,6 +91,8 @@
 		9B124EEA2039D53B007D34BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFirebaseRecipeVC.swift; sourceTree = "<group>"; };
 		9B130EC8203DF8560022C992 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		9B1E98D42040A29900A23118 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		9B1E98D62040A5EE00A23118 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		9B644D2F202F4C7B003B6A50 /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
 		9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginLayout.swift; sourceTree = "<group>"; };
 		9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginFirebase.swift; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				9B124ED52038F3CA007D34BC /* ModernSearchBar */,
+				9B1E98D62040A5EE00A23118 /* EventCell.swift */,
 				9BCF3878202DF4B000617558 /* InputView.swift */,
 				9BF398C4203B93C40009FC33 /* PickerView.swift */,
 				9BF398BE2039FB940009FC33 /* RecipeCell.swift */,
@@ -357,6 +362,7 @@
 		9BC2E17E202CEC46000B8E15 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				9B1E98D42040A29900A23118 /* DateExtension.swift */,
 				9BF398D2203CC1D30009FC33 /* DictionaryExtension.swift */,
 				9B130EC8203DF8560022C992 /* ArrayExtension.swift */,
 				9BA7B1062035AA34002886DF /* StringExtension.swift */,
@@ -550,12 +556,14 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Weasley Planner/Pods-Weasley Planner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,6 +590,7 @@
 				9BC2E18B202CFB73000B8E15 /* SlideInPresentationAnimator.swift in Sources */,
 				9BCF3874202DEA2500617558 /* UIButtonExtension.swift in Sources */,
 				9BA7B0FF203513EF002886DF /* ShoppingListLayout.swift in Sources */,
+				9B1E98D72040A5EE00A23118 /* EventCell.swift in Sources */,
 				9BA7B0EC2031FC63002886DF /* SettingsFirebase.swift in Sources */,
 				9BA7B0F020332E35002886DF /* MapDelegate.swift in Sources */,
 				9B124EE52038F480007D34BC /* ModernSearchBarDelegate.swift in Sources */,
@@ -611,6 +620,7 @@
 				9BF398CD203C693C0009FC33 /* UIViewExtension.swift in Sources */,
 				9B644D30202F4C7B003B6A50 /* TextButton.swift in Sources */,
 				9BC2E17D202CEADD000B8E15 /* Constants.swift in Sources */,
+				9B1E98D52040A29900A23118 /* DateExtension.swift in Sources */,
 				9BC2E178202CEA1C000B8E15 /* TitleBar.swift in Sources */,
 				9BF398CF203C696A0009FC33 /* UITableViewCellExtension.swift in Sources */,
 				9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */,

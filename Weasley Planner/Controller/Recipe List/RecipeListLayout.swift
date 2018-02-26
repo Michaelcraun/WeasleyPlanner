@@ -38,6 +38,10 @@ extension RecipeListVC {
     }
 }
 
+//-------------------------------------------
+// MARK: - TABLE VIEW DATASOURCE AND DELEGATE
+//-------------------------------------------
+
 extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if recipes.count > 0 {
@@ -85,6 +89,10 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
         return configuration
     }
 }
+
+//---------------------------------
+// MARK: - MODERNSEARCHBAR DELEGATE
+//---------------------------------
 
 extension RecipeListVC: ModernSearchBarDelegate {
     func getSearchableData() -> [String] {
