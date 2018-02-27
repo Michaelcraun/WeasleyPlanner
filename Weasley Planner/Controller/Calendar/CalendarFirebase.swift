@@ -11,6 +11,11 @@ import Firebase
 
 extension CalendarVC {
     func observeFamilyForEvents() {
+        guard let userFamily = user?.family else { return }
         
+        DataHandler.instance.REF_FAMILY.observe(.value) { (snapshot) in
+            guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            
+        }
     }
 }

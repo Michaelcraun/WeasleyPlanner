@@ -51,6 +51,8 @@ class TitleBar: UIView {
         } else {
             if let _ = delegate as? RecipeListVC {
                 layoutAddButton()
+            } else if let _ = delegate as? CalendarVC {
+                layoutAddButton()
             }
             
             layoutBackButton()

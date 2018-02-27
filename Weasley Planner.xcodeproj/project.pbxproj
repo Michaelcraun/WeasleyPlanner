@@ -208,6 +208,13 @@
 			path = "View Firebase Recipe";
 			sourceTree = "<group>";
 		};
+		9B1E99032044E5CF00A23118 /* Add Event */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Add Event";
+			sourceTree = "<group>";
+		};
 		9BA7B0D82030A064002886DF /* Recipe List */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +308,7 @@
 				9BC2E175202CE9F7000B8E15 /* SidePane */,
 				9BA7B0DB2030A10A002886DF /* Settings */,
 				9BC2E192202DCA07000B8E15 /* Calendar */,
+				9B1E99032044E5CF00A23118 /* Add Event */,
 				9BA7B0D82030A064002886DF /* Recipe List */,
 				9B124EAE2037B2B8007D34BC /* Add Recipe */,
 				9B130EC5203DC8160022C992 /* View Firebase Recipe */,
@@ -362,9 +370,9 @@
 		9BC2E17E202CEC46000B8E15 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				9B130EC8203DF8560022C992 /* ArrayExtension.swift */,
 				9B1E98D42040A29900A23118 /* DateExtension.swift */,
 				9BF398D2203CC1D30009FC33 /* DictionaryExtension.swift */,
-				9B130EC8203DF8560022C992 /* ArrayExtension.swift */,
 				9BA7B1062035AA34002886DF /* StringExtension.swift */,
 				9BCF3873202DEA2500617558 /* UIButtonExtension.swift */,
 				9BF398CA203C69130009FC33 /* UIDeviceExtension.swift */,

@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-enum EventType {
+enum EventType: String {
     case appointment
     case chore
     case meal
@@ -28,28 +28,16 @@ class Event {
     var coordinate: CLLocationCoordinate2D?
     var date: Date
     var location: String?
-    var name: String
+    var title: String
     var type: EventType
     
-    init(assignedUser: User? = nil, coordinate: CLLocationCoordinate2D? = nil, date: Date, location: String? = nil, name: String, type: EventType) {
+    init(assignedUser: User? = nil, coordinate: CLLocationCoordinate2D? = nil, date: Date, location: String? = nil, title: String, type: EventType) {
         self.assignedUser = assignedUser
         self.coordinate = coordinate
         self.date = date
         self.location = location
-        self.name = name
+        self.title = title
         self.type = type
-    }
-    
-    func calendarView() -> UIView {
-        let calendarView: UIView = {
-            let view = UIView()
-            view.backgroundColor = self.type.color
-            view.alpha = 0.75
-            view.anchor(size: .init(width: 0, height: 5))
-            return view
-        }()
-        
-        return calendarView
     }
     
     func eventView() -> UIView {
@@ -107,7 +95,7 @@ class Event {
             let titleLabel: UILabel = {
                 let label = UILabel()
                 label.font = UIFont(name: fontName, size: largeFontSize)
-                label.text = self.name
+                label.text = self.title
                 label.textColor = secondaryTextColor
                 return label
             }()
@@ -170,5 +158,29 @@ class Event {
             return view
         }()
         return eventView
+    }
+    
+    func convertToDictionary() -> [String : Any] {
+        var eventDictionary = [String : Any]()
+        eventDictionary["date"] = self.date
+        eventDictionary["title"] = self.title
+        eventDictionary["type"] = self.type.rawValue
+        
+        eventDictionary["user"] = {
+            guard let eventUser = self.assignedUser else { return "none" }
+            return eventUser.name
+        }()
+        
+        eventDictionary["coordinate"] = {
+            guard let eventCoordinate = self.coordinate else { return [] }
+            return [eventCoordinate.latitude, eventCoordinate.longitude]
+        }()
+        
+        eventDictionary["location"] = {
+            guard let eventLocation = self.location else { return "none" }
+            return eventLocation
+        }()
+        
+        return eventDictionary
     }
 }

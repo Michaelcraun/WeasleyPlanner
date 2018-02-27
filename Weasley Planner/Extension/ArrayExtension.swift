@@ -46,3 +46,62 @@ extension Array where Array == [Recipe] {
         return sortedArray
     }
 }
+
+extension Array where Array == [Event] {
+    func filterForDay(_ selectedDay: Date) -> [Event] {
+        var dayEvents = [Event]()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy MM dd"
+        let selectedDate = formatter.string(from: selectedDay)
+        
+        for event in self {
+            let eventDate = formatter.string(from: event.date)
+            
+            if eventDate == selectedDate {
+                dayEvents.append(event)
+            }
+        }
+        return dayEvents
+    }
+    
+    func filterAppointments() -> [Event] {
+        var appointmentsArray = [Event]()
+        for event in self {
+            if event.type == .appointment {
+                appointmentsArray.append(event)
+            }
+        }
+        return appointmentsArray
+    }
+    
+    func filterChores() -> [Event] {
+        var choresArray = [Event]()
+        for event in self {
+            if event.type == .chore {
+                choresArray.append(event)
+            }
+        }
+        return choresArray
+    }
+    
+    func filterMeals() -> [Event] {
+        var mealsArray = [Event]()
+        for event in self {
+            if event.type == .meal {
+                mealsArray.append(event)
+            }
+        }
+        return mealsArray
+    }
+    
+    func sortByTime() -> [Event] {
+        let sortedArray = self.sorted { (event1, event2) -> Bool in
+            if event1.date == event2.date {
+                return event1.date < event2.date
+            } else {
+                return event1.date < event2.date
+            }
+        }
+        return sortedArray
+    }
+}

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 extension Dictionary where Key == String {
     func toRecipe() -> Recipe? {
@@ -29,5 +30,43 @@ extension Dictionary where Key == String {
         if let imageName = self["imageName"] as? String { fetchedRecipe.imageName = imageName }
         
         return fetchedRecipe
+    }
+    
+    func toEvent() -> Event? {
+        guard let date = self["date"] as? Date else { return nil }
+        guard let title = self["title"] as? String else { return nil }
+        guard let type = self["type"] as? String else { return nil }
+        
+        let eventType: EventType = {
+            switch type {
+            case "appointment": return .appointment
+            case "chore": return .chore
+            default: return .meal
+            }
+        }()
+        
+        let fetchedEvent = Event(date: date, title: title, type: eventType)
+        
+        if let fetchedUser = self["user"] as? String {
+            for familyUser in DataHandler.instance.familyUsers {
+                if familyUser.name == fetchedUser {
+                    fetchedEvent.assignedUser = familyUser
+                }
+            }
+        }
+        
+        if let fetchedCoordinate = self["coordinate"] as? [CLLocationDegrees] {
+            var coordinate = CLLocationCoordinate2D()
+            coordinate.latitude = fetchedCoordinate[0]
+            coordinate.longitude = fetchedCoordinate[1]
+            
+            fetchedEvent.coordinate = coordinate
+        }
+        
+        if let fetchedLocation = self["location"] as? String {
+            fetchedEvent.location = fetchedLocation
+        }
+        
+        return fetchedEvent
     }
 }
