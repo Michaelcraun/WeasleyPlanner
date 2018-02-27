@@ -39,8 +39,7 @@ class FirebaseLoginVC: UIViewController {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-        imageView.layer.borderColor = primaryColor.cgColor
-        imageView.layer.borderWidth = 1
+        imageView.addBorder()
         imageView.layer.cornerRadius = 65 / 2
         return imageView
     }()

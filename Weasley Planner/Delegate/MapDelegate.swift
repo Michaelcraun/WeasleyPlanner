@@ -57,8 +57,8 @@ class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius * 2.0, regionRadius * 2.0)
         
         if let main = delegate as? MainVC {
-            main.mapView.setRegion(coordinateRegion, animated: true)
-            main.mapView.showsUserLocation = true
+            main.familyMap.setRegion(coordinateRegion, animated: true)
+            main.familyMap.showsUserLocation = true
         }
     }
     

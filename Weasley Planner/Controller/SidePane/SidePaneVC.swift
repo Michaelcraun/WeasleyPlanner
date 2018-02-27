@@ -11,12 +11,23 @@ import Firebase
 
 class SidePaneVC: UIViewController {
     //MARK: UI Variables
-    let vcTable = UITableView()
     let selfPane = UserPane()
-    let settingsButton = UIButton()
-    let logOutButton = TextButton()
-    let bottomPane = UIView()
     lazy var slideInTransitionManager = SlideInPresentationManager()
+    
+    let vcTable: UITableView = {
+        let tableView = UITableView()
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
+    let logOutButton: TextButton = {
+        let button = TextButton()
+        button.addTarget(self, action: #selector(logoutPressed(_:)), for: .touchUpInside)
+        button.sizeToFit()
+        button.title = "Log Out"
+        return button
+    }()
     
     //MARK: Data Variables
     var user: User?
@@ -29,7 +40,7 @@ class SidePaneVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        layoutSelfPane()
+        layoutUserElements()
         
         if DataHandler.instance.segueIdentifier == "dismiss" {
             dismiss(animated: true, completion: nil)

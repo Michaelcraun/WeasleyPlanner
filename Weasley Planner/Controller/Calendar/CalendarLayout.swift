@@ -80,7 +80,6 @@ extension CalendarVC {
                                   leading: view.leadingAnchor,
                                   trailing: view.trailingAnchor)
         
-//        calendarView.backgroundColor = .orange
         calendarView.anchor(top: calendarControlBar.bottomAnchor,
                             leading: view.leadingAnchor,
                             trailing: view.trailingAnchor,
@@ -89,6 +88,7 @@ extension CalendarVC {
         eventTable.backgroundColor = .clear
         eventTable.dataSource = self
         eventTable.delegate = self
+        eventTable.addBorder()
         eventTable.register(EventTableCell.self, forCellReuseIdentifier: "eventCell")
         eventTable.separatorStyle = .none
         eventTable.anchor(top: calendarView.bottomAnchor,
@@ -138,7 +138,6 @@ extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate
                                                  generateInDates: .forFirstMonthOnly,
                                                  generateOutDates: .off,
                                                  hasStrictBoundaries: false)
-//        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate, numberOfRows: 1)
         return parameters
     }
     
@@ -152,12 +151,13 @@ extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        let eventsForDay = eventList.filterForDay(cellState.date)
+        eventsForDay = eventList.filterForDay(cellState.date)
+        eventTable.reloadData()
         handleCellElements(view: cell, cellState: cellState, events: eventsForDay)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        let eventsForDay = eventList.filterForDay(cellState.date)
+        eventsForDay = eventList.filterForDay(cellState.date)
         handleCellElements(view: cell, cellState: cellState, events: eventsForDay)
     }
     
@@ -211,19 +211,48 @@ extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate
 //----------------------------------------
 
 extension CalendarVC: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if eventsForDay.count > 0 { return eventsForDay.count }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell") as! EventTableCell
-        //TODO: Layout cell
+        if eventsForDay.count > 0 {
+            cell.layoutCell(forEvent: eventsForDay[indexPath.row])
+        } else {
+            cell.layoutCellForNoEvents()
+        }
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView: UIView = {
+            let view = UIView()
+            view.backgroundColor = primaryColor
+            
+            let headerLabel: UILabel = {
+                let label = UILabel()
+                label.font = UIFont(name: fontName, size: largeFontSize)
+                label.text = "EVENTS"
+                label.textAlignment = .center
+                label.textColor = primaryTextColor
+                return label
+            }()
+            
+            view.addSubview(headerLabel)
+            headerLabel.anchor(top: view.topAnchor,
+                               leading: view.leadingAnchor,
+                               trailing: view.trailingAnchor,
+                               bottom: view.bottomAnchor,
+                               padding: .init(top: 2, left: 2, bottom: 2, right: 2))
+            
+            return view
+        }()
+        return headerView
+    }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
 }

@@ -47,8 +47,7 @@ class InputView: UIView {
     
     override func layoutSubviews() {
         self.backgroundColor = secondaryColor
-        self.layer.borderColor = primaryColor.cgColor
-        self.layer.borderWidth = 1
+        self.addBorder()
         
         let placeHolderLabel: UILabel = {
             let label = UILabel()

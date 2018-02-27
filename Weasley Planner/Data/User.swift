@@ -33,8 +33,7 @@ class User {
     
     func annotationViewForUser() -> MKAnnotationView {
         let userAnnotation = MKAnnotationView()
-        userAnnotation.layer.borderColor = primaryColor.cgColor
-        userAnnotation.layer.borderWidth = 1
+        userAnnotation.addBorder()
         userAnnotation.layer.cornerRadius = 15
         
         userAnnotation.backgroundColor = secondaryColor

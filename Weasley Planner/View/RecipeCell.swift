@@ -24,8 +24,7 @@ class RecipeCell: UITableViewCell {
         field.anchor(size: .init(width: 50, height: 0))
         field.delegate = textManager
         field.font = UIFont(name: fontName, size: smallFontSize)
-        field.layer.borderColor = primaryColor.cgColor
-        field.layer.borderWidth = 1
+        field.addBorder()
         field.textAlignment = .center
         field.textColor = secondaryTextColor
         return field
@@ -36,8 +35,7 @@ class RecipeCell: UITableViewCell {
         field.anchor(size: .init(width: 50, height: 0))
         field.delegate = textManager
         field.font = UIFont(name: fontName, size: smallFontSize)
-        field.layer.borderColor = primaryColor.cgColor
-        field.layer.borderWidth = 1
+        field.addBorder()
         field.textAlignment = .center
         field.textColor = secondaryTextColor
         return field
@@ -48,8 +46,7 @@ class RecipeCell: UITableViewCell {
         field.anchor()
         field.delegate = textManager
         field.font = UIFont(name: fontName, size: smallFontSize)
-        field.layer.borderColor = primaryColor.cgColor
-        field.layer.borderWidth = 1
+        field.addBorder()
         field.textColor = secondaryTextColor
         return field
     }()
@@ -59,8 +56,7 @@ class RecipeCell: UITableViewCell {
         textView.backgroundColor = secondaryColor
         textView.delegate = textManager
         textView.font = UIFont(name: fontName, size: smallFontSize)
-        textView.layer.borderColor = primaryColor.cgColor
-        textView.layer.borderWidth = 1
+        textView.addBorder()
         textView.textColor = secondaryTextColor
         return textView
     }()
@@ -83,19 +79,15 @@ class RecipeCell: UITableViewCell {
         let cellView: UIView = {
             let view = UIView()
             view.backgroundColor = secondaryColor
-            view.layer.borderColor = primaryColor.cgColor
-            view.layer.borderWidth = 1
+            view.addBorder()
+            view.addLightShadows()
             view.layer.cornerRadius = 5
-            view.layer.shadowColor = UIColor.black.cgColor
-            view.layer.shadowOffset = CGSize(width: 0, height: 2)
-            view.layer.shadowOpacity = 0.75
             
             let recipeImageView: UIImageView = {
                 let imageView = UIImageView()
                 imageView.clipsToBounds = true
                 imageView.image = recipe.image
-                imageView.layer.borderColor = primaryColor.cgColor
-                imageView.layer.borderWidth = 1
+                imageView.addBorder()
                 imageView.layer.cornerRadius = 5
                 return imageView
             }()
@@ -161,8 +153,7 @@ class RecipeCell: UITableViewCell {
                 let imageView = UIImageView()
                 imageView.clipsToBounds = true
                 imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-                imageView.layer.borderColor = primaryColor.cgColor
-                imageView.layer.borderWidth = 1
+                imageView.addBorder()
                 imageView.layer.cornerRadius = 25
                 return imageView
             }()

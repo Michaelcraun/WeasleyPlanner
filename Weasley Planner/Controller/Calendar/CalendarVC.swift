@@ -37,8 +37,7 @@ class CalendarVC: UIViewController {
         let view = JTAppleCalendarView()
         view.backgroundColor = .clear
         view.isPagingEnabled = true
-        view.layer.borderColor = primaryColor.cgColor
-        view.layer.borderWidth = 1
+        view.addBorder()
         view.minimumLineSpacing = 0
         view.minimumInteritemSpacing = 0
         view.register(CalendarCell.self, forCellWithReuseIdentifier: "calendarCell")
@@ -55,6 +54,7 @@ class CalendarVC: UIViewController {
     var formatter = DateFormatter()
     var shouldDismiss = false
     var eventList = [Event]()
+    var eventsForDay = [Event]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +65,7 @@ class CalendarVC: UIViewController {
         //------------------
         // MARK: - TEST DATA
         //------------------
-        let doctor = Event(date: Date(), title: "Doctor Appointment", type: .appointment)
+        let doctor = Event(date: Date(), location: "2001 Stults Rd, Huntington, IN 46750", title: "Doctor Appointment", type: .appointment)
         let laundry = Event(date: Date(), title: "Laundry", type: .chore)
         let fishSticks = Event(date: Date(), title: "Fish Sticks", type: .meal)
         eventList = [doctor, laundry, fishSticks]
@@ -81,5 +81,6 @@ class CalendarVC: UIViewController {
     @objc func scrollToToday(_ sender: UIButton?) {
         let today = Date()
         calendarView.scrollToDate(today)
+        calendarView.selectDates([today])
     }
 }

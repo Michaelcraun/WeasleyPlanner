@@ -28,6 +28,10 @@ extension Date {
         let minutesString = formatter.string(from: self)
         if let numMinutes = Int(minutesString) { minutes = numMinutes }
         
-        return "\(hours):\(minutes)\(appendage)"
+        if minutes > 10 {
+            return "\(hours):0\(minutes)\(appendage)"
+        } else {
+            return "\(hours):\(minutes)\(appendage)"
+        }
     }
 }

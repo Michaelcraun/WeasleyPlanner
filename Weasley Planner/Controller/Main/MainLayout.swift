@@ -12,17 +12,15 @@ extension MainVC {
     func layoutView() {
         let familyView = UIView()
         
-        familyView.addSubview(mapView)
+        familyView.addSubview(familyMap)
         familyView.addSubview(centerButton)
         familyView.addSubview(familyTable)
         view.addSubview(familyView)
         view.addSubview(titleBar)
         view.backgroundColor = secondaryColor
         
-        centerButton.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
-        centerButton.addTarget(self, action: #selector(centerButtonPressed(_:)), for: .touchUpInside)
-        centerButton.anchor(trailing: mapView.trailingAnchor,
-                            bottom: mapView.bottomAnchor,
+        centerButton.anchor(trailing: familyMap.trailingAnchor,
+                            bottom: familyMap.bottomAnchor,
                             padding: .init(top: 0, left: 0, bottom: 5, right: 5),
                             size: .init(width: 50, height: 50))
         
@@ -37,8 +35,7 @@ extension MainVC {
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           padding: .init(top: -5, left: 5, bottom: 5, right: 5))
         
-        mapView.delegate = mapManager
-        mapView.anchor(top: familyView.topAnchor,
+        familyMap.anchor(top: familyView.topAnchor,
                        leading: familyView.leadingAnchor,
                        trailing: familyView.trailingAnchor,
                        padding: .init(top: 5, left: 5, bottom: 0, right: 5),
@@ -47,9 +44,9 @@ extension MainVC {
         familyTable.dataSource = self
         familyTable.delegate = self
         familyTable.backgroundColor = .clear
-        familyTable.separatorStyle = .none
-        familyTable.register(UserCell.self, forCellReuseIdentifier: "userCell")
-        familyTable.anchor(top: mapView.bottomAnchor,
+//        familyTable.separatorStyle = .none
+//        familyTable.register(UserCell.self, forCellReuseIdentifier: "userCell")
+        familyTable.anchor(top: familyMap.bottomAnchor,
                            leading: familyView.leadingAnchor,
                            trailing: familyView.trailingAnchor,
                            bottom: familyView.bottomAnchor,

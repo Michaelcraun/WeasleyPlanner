@@ -25,8 +25,7 @@ class ShoppingCell: UITableViewCell {
             imageView.contentMode = .scaleAspectFit
             imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
             imageView.layer.cornerRadius = 20
-            imageView.layer.borderColor = primaryColor.cgColor
-            imageView.layer.borderWidth = 1
+            imageView.addBorder()
             return imageView
         }()
         
@@ -112,17 +111,13 @@ class ShoppingCell: UITableViewCell {
         let itemView: UIView = {
             let view = UIView()
             view.backgroundColor = secondaryColor
-            view.layer.borderColor = primaryColor.cgColor
-            view.layer.borderWidth = 1
+            view.addBorder()
             view.layer.cornerRadius = 5
-            view.layer.shadowColor = UIColor.black.cgColor
-            view.layer.shadowOffset = CGSize(width: 0, height: 2)
-            view.layer.shadowOpacity = 0.75
+            view.addLightShadows()
             
             let obtainedIndicator: UIView = {
                 let indicator = UIView()
-                indicator.layer.borderColor = primaryColor.cgColor
-                indicator.layer.borderWidth = 1
+                indicator.addBorder()
                 indicator.layer.cornerRadius = 5
                 indicator.backgroundColor = {
                     switch item.obtained {

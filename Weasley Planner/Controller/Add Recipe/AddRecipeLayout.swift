@@ -166,8 +166,7 @@ extension AddRecipeVC {
             ingredientsList.backgroundColor = secondaryColor
             ingredientsList.dataSource = self
             ingredientsList.delegate = self
-            ingredientsList.layer.borderColor = primaryColor.cgColor
-            ingredientsList.layer.borderWidth = 1
+            ingredientsList.addBorder()
             ingredientsList.register(RecipeCell.self, forCellReuseIdentifier: "ingredientsCell")
             ingredientsList.separatorStyle = .none
             ingredientsList.addConstraint(ingredientsListHeight)
@@ -179,8 +178,7 @@ extension AddRecipeVC {
             instructionsList.backgroundColor = secondaryColor
             instructionsList.dataSource = self
             instructionsList.delegate = self
-            instructionsList.layer.borderColor = primaryColor.cgColor
-            instructionsList.layer.borderWidth = 1
+            instructionsList.addBorder()
             instructionsList.register(RecipeCell.self, forCellReuseIdentifier: "instructionsCell")
             instructionsList.separatorStyle = .none
             instructionsList.addConstraint(instructionsListHeight)

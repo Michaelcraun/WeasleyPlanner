@@ -83,8 +83,7 @@ class AddRecipeVC: UIViewController {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-        imageView.layer.borderColor = primaryColor.cgColor
-        imageView.layer.borderWidth = 1
+        imageView.addBorder()
         imageView.layer.cornerRadius = 5
         return imageView
     }()

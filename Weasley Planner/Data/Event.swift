@@ -86,8 +86,7 @@ class Event {
                     guard let user = self.assignedUser else { return #imageLiteral(resourceName: "defaultProfileImage") }
                     return user.icon
                 }()
-                imageView.layer.borderColor = primaryColor.cgColor
-                imageView.layer.borderWidth = 1
+                imageView.addBorder()
                 imageView.layer.cornerRadius = 30
                 return imageView
             }()
@@ -119,7 +118,7 @@ class Event {
                 timeView.anchor(top: view.topAnchor,
                                 leading: view.leadingAnchor,
                                 bottom: view.bottomAnchor,
-                                size: .init(width: 80, height: 0))
+                                size: .init(width: 60, height: 0))
                 
                 titleLabel.anchor(top: view.topAnchor,
                                   leading: timeView.trailingAnchor,
@@ -139,7 +138,7 @@ class Event {
                 timeView.anchor(top: view.topAnchor,
                                 leading: view.leadingAnchor,
                                 bottom: view.bottomAnchor,
-                                size: .init(width: 80, height: 0))
+                                size: .init(width: 60, height: 0))
                 
                 userIconView.anchor(leading: timeView.trailingAnchor,
                                     centerY: view.centerYAnchor,

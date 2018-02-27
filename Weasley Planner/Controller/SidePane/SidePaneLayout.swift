@@ -28,47 +28,54 @@ enum Controller: String {
 extension SidePaneVC {
     func layoutView() {
         view.backgroundColor = secondaryColor
-        view.addSubview(bottomPane)
         view.addSubview(selfPane)
         view.addSubview(vcTable)
-        bottomPane.addSubview(settingsButton)
-        bottomPane.addSubview(logOutButton)
         
-        bottomPane.backgroundColor = primaryColor
-        bottomPane.anchor(leading: view.leadingAnchor,
-                          trailing: view.trailingAnchor,
-                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                          size: .init(width: 0, height: 50))
-        
-        //TODO: Finish layout of vcTable
         vcTable.dataSource = self
         vcTable.delegate = self
         vcTable.backgroundColor = .clear
-        vcTable.isScrollEnabled = false
-        vcTable.separatorStyle = .none
         vcTable.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                        leading: view.leadingAnchor,
                        trailing: view.trailingAnchor,
                        bottom: selfPane.topAnchor,
                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
-        
-        settingsButton.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
-        settingsButton.addTarget(self, action: #selector(familyButtonPressed(_:)), for: .touchUpInside)
-        settingsButton.sizeToFit()
-        settingsButton.anchor(top: bottomPane.topAnchor,
-                              leading: bottomPane.leadingAnchor,
-                              bottom: bottomPane.bottomAnchor,
-                              padding: .init(top: 5, left: 5, bottom: 5, right: 0))
     }
     
-    func layoutSelfPane() {
+    func layoutUserElements() {
+        let bottomPane: UIView = {
+            let view = UIView()
+            view.backgroundColor = primaryColor
+            
+            let settingsButton: UIButton = {
+                let button = UIButton()
+                button.addTarget(self, action: #selector(familyButtonPressed(_:)), for: .touchUpInside)
+                button.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
+                button.sizeToFit()
+                return button
+            }()
+            
+            view.addSubview(settingsButton)
+            view.addSubview(logOutButton)
+            
+            handleLogOutButtonVisibility()
+            logOutButton.anchor(top: view.topAnchor,
+                                trailing: view.trailingAnchor,
+                                bottom: view.bottomAnchor,
+                                padding: .init(top: 5, left: 0, bottom: 5, right: 5))
+            
+            settingsButton.anchor(top: view.topAnchor,
+                                  leading: view.leadingAnchor,
+                                  bottom: view.bottomAnchor,
+                                  padding: .init(top: 5, left: 5, bottom: 5, right: 0))
+            
+            return view
+        }()
+        
         if DataHandler.instance.currentUserID == nil {
             selfPane.layoutForLogin()
             selfPane.loginPanel.addTarget(self, action: #selector(loginPressed(_:)), for: .touchUpInside)
         } else {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selfPaneTapped(_:)))
-            
-            bottomPane.addSubview(logOutButton)
             
             if let user = user {
                 selfPane.userIcon = user.icon
@@ -79,20 +86,27 @@ extension SidePaneVC {
             
             selfPane.addGestureRecognizer(tapGesture)
             selfPane.layoutForUser(with: 60)
-            
-            logOutButton.title = "Log Out"
-            logOutButton.addTarget(self, action: #selector(logoutPressed(_:)), for: .touchUpInside)
-            logOutButton.sizeToFit()
-            logOutButton.anchor(top: bottomPane.topAnchor,
-                                trailing: bottomPane.trailingAnchor,
-                                bottom: bottomPane.bottomAnchor,
-                                padding: .init(top: 5, left: 0, bottom: 5, right: 5))
         }
+        
+        view.addSubview(bottomPane)
+        bottomPane.anchor(leading: view.leadingAnchor,
+                          trailing: view.trailingAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          size: .init(width: 0, height: 50))
         
         selfPane.anchor(leading: view.leadingAnchor,
                         trailing: view.trailingAnchor,
                         bottom: bottomPane.topAnchor,
+                        padding: .init(top: 0, left: 5, bottom: 5, right: 5),
                         size: .init(width: 0, height: 60))
+    }
+    
+    func handleLogOutButtonVisibility() {
+        if DataHandler.instance.currentUserID == nil {
+            logOutButton.isHidden = true
+        } else {
+            logOutButton.isHidden = false
+        }
     }
 }
 

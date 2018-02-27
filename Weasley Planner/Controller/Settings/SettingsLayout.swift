@@ -45,8 +45,7 @@ extension SettingsVC {
         familyView.addSubview(saveButton)
         
         familyView.alpha = 0
-        familyView.layer.borderColor = primaryColor.cgColor
-        familyView.layer.borderWidth = 2
+        familyView.addBorder()
         familyView.layer.cornerRadius = 10
         familyView.backgroundColor = secondaryColor
         familyView.clipsToBounds = true

@@ -19,7 +19,10 @@ class UserPane: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        self.addBorder()
+        self.addLightShadows()
         self.backgroundColor = secondaryColor
+        self.layer.cornerRadius = 5
     }
     
     func layoutForUser(with height: CGFloat) {
@@ -67,14 +70,13 @@ class UserPane: UIView {
                           leading: self.leadingAnchor,
                           trailing: self.trailingAnchor,
                           bottom: self.bottomAnchor,
-                          padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+                          padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
     
     private func layoutProfileIcon(with height: CGFloat) -> UIImageView {
         let iconView = UIImageView()
         iconView.layer.cornerRadius = (height - 10) / 2
-        iconView.layer.borderColor = primaryColor.cgColor
-        iconView.layer.borderWidth = 1
+        iconView.addBorder()
         iconView.clipsToBounds = true
         iconView.contentMode = .scaleAspectFill
         
@@ -90,8 +92,7 @@ class UserPane: UIView {
     private func layoutStatusIcon() -> UIView {
         let statusIcon = UIView()
         statusIcon.layer.cornerRadius = 7.5
-        statusIcon.layer.borderColor = primaryColor.cgColor
-        statusIcon.layer.borderWidth = 1
+        statusIcon.addBorder()
         
         if let status = userStatus {
             switch status {

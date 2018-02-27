@@ -18,9 +18,29 @@ class MainVC: UIViewController {
         return bar
     }()
     
-    let mapView = MKMapView()
-    let centerButton = UIButton()
-    let familyTable = UITableView()
+    let familyMap: MKMapView = {
+        let mapView = MKMapView()
+        mapView.delegate = mapManager
+        mapView.addBorder()
+        return mapView
+    }()
+    
+    let centerButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(centerButtonPressed(_:)), for: .touchUpInside)
+        button.setImage(#imageLiteral(resourceName: "familyIcon"), for: .normal)
+        return button
+    }()
+    
+    let familyTable: UITableView = {
+        let tableView = UITableView()
+//        tableView.addBorder()
+//        tableView.addLightShadows()
+        tableView.register(UserCell.self, forCellReuseIdentifier: "userCell")
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
     lazy var slideInTransitionManager = SlideInPresentationManager()
     
     //MARK: Data Variables
@@ -44,7 +64,7 @@ class MainVC: UIViewController {
         titleBar.delegate = self
         
         if DataHandler.instance.currentUserID == nil {
-            mapView.removeAnnotations(mapView.annotations)
+            familyMap.removeAnnotations(familyMap.annotations)
             DataHandler.instance.familyUsers = []
             familyTable.reloadData()
             selfUser = User()
@@ -126,7 +146,7 @@ class MainVC: UIViewController {
             mapIsCenteredOnCurrentUser = false
             mapIsCenteredOnFamily = true
             centerButton.setImage(#imageLiteral(resourceName: "defaultProfileImage"), for: .normal)
-            mapManager.zoom(toFitAnnotationOn: mapView)
+            mapManager.zoom(toFitAnnotationOn: familyMap)
         case #imageLiteral(resourceName: "defaultProfileImage"):
             mapIsCenteredOnCurrentUser = true
             mapIsCenteredOnFamily = false

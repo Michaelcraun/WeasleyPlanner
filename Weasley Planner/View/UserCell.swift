@@ -47,8 +47,7 @@ class UserCell: UITableViewCell {
         defaultIconView.clipsToBounds = true
         defaultIconView.contentMode = .scaleAspectFit
         defaultIconView.image = #imageLiteral(resourceName: "defaultProfileImage")
-        defaultIconView.layer.borderColor = primaryColor.cgColor
-        defaultIconView.layer.borderWidth = 1
+        defaultIconView.addBorder()
         defaultIconView.layer.cornerRadius = 15
         defaultIconView.anchor(top: self.topAnchor,
                                centerX: self.centerXAnchor,

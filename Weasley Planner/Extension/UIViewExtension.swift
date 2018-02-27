@@ -52,6 +52,30 @@ extension UIView {
         if size.height != 0 { heightAnchor.constraint(equalToConstant: size.height).isActive = true }
     }
     
+    //MARK: UI element methods
+    func addBorder() {
+        self.layer.borderColor = primaryColor.cgColor
+        self.layer.borderWidth = 1
+    }
+    
+    func addDeepShadows() {
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 10)
+        self.layer.shadowOpacity = 0.75
+    }
+    
+    func addMidShadows() {
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 5)
+        self.layer.shadowOpacity = 0.75
+    }
+    
+    func addLightShadows() {
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowOpacity = 0.75
+    }
+    
     //MARK: Keyboard interaction methods
     func addTapToDismissKeyboard() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))

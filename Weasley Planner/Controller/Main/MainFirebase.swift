@@ -191,7 +191,7 @@ extension MainVC {
             }
             self.loadUserAnnotations()
             if self.mapIsCenteredOnFamily {
-                mapManager.zoom(toFitAnnotationOn: self.mapView)
+                mapManager.zoom(toFitAnnotationOn: self.familyMap)
             } else if self.userToCenterMapOn != nil {
                 if let coordinate = self.userToCenterMapOn?.coordinate {
                     mapManager.centerMapOnLocation(coordinate)
@@ -207,7 +207,7 @@ extension MainVC {
             if let coordinate = user.coordinate {
                 let annotation = UserAnnotaion(coordinate: coordinate, user: user)
                 var userIsVisible: Bool {
-                    return self.mapView.annotations.contains(where: { (annotation) -> Bool in
+                    return self.familyMap.annotations.contains(where: { (annotation) -> Bool in
                         if let userAnnotation = annotation as? UserAnnotaion {
                             if userAnnotation.user.name == user.name {
                                 userAnnotation.update(userAnnotation, withCoordinate: coordinate)
@@ -219,7 +219,7 @@ extension MainVC {
                 }
                 
                 if !userIsVisible {
-                    self.mapView.addAnnotation(annotation)
+                    self.familyMap.addAnnotation(annotation)
                 }
             }
         }
