@@ -34,13 +34,13 @@ class RecipeListVC: UIViewController {
     var recipeSearched: Recipe?
     var isAddingFirebaseRecipe = false
     
-    var recipes = [Recipe]() {
-        didSet {
-            recipes = recipes.sortByTitle()
-            recipeList.reloadData()
-            searchBar.setDatas(datas: getSearchableData())
-        }
-    }
+//    var recipes = [Recipe]() {
+//        didSet {
+//            recipes = recipes.sortByTitle()
+//            recipeList.reloadData()
+//            searchBar.setDatas(datas: getSearchableData())
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

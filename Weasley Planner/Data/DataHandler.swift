@@ -18,6 +18,18 @@ class DataHandler {
     var familyUsers = [User]()
     var segueIdentifier: String!
     
+    var familyEvents = [Event]() {
+        didSet {
+            familyEvents = familyEvents.sortByTime()
+        }
+    }
+    
+    var familyRecipes = [Recipe]() {
+        didSet {
+            familyRecipes = familyRecipes.sortByTitle()
+        }
+    }
+    
     //MARK: Firebase Variables
     var currentUserID = FIRAuth.auth()?.currentUser?.uid
     
@@ -37,19 +49,19 @@ class DataHandler {
     var REF_PROFILE_IMAGE: FIRStorageReference { return _REF_PROFILE_IMAGE }
     var REF_RECIPE_IMAGE: FIRStorageReference { return _REF_RECIPE_IMAGE }
     
-    //MARK: Firebase Family Methods
-    func createFamilyIDString(with familyName: String) -> String {
-        var familyID = familyName
-        let familyAppendage = NSUUID().uuidString
-        familyID += "-\(familyAppendage)"
-        return familyID
+    func createUniqueIDString(with title: String) -> String {
+        var idString = title
+        let idAppendage = NSUUID().uuidString
+        idString += "-\(idAppendage)"
+        return idString
     }
     
-    func updateFirebaseFamily(id: String, familyData: Dictionary<String,Any>) {
+    //MARK: Firebase Family Methods
+    func updateFirebaseFamily(id: String, familyData: [String : Any]) {
         REF_FAMILY.child(id).updateChildValues(familyData)
     }
     
-    func updateFirebaseFamilyRecipe(familyID: String, recipeID: String, recipeData: Dictionary<String,Any>) {
+    func updateFirebaseFamilyRecipe(familyID: String, recipeID: String, recipeData: [String : Any]) {
         REF_FAMILY.child(familyID).child("recipes").child(recipeID).updateChildValues(recipeData)
     }
     
@@ -57,20 +69,21 @@ class DataHandler {
         REF_FAMILY.child(familyID).child("recipes").child(recipeID).removeValue()
     }
     
-    //MARK: Firebase Recipe Methods
-    func createRecipeIDString(with recipeName: String) -> String {
-        var recipeID = recipeName
-        let recipeAppendage = NSUUID().uuidString
-        recipeID += "-\(recipeAppendage)"
-        return recipeID
+    func updateFirebaseFamilyEvent(familyID: String, eventID: String, eventData: [String : Any]) {
+        REF_FAMILY.child(familyID).child("events").child(eventID).updateChildValues(eventData)
     }
     
-    func updateFirebaseRecipe(id: String, recipeData: Dictionary<String,Any>) {
+    func removeFirebaseFamilyEvent(familyID: String, eventID: String) {
+        REF_FAMILY.child(familyID).child("events").child(eventID).removeValue()
+    }
+    
+    //MARK: Firebase Recipe Methods
+    func updateFirebaseRecipe(id: String, recipeData: [String : Any]) {
         REF_RECIPE.child(id).updateChildValues(recipeData)
     }
     
     //MARK: Firebase User Methods
-    func updateFirebaseUser(uid: String, userData: Dictionary<String,Any>) {
+    func updateFirebaseUser(uid: String, userData: [String : Any]) {
         REF_USER.child(uid).updateChildValues(userData)
     }
 }

@@ -71,7 +71,7 @@ extension SettingsVC {
         saveButton.anchor(leading: familyView.leadingAnchor,
                           trailing: familyView.trailingAnchor,
                           bottom: familyView.bottomAnchor,
-                          size: .init(width: 0, height: 50))
+                          size: .init(width: 0, height: 40))
     }
 }
 

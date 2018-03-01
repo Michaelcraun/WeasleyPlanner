@@ -12,7 +12,6 @@ import Firebase
 extension RecipeListVC {
     func observeFamilyRecipes() {
         guard let userFamily = user?.family else { return }
-        recipes = []
         
         DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
@@ -22,11 +21,14 @@ extension RecipeListVC {
                     if family.hasChild("recipes") {
                         let familyRecipes = family.childSnapshot(forPath: "recipes")
                         guard let recipeSnapshot = familyRecipes.children.allObjects as? [FIRDataSnapshot] else { return }
-                        for recipe in recipeSnapshot {
-                            guard let recipeData = recipe.value as? Dictionary<String,Any> else { return }
-                            guard let familyRecipe = recipeData.toRecipe() else { return }
-                            familyRecipe.identifier = recipe.key
-                            self.downloadImage(forRecipe: familyRecipe)
+                        if recipeSnapshot.count != DataHandler.instance.familyRecipes.count {
+                            DataHandler.instance.familyRecipes = []
+                            for recipe in recipeSnapshot {
+                                guard let recipeData = recipe.value as? Dictionary<String,Any> else { return }
+                                guard let familyRecipe = recipeData.toRecipe() else { return }
+                                familyRecipe.identifier = recipe.key
+                                self.downloadImage(forRecipe: familyRecipe)
+                            }
                         }
                     }
                 }
@@ -42,7 +44,8 @@ extension RecipeListVC {
                 guard let recipeImage = UIImage(data: recipeImageData) else { return }
                 
                 recipe.image = recipeImage
-                self.recipes.append(recipe)
+                DataHandler.instance.familyRecipes.append(recipe)
+                self.recipeList.reloadData()
             })
         }
     }

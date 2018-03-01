@@ -44,16 +44,16 @@ extension RecipeListVC {
 
 extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if recipes.count > 0 {
-            return recipes.count
+        if DataHandler.instance.familyRecipes.count > 0 {
+            return DataHandler.instance.familyRecipes.count
         }
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell") as! RecipeCell
-        if recipes.count > 0 {
-            cell.layoutCellForRecipe(recipes[indexPath.row])
+        if DataHandler.instance.familyRecipes.count > 0 {
+            cell.layoutCellForRecipe(DataHandler.instance.familyRecipes[indexPath.row])
         } else {
             cell.layoutCellForNoRecipes()
         }
@@ -61,7 +61,7 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if recipes.count > 0 {
+        if DataHandler.instance.familyRecipes.count > 0 {
             return 100
         }
         return 70
@@ -98,7 +98,7 @@ extension RecipeListVC: ModernSearchBarDelegate {
     func getSearchableData() -> [String] {
         var searchableData: [String] {
             var _searchableData = [String]()
-            for recipe in recipes {
+            for recipe in DataHandler.instance.familyRecipes {
                 _searchableData.append(recipe.title)
             }
             return _searchableData

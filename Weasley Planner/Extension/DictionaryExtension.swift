@@ -12,7 +12,7 @@ import CoreLocation
 extension Dictionary where Key == String {
     func toRecipe() -> Recipe? {
         guard let title = self["title"] as? String else { return nil }
-        let recipeIdentifier = DataHandler.instance.createRecipeIDString(with: title)
+        let recipeIdentifier = DataHandler.instance.createUniqueIDString(with: title)
         
         let fetchedRecipe = Recipe(identifier: recipeIdentifier, title: title)
         if let activeHours = self["activeHours"] as? Int { fetchedRecipe.activeHours = activeHours }
@@ -36,6 +36,7 @@ extension Dictionary where Key == String {
         guard let date = self["date"] as? Date else { return nil }
         guard let title = self["title"] as? String else { return nil }
         guard let type = self["type"] as? String else { return nil }
+        let eventIdentifier = DataHandler.instance.createUniqueIDString(with: title)
         
         let eventType: EventType = {
             switch type {
@@ -45,7 +46,7 @@ extension Dictionary where Key == String {
             }
         }()
         
-        let fetchedEvent = Event(date: date, title: title, type: eventType)
+        let fetchedEvent = Event(date: date, title: title, type: eventType, identifier: eventIdentifier)
         
         if let fetchedUser = self["user"] as? String {
             for familyUser in DataHandler.instance.familyUsers {
@@ -55,16 +56,13 @@ extension Dictionary where Key == String {
             }
         }
         
-        if let fetchedCoordinate = self["coordinate"] as? [CLLocationDegrees] {
-            var coordinate = CLLocationCoordinate2D()
-            coordinate.latitude = fetchedCoordinate[0]
-            coordinate.longitude = fetchedCoordinate[1]
-            
-            fetchedEvent.coordinate = coordinate
+        if let fetchedCoordinate = self["location"] as? [CLLocationDegrees] {
+            let location = CLLocation(latitude: fetchedCoordinate[0], longitude: fetchedCoordinate[1])
+            fetchedEvent.location = location
         }
         
-        if let fetchedLocation = self["location"] as? String {
-            fetchedEvent.location = fetchedLocation
+        if let fetchedLocationString = self["locationString"] as? String {
+            fetchedEvent.locationString = fetchedLocationString
         }
         
         return fetchedEvent

@@ -107,8 +107,8 @@ class TitleBar: UIView {
             case #imageLiteral(resourceName: "addIcon"):
                 if let recipeVC = delegate as? RecipeListVC {
                     recipeVC.showAddRecipeActionSheet()
-                } else if let _ = delegate as? CalendarVC {
-                    delegate.performSegue(withIdentifier: "showAddEvent", sender: nil)
+                } else if let calendar = delegate as? CalendarVC {
+                    calendar.showAddEventActionSheet()
                 }
             default: break
             }

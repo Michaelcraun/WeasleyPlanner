@@ -52,6 +52,15 @@ extension UIView {
         if size.height != 0 { heightAnchor.constraint(equalToConstant: size.height).isActive = true }
     }
     
+    func fillToView(_ view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        self.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        self.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        self.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
     //MARK: UI element methods
     func addBorder() {
         self.layer.borderColor = primaryColor.cgColor

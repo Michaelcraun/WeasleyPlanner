@@ -278,7 +278,7 @@ class AddRecipeVC: UIViewController {
                 return
             }
             
-            let recipeIdentifier = DataHandler.instance.createRecipeIDString(with: title)
+            let recipeIdentifier = DataHandler.instance.createUniqueIDString(with: title)
             let newRecipe = Recipe(identifier: recipeIdentifier, title: title)
             newRecipe.activeHours = activeTime[0]
             newRecipe.activeMinutes = activeTime[1]

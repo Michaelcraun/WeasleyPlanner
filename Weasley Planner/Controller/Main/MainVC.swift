@@ -34,8 +34,6 @@ class MainVC: UIViewController {
     
     let familyTable: UITableView = {
         let tableView = UITableView()
-//        tableView.addBorder()
-//        tableView.addLightShadows()
         tableView.register(UserCell.self, forCellReuseIdentifier: "userCell")
         tableView.separatorStyle = .none
         return tableView
@@ -58,6 +56,7 @@ class MainVC: UIViewController {
         
         layoutView()
         beginConnectionTest()
+        initializeCurrentUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +75,6 @@ class MainVC: UIViewController {
             centerButton.fadeAlphaTo(1)
         }
         
-        initializeCurrentUser()
         observeFamilyUsers()
         
         if DataHandler.instance.segueIdentifier != nil {
@@ -115,6 +113,8 @@ class MainVC: UIViewController {
                 slideInTransitionManager.disableCompactHeight = false
                 destination.transitioningDelegate = slideInTransitionManager
                 destination.modalPresentationStyle = .custom
+                
+                destination.user = selfUser
             }
         } else if segue.identifier == Controller.recipeList.segueIdentifier {
             if let destination = segue.destination as? RecipeListVC {

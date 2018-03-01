@@ -32,6 +32,8 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
             firebaseLogin.registerButtonPressed(nil)
         } else if let addRecipe = delegate as? AddRecipeVC {
             addRecipe.saveButtonPressed(nil)
+        } else if let addEvent = delegate as? AddEventVC {
+            addEvent.saveButtonPressed(nil)
         }
         
         return true

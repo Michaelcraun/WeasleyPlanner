@@ -84,6 +84,8 @@ extension MainVC {
                         if family != "" {
                             self.checkForFamilyCreator()
                             self.initializeFamilyUsers()
+                            self.initializeFamilyEventsAndRecipes()
+                            self.displayLoadingView(false)
                         }
                     })
                 }
@@ -97,6 +99,9 @@ extension MainVC {
             for user in userSnapshot {
                 if user.key == DataHandler.instance.currentUserID {
                     guard let location = user.childSnapshot(forPath: "location").value as? String else { return }
+                    guard let coordinates = user.childSnapshot(forPath: "coordinate").value as? [CLLocationDegrees] else { return }
+                    let selfCoordinate = CLLocationCoordinate2D(latitude: coordinates[0], longitude: coordinates[1])
+                    self.selfUser.coordinate = selfCoordinate
                     self.selfUser.location = location
                     
                     if self.selfUser.family == "" {
@@ -222,6 +227,47 @@ extension MainVC {
                     self.familyMap.addAnnotation(annotation)
                 }
             }
+        }
+    }
+
+    func initializeFamilyEventsAndRecipes() {
+        guard let userFamily = selfUser.family else { return }
+        DataHandler.instance.familyEvents = []
+        DataHandler.instance.familyRecipes = []
+        
+        DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value) { (snapshot) in
+            guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for family in familySnapshot {
+                guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
+                if familyName == userFamily {
+                    if let familyEvents = family.childSnapshot(forPath: "events").value as? [[String : Any]] {
+                        for event in familyEvents {
+                            guard let fetchedEvent = event.toEvent() else { break }
+                            DataHandler.instance.familyEvents.append(fetchedEvent)
+                        }
+                    }
+                    
+                    if let familyRecipes = family.childSnapshot(forPath: "recipes").value as? [[String : Any]] {
+                        for recipe in familyRecipes {
+                            guard let fetchedRecipe = recipe.toRecipe() else { break }
+                            self.downloadImage(forRecipe: fetchedRecipe)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func downloadImage(forRecipe recipe: Recipe) {
+        if recipe.imageName != "" {
+            DataHandler.instance.REF_RECIPE_IMAGE.child("\(recipe.imageName).png").data(withMaxSize: 1000000, completion: { (data, error) in
+                if let _ = error { return }
+                guard let recipeImageData = data else { return }
+                guard let recipeImage = UIImage(data: recipeImageData) else { return }
+                
+                recipe.image = recipeImage
+                DataHandler.instance.familyRecipes.append(recipe)
+            })
         }
     }
 }

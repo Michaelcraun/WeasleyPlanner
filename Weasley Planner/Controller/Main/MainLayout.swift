@@ -44,13 +44,13 @@ extension MainVC {
         familyTable.dataSource = self
         familyTable.delegate = self
         familyTable.backgroundColor = .clear
-//        familyTable.separatorStyle = .none
-//        familyTable.register(UserCell.self, forCellReuseIdentifier: "userCell")
         familyTable.anchor(top: familyMap.bottomAnchor,
                            leading: familyView.leadingAnchor,
                            trailing: familyView.trailingAnchor,
                            bottom: familyView.bottomAnchor,
                            padding: .init(top: 0, left: 5, bottom: 5, right: 5))
+        
+        displayLoadingView(true)
     }
 }
 

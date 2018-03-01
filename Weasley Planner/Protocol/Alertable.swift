@@ -25,6 +25,7 @@ enum Alert {
     case logoutError
     case missingTitle
     case networkError
+    case newEventError
     case noEmail
     case noFirstName
     case noLastName
@@ -71,6 +72,7 @@ enum Alert {
         case .logoutError: return "There was an error logging out. Please try again."
         case .missingTitle: return "Every recipe requires at least a title. Please provide one and try again."
         case .networkError: return "The network seems to have timed out. Please try again."
+        case .newEventError: return "New events requre at least a title and date. Please try again."
         case .noEmail: return "Please input a valid email and try again."
         case .noFirstName: return "Please input your first name and try again."
         case .noLastName: return "Please input your last name and try again."

@@ -49,7 +49,7 @@ extension SettingsVC {
     
     func createFirebaseFamily(with familyName: String) {
         guard let uid = DataHandler.instance.currentUserID else { return }
-        let familyIdentifier = DataHandler.instance.createFamilyIDString(with: familyName)
+        let familyIdentifier = DataHandler.instance.createUniqueIDString(with: familyName)
         let userData: Dictionary<String,Any> = ["family" : familyName,
                                                 "familyIdentifier" : familyIdentifier]
         let familyData: Dictionary<String,Any> = ["creator" : user?.name as Any,

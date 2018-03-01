@@ -28,17 +28,20 @@ class InputView: UIView {
         case none
         
         case activeTime = "Active Time"
+        case date = "Date"
         case description = "Description"
         case email = "Email"
         case firstName = "First Name"
         case ingredients = "Ingredients"
         case instructions = "Instructions"
         case lastName = "Last Name"
+        case location = "Location"
         case notes = "Notes"
         case password = "Password"
         case source = "Source"
         case title = "Title"
         case url = "URL"
+        case user = "User"
         case totalTime = "Total Time"
         case yield = "Yield"
     }
@@ -60,7 +63,7 @@ class InputView: UIView {
         }()
         
         switch inputType {
-        case .activeTime, .email, .firstName, .lastName, .password, .source, .title, .totalTime, .url, .yield:
+        case .activeTime, .date, .email, .firstName, .lastName, .location, .password, .source, .title, .totalTime, .url, .user, .yield:
             if inputType == .email {
                 inputField.autocapitalizationType = .none
             } else if inputType == .password {

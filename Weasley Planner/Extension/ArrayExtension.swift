@@ -8,6 +8,9 @@
 
 import Foundation
 
+//----------------------------
+// MARK: - [Recipe] extensions
+//----------------------------
 extension Array where Array == [Recipe] {
     func sortByTitle() -> [Recipe] {
         let sortedArray = self.sorted { (recipe1, recipe2) -> Bool in
@@ -45,8 +48,21 @@ extension Array where Array == [Recipe] {
         }
         return sortedArray
     }
+    
+    func getTitles() -> [String] {
+        let sortedRecipes = self.sortByTitle()
+        var recipeTitles = [String]()
+        for recipe in sortedRecipes {
+            let recipeTitle = recipe.title
+            recipeTitles.append(recipeTitle)
+        }
+        return recipeTitles
+    }
 }
 
+//---------------------------
+// MARK: - [Event] extensions
+//---------------------------
 extension Array where Array == [Event] {
     func filterForDay(_ selectedDay: Date) -> [Event] {
         var dayEvents = [Event]()

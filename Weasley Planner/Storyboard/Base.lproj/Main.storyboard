@@ -156,10 +156,28 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="JUz-9T-d4T"/>
                     </view>
+                    <connections>
+                        <segue destination="4gS-9V-8pF" kind="show" identifier="showAddEvent" id="rPH-Wl-EsA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPy-cC-nUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="198" y="-752"/>
+        </scene>
+        <!--Add EventVC-->
+        <scene sceneID="Ib4-ng-yAo">
+            <objects>
+                <viewController id="4gS-9V-8pF" customClass="AddEventVC" customModule="Weasley_Planner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="S05-U7-ZdI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="jY3-nD-Tdv"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="glM-4L-i1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1196" y="-752"/>
         </scene>
     </scenes>
 </document>

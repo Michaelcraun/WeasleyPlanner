@@ -25,19 +25,21 @@ enum EventType: String {
 
 class Event {
     var assignedUser: User?
-    var coordinate: CLLocationCoordinate2D?
+    var location: CLLocation?
     var date: Date
-    var location: String?
+    var identifier: String
+    var locationString: String?
     var title: String
     var type: EventType
     
-    init(assignedUser: User? = nil, coordinate: CLLocationCoordinate2D? = nil, date: Date, location: String? = nil, title: String, type: EventType) {
+    init(assignedUser: User? = nil, location: CLLocation? = nil, date: Date, locationString: String? = nil, title: String, type: EventType, identifier: String) {
         self.assignedUser = assignedUser
-        self.coordinate = coordinate
-        self.date = date
         self.location = location
+        self.date = date
+        self.locationString = locationString
         self.title = title
         self.type = type
+        self.identifier = identifier
     }
     
     func eventView() -> UIView {
@@ -104,8 +106,8 @@ class Event {
                 label.font = UIFont(name: fontName, size: smallFontSize)
                 label.textColor = secondaryTextColor
                 label.text = {
-                    guard let location = self.location else { return "" }
-                    return location
+                    guard let locationString = self.locationString else { return "" }
+                    return locationString
                 }()
                 return label
             }()
@@ -159,7 +161,7 @@ class Event {
         return eventView
     }
     
-    func convertToDictionary() -> [String : Any] {
+    func dictionary() -> [String : Any] {
         var eventDictionary = [String : Any]()
         eventDictionary["date"] = self.date
         eventDictionary["title"] = self.title
@@ -170,14 +172,15 @@ class Event {
             return eventUser.name
         }()
         
-        eventDictionary["coordinate"] = {
-            guard let eventCoordinate = self.coordinate else { return [] }
-            return [eventCoordinate.latitude, eventCoordinate.longitude]
+        eventDictionary["location"] = {
+            guard let eventLocation = self.location else { return [] }
+            let locationArray = [eventLocation.coordinate.latitude, eventLocation.coordinate.longitude]
+            return locationArray
         }()
         
-        eventDictionary["location"] = {
-            guard let eventLocation = self.location else { return "none" }
-            return eventLocation
+        eventDictionary["locationString"] = {
+            guard let eventLocationString = self.locationString else { return "none" }
+            return eventLocationString
         }()
         
         return eventDictionary

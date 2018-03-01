@@ -52,7 +52,6 @@ class CalendarVC: UIViewController {
     //MARK: Data Variables
     var user: User?
     var formatter = DateFormatter()
-    var shouldDismiss = false
     var eventList = [Event]()
     var eventsForDay = [Event]()
     
@@ -65,9 +64,19 @@ class CalendarVC: UIViewController {
         //------------------
         // MARK: - TEST DATA
         //------------------
-        let doctor = Event(date: Date(), location: "2001 Stults Rd, Huntington, IN 46750", title: "Doctor Appointment", type: .appointment)
-        let laundry = Event(date: Date(), title: "Laundry", type: .chore)
-        let fishSticks = Event(date: Date(), title: "Fish Sticks", type: .meal)
+        let doctor = Event(date: Date(),
+                           locationString: "2001 Stults Rd, Huntington, IN 46750",
+                           title: "Doctor Appointment",
+                           type: .appointment,
+                           identifier: DataHandler.instance.createUniqueIDString(with: "Doctor Appointment"))
+        let laundry = Event(date: Date(),
+                            title: "Laundry",
+                            type: .chore,
+                            identifier: DataHandler.instance.createUniqueIDString(with: "Laundry"))
+        let fishSticks = Event(date: Date(),
+                               title: "Fish Sticks",
+                               type: .meal,
+                               identifier: DataHandler.instance.createUniqueIDString(with: "Fish Sticks"))
         eventList = [doctor, laundry, fishSticks]
 
         layoutView()
@@ -76,11 +85,55 @@ class CalendarVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         titleBar.delegate = self
+        
+        observeFamilyEvents()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAddEvent" {
+            if let destination = segue.destination as? AddEventVC {
+                destination.transitioningDelegate = transitioningDelegate
+                destination.modalPresentationStyle = .custom
+                
+                destination.user = user
+                if let sender = sender as? Event { destination.eventToEdit = sender }
+                if let sender = sender as? EventType { destination.eventType = sender }
+            }
+        }
     }
     
     @objc func scrollToToday(_ sender: UIButton?) {
         let today = Date()
         calendarView.scrollToDate(today)
         calendarView.selectDates([today])
+    }
+    
+    func showAddEventActionSheet() {
+        let optionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let newAppointmentAction = UIAlertAction(title: "Add New Appointment", style: .default) { (action) in
+            let eventType: EventType = .appointment
+            self.performSegue(withIdentifier: "showAddEvent", sender: eventType)
+        }
+        
+        let newChoreAction = UIAlertAction(title: "Add New Chore", style: .default) { (action) in
+            let eventType: EventType = .chore
+            self.performSegue(withIdentifier: "showAddEvent", sender: eventType)
+        }
+        
+        let newMealAction = UIAlertAction(title: "Add New Meal", style: .default) { (action) in
+            let eventType: EventType = .meal
+            self.performSegue(withIdentifier: "showAddEvent", sender: eventType)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
+            optionSheet.dismiss(animated: true, completion: nil)
+        }
+        
+        optionSheet.addAction(newAppointmentAction)
+        optionSheet.addAction(newChoreAction)
+        optionSheet.addAction(newMealAction)
+        optionSheet.addAction(cancelAction)
+        
+        present(optionSheet, animated: true, completion: nil)
     }
 }
