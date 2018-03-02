@@ -37,7 +37,6 @@ class User {
         userAnnotation.layer.cornerRadius = 15
         
         userAnnotation.backgroundColor = secondaryColor
-        userAnnotation.clipsToBounds = true
         userAnnotation.image = icon?.resizeImage(CGSize(width: 30, height: 30))
         
         return userAnnotation

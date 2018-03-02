@@ -80,7 +80,6 @@ class AddRecipeVC: UIViewController {
     
     let recipeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
         imageView.addBorder()

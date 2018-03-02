@@ -48,7 +48,6 @@ extension SettingsVC {
         familyView.addBorder()
         familyView.layer.cornerRadius = 10
         familyView.backgroundColor = secondaryColor
-        familyView.clipsToBounds = true
         familyView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,

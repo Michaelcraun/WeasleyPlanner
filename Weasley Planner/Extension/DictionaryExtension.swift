@@ -33,9 +33,10 @@ extension Dictionary where Key == String {
     }
     
     func toEvent() -> Event? {
-        guard let date = self["date"] as? Date else { return nil }
+        guard let dateString = self["date"] as? String else { return nil }
         guard let title = self["title"] as? String else { return nil }
         guard let type = self["type"] as? String else { return nil }
+        guard let date = dateString.date() else { return nil }
         let eventIdentifier = DataHandler.instance.createUniqueIDString(with: title)
         
         let eventType: EventType = {

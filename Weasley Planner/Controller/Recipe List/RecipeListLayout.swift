@@ -76,14 +76,13 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //TODO: Make an image for this action
         let delete = UIContextualAction(style: .destructive, title: "") { (action, view, handler) in
             let cell = tableView.cellForRow(at: indexPath) as! RecipeCell
             guard let recipeToDelete = cell.recipe else { return }
             
             self.removeRecipeFromFamily(recipeToDelete)
         }
-        delete.image = #imageLiteral(resourceName: "familyIcon")
+        delete.image = #imageLiteral(resourceName: "deleteIcon")
         
         let configuration = UISwipeActionsConfiguration.init(actions: [delete])
         return configuration

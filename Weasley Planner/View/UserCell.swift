@@ -31,11 +31,7 @@ class UserCell: UITableViewCell {
         userPane.userName = user.name
         userPane.userStatus = user.status
         userPane.layoutForUser(with: 60)
-        userPane.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor,
-                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        userPane.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     func layoutNoUserCell() {
@@ -44,7 +40,6 @@ class UserCell: UITableViewCell {
         self.addSubview(defaultIconView)
         self.addSubview(noUserLabel)
         
-        defaultIconView.clipsToBounds = true
         defaultIconView.contentMode = .scaleAspectFit
         defaultIconView.image = #imageLiteral(resourceName: "defaultProfileImage")
         defaultIconView.addBorder()

@@ -19,7 +19,7 @@ class UserPane: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.addBorder()
+        self.addBorder(clipsToBounds: false)
         self.addLightShadows()
         self.backgroundColor = secondaryColor
         self.layer.cornerRadius = 5
@@ -63,21 +63,14 @@ class UserPane: UIView {
     
     func layoutForLogin() {
         loginPanel = layoutLoginPanel()
-        
         self.addSubview(loginPanel)
-        
-        loginPanel.anchor(top: self.topAnchor,
-                          leading: self.leadingAnchor,
-                          trailing: self.trailingAnchor,
-                          bottom: self.bottomAnchor,
-                          padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        loginPanel.fillTo(self)
     }
     
     private func layoutProfileIcon(with height: CGFloat) -> UIImageView {
         let iconView = UIImageView()
         iconView.layer.cornerRadius = (height - 10) / 2
         iconView.addBorder()
-        iconView.clipsToBounds = true
         iconView.contentMode = .scaleAspectFill
         
         guard let image = userIcon else {
@@ -135,10 +128,7 @@ class UserPane: UIView {
         loginLabel.text = "LOGIN / SIGN UP"
         loginLabel.textAlignment = .center
         loginLabel.textColor = primaryTextColor
-        loginLabel.anchor(top: loginButton.topAnchor,
-                          leading: loginButton.leadingAnchor,
-                          trailing: loginButton.trailingAnchor,
-                          bottom: loginButton.bottomAnchor)
+        loginLabel.fillTo(loginButton)
         
         return loginButton
     }

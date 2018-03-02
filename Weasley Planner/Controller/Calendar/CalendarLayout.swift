@@ -94,12 +94,11 @@ extension CalendarVC {
         eventTable.anchor(top: calendarView.bottomAnchor,
                           leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
-                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                          padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor)
         
-        scrollToToday(nil)
         calendarView.visibleDates { (visibleDates) in
             self.updateCalendarLabels(withVisibleDates: visibleDates)
+            self.scrollToToday(nil)
         }
     }
     
@@ -122,7 +121,11 @@ extension CalendarVC {
 
 extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        
+        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
+        let eventsForDay = DataHandler.instance.familyEvents.filterForDay(date)
+        cell.layoutCell()
+        cell.dayLabel.text = cellState.text
+        handleCellElements(view: cell, cellState: cellState, events: eventsForDay)
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
@@ -143,25 +146,32 @@ extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate
     
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
-        let eventsForDay = eventList.filterForDay(date)
+        let eventsForDay = DataHandler.instance.familyEvents.filterForDay(date)
         cell.layoutCell()
         cell.dayLabel.text = cellState.text
         handleCellElements(view: cell, cellState: cellState, events: eventsForDay)
         return cell
     }
     
+    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        calendarView.deselectAllDates()
+        return true
+    }
+    
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        eventsForDay = eventList.filterForDay(cellState.date)
-        eventTable.reloadData()
+        eventsForDay = DataHandler.instance.familyEvents.filterForDay(cellState.date)
         handleCellElements(view: cell, cellState: cellState, events: eventsForDay)
+        eventTable.reloadData()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        eventsForDay = eventList.filterForDay(cellState.date)
+        eventsForDay = DataHandler.instance.familyEvents.filterForDay(cellState.date)
         handleCellElements(view: cell, cellState: cellState, events: eventsForDay)
+        eventTable.reloadData()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+        calendarView.deselectAllDates()
         updateCalendarLabels(withVisibleDates: visibleDates)
     }
     
@@ -239,20 +249,33 @@ extension CalendarVC: UITableViewDataSource, UITableViewDelegate {
                 label.textColor = primaryTextColor
                 return label
             }()
-            
             view.addSubview(headerLabel)
-            headerLabel.anchor(top: view.topAnchor,
-                               leading: view.leadingAnchor,
-                               trailing: view.trailingAnchor,
-                               bottom: view.bottomAnchor,
-                               padding: .init(top: 2, left: 2, bottom: 2, right: 2))
-            
+            headerLabel.fillTo(view, withPadding: .init(top: 2, left: 2, bottom: 2, right: 2))
             return view
         }()
         return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, handler) in
+            let cell = tableView.cellForRow(at: indexPath) as! EventTableCell
+            guard let eventToDelete = cell.event else { return }
+            
+            self.removeFamilyEvent(eventToDelete)
+        }
+        delete.image = #imageLiteral(resourceName: "deleteIcon")
+        
+        let configuration = UISwipeActionsConfiguration.init(actions: [delete])
+        return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

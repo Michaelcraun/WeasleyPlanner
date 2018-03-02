@@ -52,17 +52,21 @@ extension UIView {
         if size.height != 0 { heightAnchor.constraint(equalToConstant: size.height).isActive = true }
     }
     
-    func fillToView(_ view: UIView) {
+    func fillTo(_ view: UIView, withPadding padding: UIEdgeInsets = .zero, andSize size: CGSize = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         
-        self.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        self.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        self.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        self.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        self.topAnchor.constraint(equalTo: view.topAnchor, constant: padding.top).isActive = true
+        self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding.left).isActive = true
+        self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding.right).isActive = true
+        self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding.bottom).isActive = true
+        
+        if size.width != 0 { widthAnchor.constraint(equalToConstant: size.width).isActive = true }
+        if size.height != 0 { heightAnchor.constraint(equalToConstant: size.height).isActive = true }
     }
     
     //MARK: UI element methods
-    func addBorder() {
+    func addBorder(clipsToBounds: Bool = true) {
+        self.clipsToBounds = clipsToBounds
         self.layer.borderColor = primaryColor.cgColor
         self.layer.borderWidth = 1
     }

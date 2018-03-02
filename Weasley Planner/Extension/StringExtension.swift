@@ -74,4 +74,11 @@ extension String {
     private func reduceFractions(_ fractions: [[Int]]) -> [Int] {
         return []
     }
+    
+    func date() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy h:mm a"
+        
+        return dateFormatter.date(from: self)
+    }
 }

@@ -45,6 +45,10 @@ class Event {
     func eventView() -> UIView {
         let eventView: UIView = {
             let view = UIView()
+            view.addBorder(clipsToBounds: false)
+            view.addLightShadows()
+            view.backgroundColor = secondaryColor
+            view.layer.cornerRadius = 5
             
             let timeView: UIView = {
                 let view = UIView()
@@ -52,7 +56,7 @@ class Event {
                 
                 let timeLabel: UILabel = {
                     let label = UILabel()
-                    label.font = UIFont(name: fontName, size: smallFontSize)
+                    label.font = UIFont(name: secondaryFontName, size: 10)
                     label.textAlignment = .center
                     label.text = self.date.formatForDisplayOfTime()
                     return label
@@ -71,7 +75,7 @@ class Event {
                 colorView.anchor(top: view.topAnchor,
                                  trailing: view.trailingAnchor,
                                  bottom: view.bottomAnchor,
-                                 size: .init(width: 2, height: 0))
+                                 size: .init(width: 5, height: 0))
                 
                 timeLabel.anchor(top: view.topAnchor,
                                  leading: view.leadingAnchor,
@@ -83,13 +87,12 @@ class Event {
             
             let userIconView: UIImageView = {
                 let imageView = UIImageView()
-                imageView.anchor(size: .init(width: 60, height: 60))
+                imageView.addBorder()
+                imageView.layer.cornerRadius = 25
                 imageView.image = {
                     guard let user = self.assignedUser else { return #imageLiteral(resourceName: "defaultProfileImage") }
                     return user.icon
                 }()
-                imageView.addBorder()
-                imageView.layer.cornerRadius = 30
                 return imageView
             }()
             
@@ -142,17 +145,20 @@ class Event {
                                 bottom: view.bottomAnchor,
                                 size: .init(width: 60, height: 0))
                 
-                userIconView.anchor(leading: timeView.trailingAnchor,
+                userIconView.anchor(top: view.topAnchor,
+                                    leading: timeView.trailingAnchor,
+                                    bottom: view.bottomAnchor,
                                     centerY: view.centerYAnchor,
-                                    padding: .init(top: 0, left: 5, bottom: 0, right: 0))
+                                    padding: .init(top: 5, left: 5, bottom: 5, right: 0),
+                                    size: .init(width: 50, height: 0))
                 
                 titleLabel.anchor(top: view.topAnchor,
-                                  leading: timeView.trailingAnchor,
+                                  leading: userIconView.trailingAnchor,
                                   trailing: view.trailingAnchor,
                                   padding: .init(top: 2, left: 2, bottom: 0, right: 2))
                 
                 locationLabel.anchor(top: titleLabel.bottomAnchor,
-                                     leading: timeView.trailingAnchor,
+                                     leading: userIconView.trailingAnchor,
                                      trailing: view.trailingAnchor,
                                      padding: .init(top: 2, left: 2, bottom: 2, right: 2))
             }
@@ -163,7 +169,7 @@ class Event {
     
     func dictionary() -> [String : Any] {
         var eventDictionary = [String : Any]()
-        eventDictionary["date"] = self.date
+        eventDictionary["date"] = self.date.string()
         eventDictionary["title"] = self.title
         eventDictionary["type"] = self.type.rawValue
         

@@ -129,7 +129,6 @@ public class ModernSearchBar: UISearchBar, UISearchBarDelegate, UITableViewDataS
     // --------------------------------
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("SEARCH: in ModernSearchBar")
         self.searchWhenUserTyping(caracters: searchText)
         self.delegateModernSearchBar?.searchBar?(searchBar, textDidChange: searchText)
     }

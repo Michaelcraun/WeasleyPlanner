@@ -37,7 +37,6 @@ class FirebaseLoginVC: UIViewController {
     
     let iconPicker: UIImageView = {
         let imageView = UIImageView()
-        imageView.clipsToBounds = true
         imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
         imageView.addBorder()
         imageView.layer.cornerRadius = 65 / 2

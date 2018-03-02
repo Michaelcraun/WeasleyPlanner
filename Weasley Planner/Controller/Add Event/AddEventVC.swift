@@ -203,8 +203,8 @@ class AddEventVC: UIViewController {
                 }
                 
                 newEvent.locationString = addressString
-                self.updateFamilyEvent(newEvent)
             })
         }
+        updateFamilyEvent(newEvent)
     }
 }

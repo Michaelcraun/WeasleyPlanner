@@ -104,8 +104,9 @@ class CalendarVC: UIViewController {
     
     @objc func scrollToToday(_ sender: UIButton?) {
         let today = Date()
-        calendarView.scrollToDate(today)
-        calendarView.selectDates([today])
+        calendarView.scrollToDate(today) {
+            self.calendarView.selectDates([today])
+        }
     }
     
     func showAddEventActionSheet() {

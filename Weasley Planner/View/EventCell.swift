@@ -78,13 +78,8 @@ class EventTableCell: UITableViewCell {
             let view = event.eventView()
             return view
         }()
-        
         self.addSubview(cellView)
-        
-        cellView.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor)
+        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     func layoutCellForNoEvents() {
@@ -92,11 +87,17 @@ class EventTableCell: UITableViewCell {
         
         let cellView: UIView = {
             let view = UIView()
+            view.addBorder(clipsToBounds: false)
+            view.addLightShadows()
+            view.backgroundColor = secondaryColor
+            view.layer.cornerRadius = 5
             
             let noEventsImageView: UIImageView = {
                 let imageView = UIImageView()
+                imageView.addBorder()
                 imageView.contentMode = .scaleAspectFit
                 imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
+                imageView.layer.cornerRadius = 20
                 return imageView
             }()
             
@@ -117,19 +118,13 @@ class EventTableCell: UITableViewCell {
                                  bottom: view.bottomAnchor)
             
             noEventsImageView.anchor(top: view.topAnchor,
-                                     leading: view.leadingAnchor,
-                                     trailing: view.trailingAnchor,
-                                     bottom: noEventsLabel.topAnchor,
-                                     padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+                                     centerX: view.centerXAnchor,
+                                     size: .init(width: 40, height: 40))
             
             return view
         }()
         
         self.addSubview(cellView)
-        
-        cellView.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor)
+        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 }

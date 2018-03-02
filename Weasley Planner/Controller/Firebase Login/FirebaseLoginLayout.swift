@@ -88,10 +88,7 @@ extension FirebaseLoginVC {
                           padding: .init(top: 5, left: 0, bottom: 0, right: 5),
                           size: .init(width: 65, height: 65))
         
-        iconPickerButton.anchor(top: iconPicker.topAnchor,
-                                leading: iconPicker.leadingAnchor,
-                                trailing: iconPicker.trailingAnchor,
-                                bottom: iconPicker.bottomAnchor)
+        iconPickerButton.fillTo(iconPicker)
         
          firstNameField.anchor(top: passwordField.bottomAnchor,
                               leading: view.leadingAnchor,
@@ -125,10 +122,7 @@ extension FirebaseLoginVC {
                           padding: .init(top: 5, left: 0, bottom: 0, right: 5),
                           size: .init(width: 65, height: 65))
         
-        iconPickerButton.anchor(top: iconPicker.topAnchor,
-                                leading: iconPicker.leadingAnchor,
-                                trailing: iconPicker.trailingAnchor,
-                                bottom: iconPicker.bottomAnchor)
+        iconPickerButton.fillTo(iconPicker)
         
         firstNameField.anchor(top: view.topAnchor,
                               leading: view.leadingAnchor,

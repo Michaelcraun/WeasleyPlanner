@@ -114,10 +114,7 @@ extension AddRecipeVC {
                                    padding: .init(top: 5, left: 5, bottom: 0, right: 5),
                                    size: .init(width: view.frame.width - 20, height: 150))
             
-            recipeImageButton.anchor(top: recipeImageView.topAnchor,
-                                     leading: recipeImageView.leadingAnchor,
-                                     trailing: recipeImageView.trailingAnchor,
-                                     bottom: recipeImageView.bottomAnchor)
+            recipeImageButton.fillTo(recipeImageView)
             
             descriptionView.anchor(top: recipeImageView.bottomAnchor,
                                    leading: scrollView.leadingAnchor,

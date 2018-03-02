@@ -11,27 +11,15 @@ import Foundation
 extension Date {
     func formatForDisplayOfTime() -> String {
         let formatter = DateFormatter()
-        var hours = 0
-        var minutes = 0
-        var appendage = "a"
+        formatter.dateFormat = "h:mm a"
         
-        formatter.dateFormat = "HH"
-        let hoursString = formatter.string(from: self)
-        if let numHours = Int(hoursString) {
-            if numHours > 12 {
-                hours = numHours - 12
-                appendage = "p"
-            }
-        }
+        return formatter.string(from: self)
+    }
+    
+    func string() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy h:mm a"
         
-        formatter.dateFormat = "mm"
-        let minutesString = formatter.string(from: self)
-        if let numMinutes = Int(minutesString) { minutes = numMinutes }
-        
-        if minutes < 10 {
-            return "\(hours):0\(minutes)\(appendage)"
-        } else {
-            return "\(hours):\(minutes)\(appendage)"
-        }
+        return dateFormatter.string(from: self)
     }
 }

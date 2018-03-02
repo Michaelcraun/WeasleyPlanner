@@ -67,22 +67,12 @@ class ShoppingCell: UITableViewCell {
             label.text = "ADD ITEM"
             label.textAlignment = .center
             label.textColor = primaryTextColor
-            label.anchor(top: view.topAnchor,
-                         leading: view.leadingAnchor,
-                         trailing: view.trailingAnchor,
-                         bottom: view.bottomAnchor,
-                         padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+            label.fillTo(view, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
             
             return view
         }()
-        
         self.addSubview(addButton)
-        
-        addButton.anchor(top: self.topAnchor,
-                         leading: self.leadingAnchor,
-                         trailing: self.trailingAnchor,
-                         bottom: self.bottomAnchor,
-                         padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        addButton.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     func layoutCellForPrevious(entry: String) {
@@ -95,13 +85,8 @@ class ShoppingCell: UITableViewCell {
             label.textColor = secondaryTextColor
             return label
         }()
-        
         self.addSubview(itemLabel)
-        
-        itemLabel.anchor(top: self.topAnchor,
-                         leading: self.leadingAnchor,
-                         trailing: self.trailingAnchor,
-                         bottom: self.bottomAnchor)
+        itemLabel.fillTo(self)
     }
     
     func layoutCellForItem(_ item: Item) {
@@ -158,13 +143,7 @@ class ShoppingCell: UITableViewCell {
             
             return view
         }()
-        
         self.addSubview(itemView)
-        
-        itemView.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor,
-                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        itemView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 }

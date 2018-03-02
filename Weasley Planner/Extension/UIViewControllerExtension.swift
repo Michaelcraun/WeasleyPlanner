@@ -11,7 +11,6 @@ import UIKit
 extension UIViewController {
     func displayLoadingView(_ shouldDisplay: Bool) {
         if shouldDisplay {
-            //TODO: Display loading view
             let loadingView: UIView = {
                 let view = UIView()
                 view.alpha = 0.75
@@ -35,7 +34,7 @@ extension UIViewController {
             
             self.view.addSubview(loadingView)
             
-            loadingView.fillToView(self.view)
+            loadingView.fillTo(self.view)
         } else {
             for subview in self.view.subviews {
                 if subview.tag == 1007 {

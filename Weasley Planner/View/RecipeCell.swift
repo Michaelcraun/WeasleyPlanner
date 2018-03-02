@@ -85,7 +85,6 @@ class RecipeCell: UITableViewCell {
             
             let recipeImageView: UIImageView = {
                 let imageView = UIImageView()
-                imageView.clipsToBounds = true
                 imageView.image = recipe.image
                 imageView.addBorder()
                 imageView.layer.cornerRadius = 5
@@ -134,12 +133,7 @@ class RecipeCell: UITableViewCell {
         }()
         
         self.addSubview(cellView)
-        
-        cellView.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor,
-                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     func layoutCellForNoRecipes() {
@@ -151,7 +145,6 @@ class RecipeCell: UITableViewCell {
             
             let defaultImageView: UIImageView = {
                 let imageView = UIImageView()
-                imageView.clipsToBounds = true
                 imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
                 imageView.addBorder()
                 imageView.layer.cornerRadius = 25
@@ -185,12 +178,7 @@ class RecipeCell: UITableViewCell {
         }()
         
         self.addSubview(cellView)
-        
-        cellView.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor,
-                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     //-------------------------------
@@ -273,7 +261,6 @@ class RecipeCell: UITableViewCell {
             
             return view
         }()
-        
         return ingredientHeaderView
     }
     
@@ -297,12 +284,7 @@ class RecipeCell: UITableViewCell {
         measurementField.inputView = picker
         
         self.addSubview(ingredientStack)
-        
-        ingredientStack.anchor(top: self.topAnchor,
-                               leading: self.leadingAnchor,
-                               trailing: self.trailingAnchor,
-                               bottom: self.bottomAnchor,
-                               padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        ingredientStack.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     func layoutIngredientAddCell() {
@@ -316,14 +298,8 @@ class RecipeCell: UITableViewCell {
             label.textColor = secondaryTextColor
             return label
         }()
-        
         self.addSubview(addLabel)
-        
-        addLabel.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor,
-                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        addLabel.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     //--------------------------------
@@ -345,16 +321,9 @@ class RecipeCell: UITableViewCell {
             }()
             
             view.addSubview(instructionsLabel)
-            
-            instructionsLabel.anchor(top: view.topAnchor,
-                                     leading: view.leadingAnchor,
-                                     trailing: view.trailingAnchor,
-                                     bottom: view.bottomAnchor,
-                                     padding: .init(top: 5, left: 5, bottom: 5, right: 5))
-            
+            instructionsLabel.fillTo(view, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
             return view
         }()
-        
         return instructionsView
     }
     
@@ -362,12 +331,7 @@ class RecipeCell: UITableViewCell {
         clearCell()
         
         self.addSubview(instructionView)
-        instructionView.anchor(top: self.topAnchor,
-                               leading: self.leadingAnchor,
-                               trailing: self.trailingAnchor,
-                               bottom: self.bottomAnchor,
-                               padding: .init(top: 5, left: 5, bottom: 5, right: 5),
-                               size: .init(width: 0, height: 60))
+        instructionView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5), andSize: .init(width: 0, height: 60))
     }
     
     func layoutInstructionAddCell() {
@@ -381,14 +345,8 @@ class RecipeCell: UITableViewCell {
             label.textColor = secondaryTextColor
             return label
         }()
-        
         self.addSubview(addLabel)
-        
-        addLabel.anchor(top: self.topAnchor,
-                        leading: self.leadingAnchor,
-                        trailing: self.trailingAnchor,
-                        bottom: self.bottomAnchor,
-                        padding: .init(top: 5, left: 5, bottom: 5, right: 5))
+        addLabel.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     //---------------------

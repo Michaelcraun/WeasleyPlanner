@@ -28,13 +28,8 @@ class TextButton: UIButton {
             label.textAlignment = .center
             return label
         }()
-        
         self.addSubview(label)
-        
-        label.anchor(top: self.topAnchor,
-                     leading: self.leadingAnchor,
-                     trailing: self.trailingAnchor,
-                     bottom: self.bottomAnchor)
+        label.fillTo(self)
     }
     
     func updateTitle() {

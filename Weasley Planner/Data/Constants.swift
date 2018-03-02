@@ -25,7 +25,7 @@ let smallFontSize: CGFloat = 20.0
 var topBannerHeight: CGFloat {
     switch UIDevice.current.modelName {
     case "iPhone X": return 108
-    default: return 70
+    default: return 78
     }
 }
 

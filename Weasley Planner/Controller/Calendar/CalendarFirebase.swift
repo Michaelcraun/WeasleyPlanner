@@ -28,11 +28,28 @@ extension CalendarVC {
                                 guard let familyEvent = eventData.toEvent() else { return }
                                 familyEvent.identifier = event.key
                                 DataHandler.instance.familyEvents.append(familyEvent)
+                                self.calendarView.reloadData()
+                                self.eventTable.reloadData()
                             }
                         }
                     }
                 }
             }
         }
+    }
+    
+    func removeFamilyEvent(_ event: Event) {
+        guard let userFamily = user?.family else { return }
+        
+        DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for family in familySnapshot {
+                guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
+                if familyName == userFamily {
+                    DataHandler.instance.removeFirebaseFamilyEvent(familyID: family.key, eventID: event.identifier)
+                    self.observeFamilyEvents()
+                }
+            }
+        })
     }
 }

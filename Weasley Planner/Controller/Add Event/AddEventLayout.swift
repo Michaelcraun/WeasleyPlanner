@@ -108,12 +108,7 @@ extension AddEventVC: ModernSearchBarDelegate {
     
     func performSearch(searchText: String) {
         matchingLocations.removeAll()
-        guard let userCoordinate = user?.coordinate else {
-            //TODO: Show alert
-            print("SEARCH: Cannot find user's coordinate!")
-            return
-        }
-        
+        guard let userCoordinate = user?.coordinate else { return }
         let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 100000, 100000)
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = searchText
@@ -122,8 +117,6 @@ extension AddEventVC: ModernSearchBarDelegate {
         let search = MKLocalSearch(request: request)
         search.start { (response, error) in
             if error != nil {
-                //TODO: Show alert
-            } else if response?.mapItems.count == 0 {
                 //TODO: Show alert
             } else {
                 for mapItem in response!.mapItems {
