@@ -38,7 +38,7 @@ extension MainVC {
                 if addressString == "" {
                     addressString = locality
                 } else {
-                    addressString += ", \(locality)"
+                    addressString += ", \n\(locality)"
                 }
             }
             

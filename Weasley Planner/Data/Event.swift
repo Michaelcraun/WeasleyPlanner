@@ -98,7 +98,7 @@ class Event {
             
             let titleLabel: UILabel = {
                 let label = UILabel()
-                label.font = UIFont(name: fontName, size: largeFontSize)
+                label.font = UIFont(name: secondaryFontName, size: smallFontSize)
                 label.text = self.title
                 label.textColor = secondaryTextColor
                 return label
@@ -106,8 +106,9 @@ class Event {
             
             let locationLabel: UILabel = {
                 let label = UILabel()
-                label.font = UIFont(name: fontName, size: smallFontSize)
-                label.textColor = secondaryTextColor
+                label.font = UIFont(name: secondaryFontName, size: smallestFontSize)
+                label.numberOfLines = 0
+                label.textColor = primaryColor
                 label.text = {
                     guard let locationString = self.locationString else { return "" }
                     return locationString
@@ -128,12 +129,12 @@ class Event {
                 titleLabel.anchor(top: view.topAnchor,
                                   leading: timeView.trailingAnchor,
                                   trailing: view.trailingAnchor,
-                                  padding: .init(top: 2, left: 2, bottom: 0, right: 2))
+                                  padding: .init(top: 5, left: 5, bottom: 0, right: 5))
                 
                 locationLabel.anchor(top: titleLabel.bottomAnchor,
                                      leading: timeView.trailingAnchor,
                                      trailing: view.trailingAnchor,
-                                     padding: .init(top: 2, left: 2, bottom: 2, right: 2))
+                                     padding: .init(top: 5, left: 5, bottom: 5, right: 5))
             } else {
                 view.addSubview(timeView)
                 view.addSubview(userIconView)
@@ -155,12 +156,12 @@ class Event {
                 titleLabel.anchor(top: view.topAnchor,
                                   leading: userIconView.trailingAnchor,
                                   trailing: view.trailingAnchor,
-                                  padding: .init(top: 2, left: 2, bottom: 0, right: 2))
+                                  padding: .init(top: 5, left: 5, bottom: 0, right: 5))
                 
                 locationLabel.anchor(top: titleLabel.bottomAnchor,
                                      leading: userIconView.trailingAnchor,
                                      trailing: view.trailingAnchor,
-                                     padding: .init(top: 2, left: 2, bottom: 2, right: 2))
+                                     padding: .init(top: 5, left: 5, bottom: 5, right: 5))
             }
             return view
         }()

@@ -11,13 +11,31 @@ import CoreLocation
 import MapKit
 
 class AddEventVC: UIViewController {
-    //--------------------
-    //MARK: - UI Variables
-    //--------------------
+    //---------------------
+    // MARK: - UI Variables
+    //---------------------
+    var locationsListHeight: NSLayoutConstraint!
+    
     let titleBar: TitleBar = {
         let bar = TitleBar()
         bar.subtitle = "Add Event"
         return bar
+    }()
+    
+    let locationField: InputView = {
+        let field = InputView()
+        field.inputField.delegate = textManager
+        field.inputType = .location
+        return field
+    }()
+    
+    let locationList: UITableView = {
+        let tableView = UITableView()
+        tableView.addMidShadows()
+        tableView.backgroundColor = primaryColor
+        tableView.register(LocationCell.self, forCellReuseIdentifier: "locationCell")
+        tableView.separatorStyle = .none
+        return tableView
     }()
     
     let titleField: InputView = {
@@ -39,30 +57,6 @@ class AddEventVC: UIViewController {
         field.inputField.delegate = textManager
         field.inputType = .user
         return field
-    }()
-    
-    let locationSearchBar: ModernSearchBar = {
-        let bar = ModernSearchBar()
-        bar.placeholder = "Location..."
-        bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
-        bar.searchLabel_textColor = primaryTextColor
-        bar.searchLabel_backgroundColor = primaryColor
-        bar.suggestionsView_maxHeight = 180
-        bar.suggestionsView_separatorStyle = .none
-        bar.suggestionsView_contentViewColor = primaryColor
-        return bar
-    }()
-    
-    let mealSearchBar: ModernSearchBar = {
-        let bar = ModernSearchBar()
-        bar.placeholder = "Meal..."
-        bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
-        bar.searchLabel_textColor = primaryTextColor
-        bar.searchLabel_backgroundColor = primaryColor
-        bar.suggestionsView_maxHeight = 180
-        bar.suggestionsView_separatorStyle = .none
-        bar.suggestionsView_contentViewColor = primaryColor
-        return bar
     }()
     
     let saveButton: TextButton = {
@@ -96,18 +90,10 @@ class AddEventVC: UIViewController {
     var assignedUser: User?
     var eventType: EventType = .appointment
     var selectedDate: Date?
-    var selectedLocation: CLLocation?
+    var selectedLocation: MKMapItem?
     var matchingLocations = [MKMapItem]() {
         didSet {
-            var matchingItems = [String]()
-            for location in matchingLocations {
-                guard let locationName = location.name else { return }
-                let suggestionsView = locationSearchBar.getSuggestionsView()
-                
-                matchingItems.append(locationName)
-                locationSearchBar.setDatas(datas: matchingItems)
-                suggestionsView.reloadData()
-            }
+            locationList.reloadData()
         }
     }
     
@@ -121,8 +107,6 @@ class AddEventVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        locationSearchBar.delegateModernSearchBar = self
-        mealSearchBar.delegateModernSearchBar = self
         textManager.delegate = self
         titleBar.delegate = self
         
@@ -156,54 +140,9 @@ class AddEventVC: UIViewController {
         let eventIdentifier = DataHandler.instance.createUniqueIDString(with: title)
         let newEvent = Event(date: date, title: title, type: eventType, identifier: eventIdentifier)
         if let eventUser = assignedUser { newEvent.assignedUser = eventUser }
-        if let eventLocation = selectedLocation {
-            let geoCoder = CLGeocoder()
-            var addressString = ""
-            
-            newEvent.location = eventLocation
-            geoCoder.reverseGeocodeLocation(eventLocation, completionHandler: { (placemarks, error) in
-                if let _ = error { return }
-                guard let placemarks = placemarks else { return }
-                let placemark = placemarks[0]
-                
-                if let subThoroughfare = placemark.subThoroughfare {
-                    addressString = subThoroughfare
-                }
-                
-                if let thoroughfare = placemark.thoroughfare {
-                    if addressString == "" {
-                        addressString = thoroughfare
-                    } else {
-                        addressString += " \(thoroughfare)"
-                    }
-                }
-                
-                if let locality = placemark.locality {
-                    if addressString == "" {
-                        addressString = locality
-                    } else {
-                        addressString += ", \(locality)"
-                    }
-                }
-                
-                if let country = placemark.country {
-                    if addressString == "" {
-                        addressString = country
-                    } else {
-                        addressString += ", \(country)"
-                    }
-                }
-                
-                if let postalCode = placemark.postalCode {
-                    if addressString == "" {
-                        addressString = postalCode
-                    } else {
-                        addressString += ", \(postalCode)"
-                    }
-                }
-                
-                newEvent.locationString = addressString
-            })
+        if let selectedLocation = selectedLocation {
+            if let eventLocation = selectedLocation.placemark.location { newEvent.location = eventLocation }
+            if let locationAddress = selectedLocation.placemark.title { newEvent.locationString = locationAddress }
         }
         updateFamilyEvent(newEvent)
     }

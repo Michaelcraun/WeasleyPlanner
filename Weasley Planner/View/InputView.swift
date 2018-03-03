@@ -11,7 +11,7 @@ import UIKit
 class InputView: UIView {
     let inputField: InputField = {
         let field = InputField()
-        field.font = UIFont(name: fontName, size: smallFontSize)
+        field.font = UIFont(name: secondaryFontName, size: smallerFontSize)
         field.textColor = secondaryTextColor
         return field
     }()
@@ -19,7 +19,7 @@ class InputView: UIView {
     let inputTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .clear
-        textView.font = UIFont(name: fontName, size: smallFontSize)
+        textView.font = UIFont(name: secondaryFontName, size: smallerFontSize)
         textView.textColor = secondaryTextColor
         return textView
     }()

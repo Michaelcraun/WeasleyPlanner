@@ -24,7 +24,13 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate.view.addTapToDismissKeyboard()
         
-        
+        if let addEvent = delegate as? AddEventVC {
+            if textField == addEvent.locationField.inputField {
+                addEvent.view.removeTapToDismissKeyboard()
+                addEvent.animateLocationTable(shouldOpen: true)
+                addEvent.locationField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -33,16 +39,33 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
         } else if let addRecipe = delegate as? AddRecipeVC {
             addRecipe.saveButtonPressed(nil)
         } else if let addEvent = delegate as? AddEventVC {
-            addEvent.saveButtonPressed(nil)
+            if textField == addEvent.locationField.inputField {
+                guard let searchText = textField.text else { return false }
+                addEvent.performSearch(searchText: searchText)
+            } else {
+                addEvent.saveButtonPressed(nil)
+            }
         }
-        
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate.view.removeTapToDismissKeyboard()
         
-        
+        if let addEvent = delegate as? AddEventVC {
+            if textField == addEvent.locationField.inputField {
+                addEvent.animateLocationTable(shouldOpen: false)
+            }
+        }
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if let addEvent = delegate as? AddEventVC {
+            if textField == addEvent.locationField.inputField {
+                guard let searchText = textField.text else { return }
+                addEvent.performSearch(searchText: searchText)
+            }
+        }
     }
     
     //-----------------------------------

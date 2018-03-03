@@ -20,6 +20,8 @@ let secondaryFontName = "Copperplate"
 let largeFontSize: CGFloat = 30.0
 let mediumFontSize: CGFloat = 25.0
 let smallFontSize: CGFloat = 20.0
+let smallerFontSize: CGFloat = 15.0
+let smallestFontSize: CGFloat = 10.0
 
 //MARK: Layout Constants
 var topBannerHeight: CGFloat {

@@ -52,13 +52,13 @@ class UserPane: UIView {
         
         userNameLabel.anchor(top: self.topAnchor,
                              leading: userIconView.trailingAnchor,
-                             trailing: self.trailingAnchor,
-                             padding: .init(top: 5, left: 5, bottom: 0, right: 5))
+                             padding: .init(top: 5, left: 5, bottom: 0, right: 0))
         
-        locationLabel.anchor(leading: userIconView.trailingAnchor,
+        locationLabel.anchor(top: userNameLabel.bottomAnchor,
+                             leading: userIconView.trailingAnchor,
                              trailing: self.trailingAnchor,
                              bottom: self.bottomAnchor,
-                             padding: .init(top: 5, left: 5, bottom: 5, right: 0))
+                             padding: .init(top: 0, left: 5, bottom: 5, right: 5))
     }
     
     func layoutForLogin() {
@@ -99,7 +99,7 @@ class UserPane: UIView {
     
     private func layoutUserNameLabel() -> UILabel {
         let userNameLabel = UILabel()
-        userNameLabel.font = UIFont(name: fontName, size: mediumFontSize)
+        userNameLabel.font = UIFont(name: secondaryFontName, size: smallFontSize)
         userNameLabel.text = userName
         userNameLabel.textColor = secondaryTextColor
         userNameLabel.sizeToFit()
@@ -109,7 +109,8 @@ class UserPane: UIView {
     
     private func layoutLocationLabel() -> UILabel {
         let locationLabel = UILabel()
-        locationLabel.font = UIFont(name: fontName, size: smallFontSize)
+        locationLabel.font = UIFont(name: secondaryFontName, size: smallestFontSize)
+        locationLabel.numberOfLines = 0
         locationLabel.text = userLocation
         locationLabel.textColor = primaryColor
         locationLabel.sizeToFit()

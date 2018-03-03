@@ -49,7 +49,7 @@ class UserCell: UITableViewCell {
                                padding: .init(top: 5, left: 0, bottom: 0, right: 0),
                                size: .init(width: 30, height: 30))
         
-        noUserLabel.font = UIFont(name: fontName, size: smallFontSize)
+        noUserLabel.font = UIFont(name: secondaryFontName, size: smallFontSize)
         noUserLabel.text = "No Users..."
         noUserLabel.textColor = secondaryTextColor
         noUserLabel.textAlignment = .center
