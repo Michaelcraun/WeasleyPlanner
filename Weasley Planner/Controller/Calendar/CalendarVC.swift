@@ -61,24 +61,6 @@ class CalendarVC: UIViewController {
         calendarView.calendarDataSource = self
         calendarView.calendarDelegate = self
         
-        //------------------
-        // MARK: - TEST DATA
-        //------------------
-        let doctor = Event(date: Date(),
-                           locationString: "2001 Stults Rd, Huntington, IN 46750",
-                           title: "Doctor Appointment",
-                           type: .appointment,
-                           identifier: DataHandler.instance.createUniqueIDString(with: "Doctor Appointment"))
-        let laundry = Event(date: Date(),
-                            title: "Laundry",
-                            type: .chore,
-                            identifier: DataHandler.instance.createUniqueIDString(with: "Laundry"))
-        let fishSticks = Event(date: Date(),
-                               title: "Fish Sticks",
-                               type: .meal,
-                               identifier: DataHandler.instance.createUniqueIDString(with: "Fish Sticks"))
-        eventList = [doctor, laundry, fishSticks]
-
         layoutView()
         beginConnectionTest()
     }
@@ -86,7 +68,11 @@ class CalendarVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         titleBar.delegate = self
         
-        observeFamilyEvents()
+        displayLoadingView(true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.observeFamilyEvents()
+            self.displayLoadingView(false)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

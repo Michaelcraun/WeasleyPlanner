@@ -66,16 +66,14 @@ class AddEventVC: UIViewController {
         return button
     }()
     
+    let recurrenceView: RecurrenceView = {
+        let view = RecurrenceView()
+        return view
+    }()
+    
     //--------------------
     // MARK: - INPUT VIEWS
     //--------------------
-    let userPicker: DataPicker = {
-        let picker = DataPicker()
-        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-        return picker
-    }()
-    
     let datePicker: DataPicker = {
         let picker = DataPicker()
         picker.isDatePicker = true
@@ -84,11 +82,20 @@ class AddEventVC: UIViewController {
         return picker
     }()
     
+    let userPicker: DataPicker = {
+        let picker = DataPicker()
+        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+        return picker
+    }()
+    
     //MARK: Data Variables
+    let formatter = DateFormatter()
     var user: User?
     var eventToEdit: Event?
     var assignedUser: User?
     var eventType: EventType = .appointment
+    var isRecurringChore = false
     var selectedDate: Date?
     var selectedLocation: MKMapItem?
     var matchingLocations = [MKMapItem]() {
@@ -144,6 +151,44 @@ class AddEventVC: UIViewController {
             if let eventLocation = selectedLocation.placemark.location { newEvent.location = eventLocation }
             if let locationAddress = selectedLocation.placemark.title { newEvent.locationString = locationAddress }
         }
+        
+        if recurrenceView.isRecurringChore {
+            let recurrenceString = recurrenceView.recurrenceString
+            newEvent.recurrenceString = recurrenceString
+        }
+        
         updateFamilyEvent(newEvent)
+    }
+    
+    func scheduleFutureEvents(withRecurrence recurrence: String, andEvent event: Event) {
+        let dateComponents: DateComponents = {
+            let recurrenceParts = recurrence.split(separator: "|")
+            let recurrenceInterval = Int(String(recurrenceParts[0]))
+            let recurrenceType = String(recurrenceParts[1])
+            
+            var _dateComponents = DateComponents()
+            switch recurrenceType {
+            case "day", "days": _dateComponents.day = recurrenceInterval
+            case "week", "weeks": _dateComponents.day = recurrenceInterval! * 7
+            case "month", "months": _dateComponents.month = recurrenceInterval
+            default: _dateComponents.year = recurrenceInterval
+            }
+            return _dateComponents
+        }()
+        
+        formatter.dateFormat = "MM dd yyyy"
+        let calendar = Calendar.current
+        guard let calendarBounds = formatter.date(from: "12 31 2052") else { return }
+        guard let newEventDate = calendar.date(byAdding: dateComponents, to: event.date) else { return }
+        
+        if newEventDate <= calendarBounds {
+            let newIdentifier = DataHandler.instance.createUniqueIDString(with: event.title)
+            print("RECURRENCE: newIdentifier: \(newIdentifier)")
+            print("RECURRENCE: newEventDate: \(newEventDate)")
+            event.date = newEventDate
+            event.identifier = newIdentifier
+            updateFamilyEvent(event)
+//            scheduleFutureEvents(withRecurrence: recurrence, andEvent: event)
+        }
     }
 }

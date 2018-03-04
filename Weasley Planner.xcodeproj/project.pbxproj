@@ -31,6 +31,7 @@
 		9B644D39203063DD003B6A50 /* MainFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D38203063DD003B6A50 /* MainFirebase.swift */; };
 		9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D3A20308BD6003B6A50 /* UserCell.swift */; };
 		9B9C70672049B67700F61248 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C70662049B67700F61248 /* LocationCell.swift */; };
+		9BA1F0A9204AD7E600B44843 /* RecurrenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */; };
 		9BA7B0DA2030A07E002886DF /* RecipeListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0D92030A07E002886DF /* RecipeListVC.swift */; };
 		9BA7B0DD2030A11F002886DF /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DC2030A11F002886DF /* SettingsVC.swift */; };
 		9BA7B0DF2030E323002886DF /* CalendarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DE2030E323002886DF /* CalendarLayout.swift */; };
@@ -109,6 +110,7 @@
 		9B644D38203063DD003B6A50 /* MainFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFirebase.swift; sourceTree = "<group>"; };
 		9B644D3A20308BD6003B6A50 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		9B9C70662049B67700F61248 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceView.swift; sourceTree = "<group>"; };
 		9BA7B0D92030A07E002886DF /* RecipeListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListVC.swift; sourceTree = "<group>"; };
 		9BA7B0DC2030A11F002886DF /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9BA7B0DE2030E323002886DF /* CalendarLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarLayout.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				9B9C70662049B67700F61248 /* LocationCell.swift */,
 				9BF398C4203B93C40009FC33 /* PickerView.swift */,
 				9BF398BE2039FB940009FC33 /* RecipeCell.swift */,
+				9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */,
 				9BA7B104203517F7002886DF /* ShoppingCell.swift */,
 				9B644D2F202F4C7B003B6A50 /* TextButton.swift */,
 				9BC2E177202CEA1C000B8E15 /* TitleBar.swift */,
@@ -649,6 +652,7 @@
 				9BC2E178202CEA1C000B8E15 /* TitleBar.swift in Sources */,
 				9BF398CF203C696A0009FC33 /* UITableViewCellExtension.swift in Sources */,
 				9B9C70672049B67700F61248 /* LocationCell.swift in Sources */,
+				9BA1F0A9204AD7E600B44843 /* RecurrenceView.swift in Sources */,
 				9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */,
 				9BF398CB203C69130009FC33 /* UIDeviceExtension.swift in Sources */,
 				9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */,

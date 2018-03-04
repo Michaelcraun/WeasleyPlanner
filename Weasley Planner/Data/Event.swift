@@ -29,14 +29,16 @@ class Event {
     var date: Date
     var identifier: String
     var locationString: String?
+    var recurrenceString: String?
     var title: String
     var type: EventType
     
-    init(assignedUser: User? = nil, location: CLLocation? = nil, date: Date, locationString: String? = nil, title: String, type: EventType, identifier: String) {
+    init(assignedUser: User? = nil, location: CLLocation? = nil, date: Date, locationString: String? = nil, recurrenceString: String? = nil, title: String, type: EventType, identifier: String) {
         self.assignedUser = assignedUser
         self.location = location
         self.date = date
         self.locationString = locationString
+        self.recurrenceString = recurrenceString
         self.title = title
         self.type = type
         self.identifier = identifier
@@ -188,6 +190,11 @@ class Event {
         eventDictionary["locationString"] = {
             guard let eventLocationString = self.locationString else { return "none" }
             return eventLocationString
+        }()
+        
+        eventDictionary["recurrenceString"] = {
+            guard let recurrenceString = self.recurrenceString else { return "none" }
+            return recurrenceString
         }()
         
         return eventDictionary

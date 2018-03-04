@@ -19,6 +19,11 @@ extension AddEventVC {
                 if familyName == userFamily {
                     let eventData = event.dictionary()
                     DataHandler.instance.updateFirebaseFamilyEvent(familyID: family.key, eventID: event.identifier, eventData: eventData)
+                    
+                    if self.recurrenceView.isRecurringChore {
+                        self.scheduleFutureEvents(withRecurrence: event.recurrenceString!, andEvent: event)
+                    }
+                    
                     self.dismiss(animated: true, completion: nil)
                 }
             }

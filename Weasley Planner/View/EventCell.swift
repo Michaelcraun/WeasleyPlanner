@@ -49,6 +49,7 @@ class CalendarCell: JTAppleCell {
         eventView.anchor(leading: self.leadingAnchor,
                          trailing: self.trailingAnchor,
                          bottom: self.bottomAnchor,
+                         padding: .init(top: 0, left: 0, bottom: 1, right: 0),
                          size: .init(width: 0, height: 5))
         
         selectedView.anchor(top: self.topAnchor,

@@ -20,6 +20,17 @@ extension AddEventVC {
         view.addSubview(titleBar)
         view.addSubview(saveButton)
         
+        if eventType == .meal {
+            //TODO: Segue to Recipe List so user can pick a meal/add a new one
+        } else if eventType == .chore {
+            view.addSubview(recurrenceView)
+            
+            recurrenceView.anchor(top: userField.bottomAnchor,
+                                  leading: view.leadingAnchor,
+                                  trailing: view.trailingAnchor,
+                                  padding: .init(top: 5, left: 5, bottom: 0, right: 5))
+        }
+        
         titleBar.anchor(top: view.topAnchor,
                         leading: view.leadingAnchor,
                         trailing: view.trailingAnchor,
@@ -70,10 +81,6 @@ extension AddEventVC {
                          padding: .init(top: 5, left: 5, bottom: 0, right: 5),
                          size: .init(width: 0, height: 30))
         
-        if eventType == .meal {
-            //TODO: Segue to Recipe List so user can pick a meal/add a new one
-        }
-        
         saveButton.anchor(leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
                           bottom: view.bottomAnchor,
@@ -82,6 +89,9 @@ extension AddEventVC {
     }
 }
 
+//-------------------------------------------
+// MARK: - PICKERVIEW DATASOURCE AND DELEGATE
+//-------------------------------------------
 extension AddEventVC: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -107,6 +117,9 @@ extension AddEventVC: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 }
 
+//------------------------------------------
+// MARK: - TABLEVIEW DATASOURCE AND DELEGATE
+//------------------------------------------
 extension AddEventVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return matchingLocations.count
@@ -180,16 +193,6 @@ extension AddEventVC: UITableViewDataSource, UITableViewDelegate {
                     self.matchingLocations.append(mapItem)
                 }
             }
-        }
-    }
-}
-
-extension AddEventVC: ModernSearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-//            locationSearchBar.setDatas(datas: [])
-        } else {
-            performSearch(searchText: searchText)
         }
     }
 }
