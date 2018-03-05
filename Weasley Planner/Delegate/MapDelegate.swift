@@ -9,11 +9,14 @@
 import Foundation
 import MapKit
 
+/// Map Manager for MKMapViews
 class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
+    /// The UIViewController the MapDelegate belongs to
     var delegate: UIViewController?
     var locationManager = CLLocationManager()
-    let regionRadius: CLLocationDistance = 1000
+    private let regionRadius: CLLocationDistance = 1000
     
+    /// Checks if user has authorized use of location services
     func checkLocationAuthStatus() {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -26,33 +29,8 @@ class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkLocationAuthStatus()
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let annotation = annotation as? UserAnnotaion {
-            let annotationView = annotation.user.annotationViewForUser()
-            return annotationView
-        }
-        return nil
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let userLocation = locations.last else { return }
-        
-        if let main = delegate as? MainVC {
-            main.updateUserLocation(userLocation)
-            if main.mapIsCenteredOnCurrentUser {
-                centerMapOnLocation(userLocation.coordinate)
-            } else {
-                if let coordinate = main.userToCenterMapOn?.coordinate {
-                    centerMapOnLocation(coordinate)
-                }
-            }
-        }
-    }
-    
+    /// Centers the map on a specific coordinate with a region of 2000 by 2000 meters.
+    /// - parameter coordinate: The CLLocationCoordinate2D that the map should focus on.
     func centerMapOnLocation(_ coordinate: CLLocationCoordinate2D) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius * 2.0, regionRadius * 2.0)
         
@@ -62,6 +40,8 @@ class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+     /// Zooms out the map to show all annotations on the map view with a region of 2000 by 2000 meters.
+     /// - parameter mapView: The MKMapView annotations are displayed on.
     func zoom(toFitAnnotationOn mapView: MKMapView) {
         if mapView.annotations.count == 0 { return }
         
@@ -85,5 +65,32 @@ class MapDelegate: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         var region = MKCoordinateRegion(center: center, span: span)
         region = mapView.regionThatFits(region)
         mapView.setRegion(region, animated: true)
+    }
+    
+    internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthStatus()
+    }
+    
+    internal func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? UserAnnotaion {
+            let annotationView = annotation.user.annotationViewForUser()
+            return annotationView
+        }
+        return nil
+    }
+    
+    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation = locations.last else { return }
+        
+        if let main = delegate as? MainVC {
+            main.updateUserLocation(userLocation)
+            if main.mapIsCenteredOnCurrentUser {
+                centerMapOnLocation(userLocation.coordinate)
+            } else {
+                if let coordinate = main.userToCenterMapOn?.coordinate {
+                    centerMapOnLocation(coordinate)
+                }
+            }
+        }
     }
 }

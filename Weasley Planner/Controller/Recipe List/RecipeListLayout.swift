@@ -55,7 +55,7 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
         if DataHandler.instance.familyRecipes.count > 0 {
             cell.layoutCellForRecipe(DataHandler.instance.familyRecipes[indexPath.row])
         } else {
-            cell.layoutCellForNoRecipes()
+            cell.layoutCellForNo("Recipe")
         }
         return cell
     }

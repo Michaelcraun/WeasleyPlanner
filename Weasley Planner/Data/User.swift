@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import Firebase
 
+/// Represents a single user to be created and stored on Firebase and displayed to the user.
+/// - important: All values are optional
 class User {
     var coordinate: CLLocationCoordinate2D?
     var family: String?
@@ -20,6 +22,19 @@ class User {
     var status: Bool
     var uid: String?
     
+    /// The initializer for the User class
+    /// - parameter coordinate: The optional CLLocationCoordinate2D value that represents the coordinate of the
+    /// specified user (defaults to nil)
+    /// - parameter family: The optional String value that represents the user's family (defaults to nil)
+    /// - parameter icon: The optional UIImage value that represents the user's chosen image (dfaults to nil)
+    /// - parameter isFamilyCreator: A Boolean value that represents if the user has created the user's family
+    /// (defaults to false)
+    /// - parameter name: The optional String value that represents the specified user's name (defaults to nil)
+    /// - parameter location: The optional String value that represents the specified user's physical address
+    /// (defaults to nil)
+    /// - parameter status: A Boolean value that represents whether the user is currently logged in or not
+    /// (defaults to false)
+    /// - parameter uid: The String value that represents the user's unique identifier
     init(coordinate: CLLocationCoordinate2D? = nil, family: String? = nil, icon: UIImage? = nil, isFamilyCreator: Bool = false, name: String? = nil, location: String? = nil, status: Bool = false, uid: String? = nil) {
         self.coordinate = coordinate
         self.icon = icon
@@ -31,6 +46,8 @@ class User {
         self.uid = uid
     }
     
+    /// Creates an MKAnnotationView for a specific user, using that user's image
+    /// - returns: An MKAnnotationView that represents the specified user
     func annotationViewForUser() -> MKAnnotationView {
         let userAnnotation = MKAnnotationView()
         userAnnotation.addBorder()
@@ -43,6 +60,7 @@ class User {
     }
 }
 
+/// The MKAnnotation object to be used in the map view
 class UserAnnotaion: NSObject, MKAnnotation {
     dynamic var coordinate: CLLocationCoordinate2D
     var user: User

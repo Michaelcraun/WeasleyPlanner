@@ -9,8 +9,10 @@
 import UIKit
 import AudioToolbox.AudioServices
 
+/// Protocol for handling alert controllers
 protocol Alertable {  }
 
+/// An enumeration of alert types. This must be modified if you want to add a new type of alert!
 enum Alert {
     case defaultError
     case generalFirebaseError
@@ -37,6 +39,7 @@ enum Alert {
     case weakPassword
     case wrongPassword
     
+    /// The title displayed by the alert
     var title: String {
         switch self {
         case .generalFirebaseError: return "Firebase Error:"
@@ -60,6 +63,7 @@ enum Alert {
         }
     }
     
+    /// The message displayed by the alert
     var message: String {
         switch self {
         case .generalFirebaseError: return "An unexpected error occured in Firebase. Please try again."
@@ -86,6 +90,7 @@ enum Alert {
         }
     }
     
+    /// The notification type of the alert
     var notificationType: NotificationType {
         switch self {
         case .addUserToFamily: return .warning
@@ -96,6 +101,7 @@ enum Alert {
         }
     }
     
+    // Sets whether the alert needs a Yes and No option or simply an OK option. Should be handled within the showAlert(_:) function.
     var needsOptions: Bool {
         switch self {
         case .addUserToFamily: return true
@@ -106,6 +112,7 @@ enum Alert {
         }
     }
     
+    /// Sets whether the alert needs a text field for user input. Should be handled within the showAlert(_:) function.
     var needsTextField: Bool {
         switch self {
         case .startFamily: return true
@@ -127,6 +134,8 @@ enum NotificationType {
 }
 
 extension Alertable where Self: UIViewController {
+    /// Displays a blur effect view and an alert that has various features and functionalities, as determined by the Alert enumeration.
+    /// - parameter alert: The type of alert you wish to be displayed. This type must be set up before being used!
     func showAlert(_ alert: Alert) {
         var defaultActionTitle: String {
             switch alert.needsOptions {
@@ -193,6 +202,7 @@ extension Alertable where Self: UIViewController {
         present(alertController, animated: false, completion: nil)
     }
     
+    /// Dismisses the alert by fading out the blur effect view in the background
     private func dismissAlert() {
         for subview in self.view.subviews {
             if subview.tag == 1001 {
@@ -201,6 +211,8 @@ extension Alertable where Self: UIViewController {
         }
     }
     
+    /// Adds either haptic feedback or vibration, depending upon the user's device hardware
+    /// - parameter type: The NotificationType that set in the Alert enumeration
     private func addVibration(withNotificationType type: NotificationType) {
         var notificationDevice: NotificationDevice {
             switch UIDevice.current.modelName {

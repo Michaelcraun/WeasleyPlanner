@@ -8,32 +8,39 @@
 
 import UIKit
 
+/// Manager for UITextField and UITextView input
 class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
+    /// The UIViewController TextDelegate belongs to. Must be set before setting the delegates of any UITextField or UITextView is set
     var delegate: UIViewController!
     
     //------------------------------------
     // MARK: - TEXT FIELD DELEGATE METHODS
     //------------------------------------
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    internal func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         delegate.view.endEditing(true)
         
         return true
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    internal func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate.view.addTapToDismissKeyboard()
         
         if let addEvent = delegate as? AddEventVC {
             if textField == addEvent.locationField.inputField {
                 addEvent.view.removeTapToDismissKeyboard()
-                addEvent.animateLocationTable(shouldOpen: true)
+                addEvent.animateTableView(addEvent.locationList, shouldOpen: true)
                 addEvent.locationField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            } else if textField == addEvent.titleField.inputField {
+                if addEvent.eventType == .meal {
+                    addEvent.view.removeTapToDismissKeyboard()
+                    addEvent.animateTableView(addEvent.recipeList, shouldOpen: true)
+                    addEvent.titleField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                }
             }
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let firebaseLogin = delegate as? FirebaseLoginVC {
             firebaseLogin.registerButtonPressed(nil)
         } else if let addRecipe = delegate as? AddRecipeVC {
@@ -41,7 +48,10 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
         } else if let addEvent = delegate as? AddEventVC {
             if textField == addEvent.locationField.inputField {
                 guard let searchText = textField.text else { return false }
-                addEvent.performSearch(searchText: searchText)
+                addEvent.performLocationSearch(searchText: searchText)
+            } else if textField == addEvent.titleField.inputField && addEvent.eventType == .meal {
+                guard let searchText = textField.text else { return false }
+                addEvent.performRecipeSearch(searchText: searchText)
             } else {
                 addEvent.saveButtonPressed(nil)
             }
@@ -49,12 +59,12 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    internal func textFieldDidEndEditing(_ textField: UITextField) {
         delegate.view.removeTapToDismissKeyboard()
         
         if let addEvent = delegate as? AddEventVC {
             if textField == addEvent.locationField.inputField {
-                addEvent.animateLocationTable(shouldOpen: false)
+                addEvent.animateTableView(addEvent.locationList, shouldOpen: false)
             } else if textField == addEvent.recurrenceView.amountField {
                 addEvent.recurrenceView.recurrenceTypePicker.dataPicker.reloadAllComponents()
                 addEvent.recurrenceView.updateRecurrenceView(true)
@@ -68,7 +78,10 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
         if let addEvent = delegate as? AddEventVC {
             if textField == addEvent.locationField.inputField {
                 guard let searchText = textField.text else { return }
-                addEvent.performSearch(searchText: searchText)
+                addEvent.performLocationSearch(searchText: searchText)
+            } else if textField == addEvent.titleField.inputField {
+                guard let searchText = textField.text else { return }
+                addEvent.performRecipeSearch(searchText: searchText)
             }
         }
     }
@@ -77,19 +90,19 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
     // MARK: - TEXT VIEW DELEGATE METHODS
     //-----------------------------------
     
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    internal func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         delegate.view.endEditing(true)
         
         return true
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    internal func textViewDidBeginEditing(_ textView: UITextView) {
         delegate.view.addTapToDismissKeyboard()
         
         
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    internal func textViewDidEndEditing(_ textView: UITextView) {
         delegate.view.removeTapToDismissKeyboard()
         
         

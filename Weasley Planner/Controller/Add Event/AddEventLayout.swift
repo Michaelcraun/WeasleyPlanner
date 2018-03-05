@@ -17,11 +17,12 @@ extension AddEventVC {
         view.addSubview(dateField)
         view.addSubview(userField)
         view.addSubview(locationList)
+        view.addSubview(recipeList)
         view.addSubview(titleBar)
         view.addSubview(saveButton)
         
         if eventType == .meal {
-            //TODO: Segue to Recipe List so user can pick a meal/add a new one
+            
         } else if eventType == .chore {
             view.addSubview(recurrenceView)
             
@@ -64,6 +65,23 @@ extension AddEventVC {
                           trailing: view.trailingAnchor,
                           padding: .init(top: 5, left: 5, bottom: 0, right: 5),
                           size: .init(width: 0, height: 30))
+        
+        recipeListHeight = NSLayoutConstraint(item: recipeList,
+                                              attribute: .height,
+                                              relatedBy: .equal,
+                                              toItem: nil,
+                                              attribute: .notAnAttribute,
+                                              multiplier: 1.0,
+                                              constant: 0)
+        
+        recipeList.backgroundColor = primaryColor
+        recipeList.dataSource = self
+        recipeList.delegate = self
+        recipeList.addConstraint(recipeListHeight)
+        recipeList.anchor(top: titleField.bottomAnchor,
+                          leading: titleField.leadingAnchor,
+                          trailing: titleField.trailingAnchor,
+                          padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         
         datePicker.anchor()
         dateField.inputField.inputView = datePicker
@@ -122,61 +140,118 @@ extension AddEventVC: UIPickerViewDataSource, UIPickerViewDelegate {
 //------------------------------------------
 extension AddEventVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return matchingLocations.count
+        if tableView == locationList {
+            return matchingLocations.count + 1
+        } else {
+            return matchingRecipes.count + 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell") as! LocationCell
-        let indexedLocation = matchingLocations[indexPath.row]
-        cell.layoutCell(forLocation: indexedLocation)
-        return cell
+        if tableView == locationList {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell") as! LocationCell
+            if indexPath.row == 0 {
+                cell.layoutCancelCell()
+            } else {
+                if matchingLocations.count == 0 {
+                    cell.layoutCellForNo("Location")
+                } else {
+                    let indexedLocation = matchingLocations[indexPath.row - 1]
+                    cell.layoutCell(forLocation: indexedLocation)
+                }
+            }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell") as! RecipeCell
+            if indexPath.row == 0 {
+                cell.layoutCancelCell()
+            } else {
+                if matchingRecipes.count == 0 {
+                    cell.layoutCellForNo("Recipe")
+                } else {
+                    let indexedRecipe = matchingRecipes[indexPath.row]
+                    cell.layoutCellForRecipe(indexedRecipe)
+                }
+            }
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if indexPath.row == 0 {
+            return 50
+        } else {
+            if tableView == locationList {
+                return 50
+            } else {
+                return 100
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view.endEditing(true)
-        let location = matchingLocations[indexPath.row]
-        if let locationName = location.name {
-            selectedLocation = location
-            locationField.inputField.text = locationName
+        
+        if tableView == locationList {
+            let location = matchingLocations[indexPath.row]
+            if let locationName = location.name {
+                selectedLocation = location
+                locationField.inputField.text = locationName
+            }
+        } else {
+            let meal = matchingRecipes[indexPath.row]
+            titleField.inputField.text = meal.title
         }
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func animateLocationTable(shouldOpen: Bool) {
-        locationList.removeConstraint(locationsListHeight)
-        if shouldOpen {
-            locationsListHeight = NSLayoutConstraint(item: locationList,
-                                                     attribute: .height,
-                                                     relatedBy: .equal,
-                                                     toItem: nil,
-                                                     attribute: .notAnAttribute,
-                                                     multiplier: 1.0,
-                                                     constant: 180)
-        } else {
-            locationsListHeight = NSLayoutConstraint(item: locationList,
-                                                     attribute: .height,
-                                                     relatedBy: .equal,
-                                                     toItem: nil,
-                                                     attribute: .notAnAttribute,
-                                                     multiplier: 1.0,
-                                                     constant: 0)
+    func animateTableView(_ tableView: UITableView, shouldOpen: Bool) {
+        var heightConstant: CGFloat {
+            switch shouldOpen {
+            case true: return 180
+            case false: return 0
+            }
         }
         
+        var heightConstraint: NSLayoutConstraint {
+            switch tableView {
+            case locationList:
+                tableView.removeConstraint(locationsListHeight)
+                locationsListHeight = NSLayoutConstraint(item: tableView,
+                                                         attribute: .height,
+                                                         relatedBy: .equal,
+                                                         toItem: nil,
+                                                         attribute: .notAnAttribute,
+                                                         multiplier: 1.0,
+                                                         constant: heightConstant)
+                return locationsListHeight
+            default:
+                tableView.removeConstraint(recipeListHeight)
+                recipeListHeight = NSLayoutConstraint(item: tableView,
+                                                      attribute: .height,
+                                                      relatedBy: .equal,
+                                                      toItem: nil,
+                                                      attribute: .notAnAttribute,
+                                                      multiplier: 1.0,
+                                                      constant: heightConstant)
+                return recipeListHeight
+            }
+        }
+            
         UIView.animate(withDuration: 0.2, animations: {
-            self.locationList.addConstraint(self.locationsListHeight)
-            self.locationList.updateConstraints()
+            tableView.frame.size.height = heightConstant
         }, completion: { (finished) in
+            tableView.addConstraint(heightConstraint)
+            tableView.updateConstraints()
+            
             if shouldOpen {
-                self.locationList.reloadData()
+                tableView.reloadData()
             }
         })
     }
     
-    func performSearch(searchText: String) {
+    func performLocationSearch(searchText: String) {
         matchingLocations.removeAll()
         guard let userCoordinate = user?.coordinate else { return }
         let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 100000, 100000)
@@ -194,5 +269,10 @@ extension AddEventVC: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+    }
+    
+    func performRecipeSearch(searchText: String) {
+        matchingRecipes.removeAll()
+        matchingRecipes = DataHandler.instance.familyRecipes.filterByTitle(searchText: searchText)
     }
 }

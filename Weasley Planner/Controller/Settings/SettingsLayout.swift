@@ -112,13 +112,13 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
             if DataHandler.instance.familyUsers.count > 0 {
                 cell.layoutCellForUser(DataHandler.instance.familyUsers[indexPath.row])
             } else {
-                cell.layoutNoUserCell()
+                cell.layoutCellForNo("User")
             }
         } else {
             if nearbyUsers.count > 0 {
                 cell.layoutCellForUser(nearbyUsers[indexPath.row])
             } else {
-                cell.layoutNoUserCell()
+                cell.layoutCellForNo("User")
             }
         }
         return cell

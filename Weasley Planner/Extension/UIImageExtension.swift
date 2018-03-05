@@ -9,6 +9,9 @@
 import UIKit
 
 extension UIImage {
+    /// Finds the shortest side of an image and creates a square crop of the original image, centered on the
+    /// center point of the original image
+    /// - returns: A UIImage that is a perfect square
     func cropSquare() -> UIImage {
         guard let cgImage = self.cgImage else { return self }
         let contextSize: CGSize = self.size
@@ -37,6 +40,9 @@ extension UIImage {
         return image
     }
     
+    /// Resizes a given UIImage to decrease the overall file size
+    /// - parameter targetSize: A CGSize value representing the maximum size you wish the resulting image to be
+    /// - returns: A resized UIImage that is the size of the given targetSize
     func resizeImage(_ targetSize: CGSize) -> UIImage {
         let size = self.size
         

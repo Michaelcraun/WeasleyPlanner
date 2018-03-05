@@ -9,6 +9,10 @@
 import UIKit
 
 extension UIViewController {
+    /// Either displays a dimmed view with an activity indicator over the ViewController's view or removes
+    /// said dimmed view
+    /// - parameter shouldDisplay: A Boolean value representing whether or not the dimmed view should be
+    /// added or removed
     func displayLoadingView(_ shouldDisplay: Bool) {
         if shouldDisplay {
             let loadingView: UIView = {

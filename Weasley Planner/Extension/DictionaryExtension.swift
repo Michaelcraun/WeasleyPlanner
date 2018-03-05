@@ -10,6 +10,8 @@ import Foundation
 import CoreLocation
 
 extension Dictionary where Key == String {
+    /// Converts a dictionary fetched from Firebase into a Recipe
+    /// - returns: A Recipe that contains the information stored on Firebase
     func toRecipe() -> Recipe? {
         guard let title = self["title"] as? String else { return nil }
         let recipeIdentifier = DataHandler.instance.createUniqueIDString(with: title)
@@ -32,6 +34,8 @@ extension Dictionary where Key == String {
         return fetchedRecipe
     }
     
+    /// Converst a dictionary fetched from Firebase into an Event
+    /// - returns: An Event that contains the information stored on Firebase
     func toEvent() -> Event? {
         guard let dateString = self["date"] as? String else { return nil }
         guard let title = self["title"] as? String else { return nil }

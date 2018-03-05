@@ -78,7 +78,7 @@ extension ShoppingListVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "shoppingCell") as! ShoppingCell
         switch shoppingItems.count {
-        case 0: cell.layoutCellForNoItems()
+        case 0: cell.layoutCellForNo("Item")
         default: cell.layoutCellForItem(shoppingItems[indexPath.row])
         }
         return cell
@@ -119,7 +119,7 @@ extension ShoppingListVC: UITableViewDataSource, UITableViewDelegate {
         let itemQuantity = text.quantity()
         let itemName = text.trimmingQunatity(itemQuantity)
         
-        let newItem = Item(quanity: itemQuantity, name: itemName, obtained: false)
+        let newItem = Item(quantity: itemQuantity, name: itemName, obtained: false)
         return newItem
     }
 }

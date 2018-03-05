@@ -54,9 +54,12 @@ extension NSObject: Utilities {
     }
 }
 
+/// Protocol that allows the device to check the current internet connection and display a warning to the user
+/// if they have no connection
 protocol Connection {  }
-
 extension Connection where Self: UIViewController {
+    /// Starts a timer that fires every second to check if the device has a connection to the internet. If no
+    /// connection, displays the connection view
     func beginConnectionTest() {
         let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
             if self.currentConnectionStatus == .notReachable {
@@ -67,7 +70,11 @@ extension Connection where Self: UIViewController {
         }
     }
     
-    func displayNoConnectionView(_ shouldDisplay: Bool) {
+    /// Checks to see if the connection view is already being displayed and displays a red banner with the phrase
+    /// "No internet connection..." on it if it isn't. Then, animates the connection view to remove the label and
+    /// shrink the view to the size of the control bar.
+    /// - parameter shouldDisplay: A Boolean value indicating whether or not the connection view should be displayed.
+    private func displayNoConnectionView(_ shouldDisplay: Bool) {
         var isDisplayed: Bool {
             var _isDisplayed = false
             for subview in self.view.subviews {

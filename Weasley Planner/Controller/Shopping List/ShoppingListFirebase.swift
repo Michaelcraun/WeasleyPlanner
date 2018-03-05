@@ -25,7 +25,7 @@ extension ShoppingListVC {
                         guard let name = item["name"] as? String else { return }
                         guard let obtained = item["obtained"] as? Bool else { return }
                         
-                        let newItem = Item(quanity: quantity, name: name, obtained: obtained)
+                        let newItem = Item(quantity: quantity, name: name, obtained: obtained)
                         self.shoppingItems.append(newItem)
                     }
                 }

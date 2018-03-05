@@ -15,6 +15,7 @@ class AddEventVC: UIViewController {
     // MARK: - UI Variables
     //---------------------
     var locationsListHeight: NSLayoutConstraint!
+    var recipeListHeight: NSLayoutConstraint!
     
     let titleBar: TitleBar = {
         let bar = TitleBar()
@@ -34,6 +35,14 @@ class AddEventVC: UIViewController {
         tableView.addMidShadows()
         tableView.backgroundColor = primaryColor
         tableView.register(LocationCell.self, forCellReuseIdentifier: "locationCell")
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
+    let recipeList: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = primaryColor
+        tableView.register(RecipeCell.self, forCellReuseIdentifier: "recipeCell")
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -101,6 +110,11 @@ class AddEventVC: UIViewController {
     var matchingLocations = [MKMapItem]() {
         didSet {
             locationList.reloadData()
+        }
+    }
+    var matchingRecipes = [Recipe]() {
+        didSet {
+            recipeList.reloadData()
         }
     }
     

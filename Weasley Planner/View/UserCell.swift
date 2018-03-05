@@ -33,29 +33,4 @@ class UserCell: UITableViewCell {
         userPane.layoutForUser(with: 60)
         userPane.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
-    
-    func layoutNoUserCell() {
-        clearCell()
-        
-        self.addSubview(defaultIconView)
-        self.addSubview(noUserLabel)
-        
-        defaultIconView.contentMode = .scaleAspectFit
-        defaultIconView.image = #imageLiteral(resourceName: "defaultProfileImage")
-        defaultIconView.addBorder()
-        defaultIconView.layer.cornerRadius = 15
-        defaultIconView.anchor(top: self.topAnchor,
-                               centerX: self.centerXAnchor,
-                               padding: .init(top: 5, left: 0, bottom: 0, right: 0),
-                               size: .init(width: 30, height: 30))
-        
-        noUserLabel.font = UIFont(name: secondaryFontName, size: smallFontSize)
-        noUserLabel.text = "No Users..."
-        noUserLabel.textColor = secondaryTextColor
-        noUserLabel.textAlignment = .center
-        noUserLabel.anchor(leading: self.leadingAnchor,
-                           trailing: self.trailingAnchor,
-                           bottom: self.bottomAnchor,
-                           padding: .init(top: 0, left: 5, bottom: 5, right: 5))
-    }
 }

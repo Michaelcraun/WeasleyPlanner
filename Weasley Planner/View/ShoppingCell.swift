@@ -17,42 +17,6 @@ class ShoppingCell: UITableViewCell {
         self.backgroundColor = .clear
     }
     
-    func layoutCellForNoItems() {
-        clearCell()
-        
-        let noItemsImage: UIImageView = {
-            let imageView = UIImageView()
-            imageView.contentMode = .scaleAspectFit
-            imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-            imageView.layer.cornerRadius = 20
-            imageView.addBorder()
-            return imageView
-        }()
-        
-        let noItemsLabel: UILabel = {
-            let label = UILabel()
-            label.font = UIFont(name: fontName, size: smallFontSize)
-            label.sizeToFit()
-            label.text = "No Items..."
-            label.textAlignment = .center
-            label.textColor = secondaryTextColor
-            return label
-        }()
-        
-        self.addSubview(noItemsImage)
-        self.addSubview(noItemsLabel)
-        
-        noItemsImage.anchor(top: self.topAnchor,
-                            centerX: self.centerXAnchor,
-                            padding: .init(top: 5, left: 0, bottom: 0, right: 0),
-                            size: .init(width: 40, height: 40))
-        
-        noItemsLabel.anchor(leading: self.leadingAnchor,
-                            trailing: self.trailingAnchor,
-                            bottom: self.bottomAnchor,
-                            padding: .init(top: 0, left: 5, bottom: 5, right: 5))
-    }
-    
     func layoutCellForAddItem() {
         clearCell()
         

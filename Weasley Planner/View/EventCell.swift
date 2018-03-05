@@ -67,7 +67,6 @@ class EventTableCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         self.backgroundColor = .clear
     }
     
@@ -79,52 +78,6 @@ class EventTableCell: UITableViewCell {
             let view = event.eventView()
             return view
         }()
-        self.addSubview(cellView)
-        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
-    }
-    
-    func layoutCellForNoEvents() {
-        clearCell()
-        
-        let cellView: UIView = {
-            let view = UIView()
-            view.addBorder(clipsToBounds: false)
-            view.addLightShadows()
-            view.backgroundColor = secondaryColor
-            view.layer.cornerRadius = 5
-            
-            let noEventsImageView: UIImageView = {
-                let imageView = UIImageView()
-                imageView.addBorder()
-                imageView.contentMode = .scaleAspectFit
-                imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-                imageView.layer.cornerRadius = 20
-                return imageView
-            }()
-            
-            let noEventsLabel: UILabel = {
-                let label = UILabel()
-                label.font = UIFont(name: fontName, size: smallFontSize)
-                label.text = "No Events..."
-                label.textAlignment = .center
-                label.textColor = secondaryTextColor
-                return label
-            }()
-            
-            view.addSubview(noEventsLabel)
-            view.addSubview(noEventsImageView)
-            
-            noEventsLabel.anchor(leading: view.leadingAnchor,
-                                 trailing: view.trailingAnchor,
-                                 bottom: view.bottomAnchor)
-            
-            noEventsImageView.anchor(top: view.topAnchor,
-                                     centerX: view.centerXAnchor,
-                                     size: .init(width: 40, height: 40))
-            
-            return view
-        }()
-        
         self.addSubview(cellView)
         cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }

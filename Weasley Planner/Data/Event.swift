@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 
+/// An enumeration of event types
 enum EventType: String {
     case appointment
     case chore
@@ -23,6 +24,9 @@ enum EventType: String {
     }
 }
 
+/// Represents a single event to be created and stored on Firebase and displayed to the user.
+/// - important: The Event date, identifier, title, and type must be declared at the time initialization.
+/// All other values are optional.
 class Event {
     var assignedUser: User?
     var location: CLLocation?
@@ -33,6 +37,19 @@ class Event {
     var title: String
     var type: EventType
     
+    /// The initializer for the Event class
+    /// - parameter assignedUser: The optional User value that has been assigned to complete the specified
+    /// Event (defaults to nil)
+    /// - parameter location: The optional CLLocation value that represents the location where the Event
+    /// is to take place (defaults to nil)
+    /// - parameter date: The Date value that represents when the Event is to take place
+    /// - parameter locationString: The optinal String value that represents the physical address of where
+    /// the event is to take place (defaults to nil)
+    /// - parameter recurrenceString: The optional String value that represents the recurrence of a specific
+    /// Event (defaults to nil)
+    /// - parameter title: The String value that represents the title of the Event
+    /// - parameter type: The EventType value that represents the type of Event
+    /// - parameter identifier: The String value that represents the unique identifier of the specified Event
     init(assignedUser: User? = nil, location: CLLocation? = nil, date: Date, locationString: String? = nil, recurrenceString: String? = nil, title: String, type: EventType, identifier: String) {
         self.assignedUser = assignedUser
         self.location = location
@@ -44,6 +61,9 @@ class Event {
         self.identifier = identifier
     }
     
+    /// Creates a view for a given event to be displayed for the user in CalendarVC
+    /// - returns: A UIView that displays the event's assignedUser, date, locationString, title, and type (as
+    /// a specific color)
     func eventView() -> UIView {
         let eventView: UIView = {
             let view = UIView()
@@ -170,6 +190,8 @@ class Event {
         return eventView
     }
     
+    /// Creates a Dictionary of a given event to store on Firebase
+    /// - returns: A Dictionary of type [String : Any] that represents the information contained within a recipe
     func dictionary() -> [String : Any] {
         var eventDictionary = [String : Any]()
         eventDictionary["date"] = self.date.string()

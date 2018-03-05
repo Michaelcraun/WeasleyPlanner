@@ -174,10 +174,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="jY3-nD-Tdv"/>
                     </view>
+                    <connections>
+                        <segue destination="iK1-kA-nag" kind="show" identifier="showAddMeal" id="BuL-7w-jT7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glM-4L-i1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1196" y="-752"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="BuL-7w-jT7"/>
+    </inferredMetricsTieBreakers>
 </document>

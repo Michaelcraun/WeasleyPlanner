@@ -231,7 +231,7 @@ extension CalendarVC: UITableViewDataSource, UITableViewDelegate {
         if eventsForDay.count > 0 {
             cell.layoutCell(forEvent: eventsForDay[indexPath.row])
         } else {
-            cell.layoutCellForNoEvents()
+            cell.layoutCellForNo("Event")
         }
         return cell
     }

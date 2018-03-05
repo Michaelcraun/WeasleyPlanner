@@ -70,7 +70,6 @@ class RecipeCell: UITableViewCell {
     //---------------------------
     // MARK: - LAYOUT FOR RECIPES
     //---------------------------
-    
     func layoutCellForRecipe(_ recipe: Recipe) {
         clearCell()
         
@@ -128,51 +127,6 @@ class RecipeCell: UITableViewCell {
                                trailing: view.trailingAnchor,
                                bottom: view.bottomAnchor,
                                padding: .init(top: 0, left: 5, bottom: 5, right: 5))
-            
-            return view
-        }()
-        
-        self.addSubview(cellView)
-        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
-    }
-    
-    func layoutCellForNoRecipes() {
-        clearCell()
-        
-        let cellView: UIView = {
-            let view = UIView()
-            view.backgroundColor = secondaryColor
-            
-            let defaultImageView: UIImageView = {
-                let imageView = UIImageView()
-                imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-                imageView.addBorder()
-                imageView.layer.cornerRadius = 25
-                return imageView
-            }()
-            
-            let defaultTitle: UILabel = {
-                let label = UILabel()
-                label.font = UIFont(name: fontName, size: largeFontSize)
-                label.text = "No Recipes..."
-                label.textColor = secondaryTextColor
-                return label
-            }()
-            
-            view.addSubview(defaultImageView)
-            view.addSubview(defaultTitle)
-            
-            defaultImageView.anchor(top: view.topAnchor,
-                                    leading: view.leadingAnchor,
-                                    bottom: view.bottomAnchor,
-                                    padding: .init(top: 5, left: 5, bottom: 5, right: 0),
-                                    size: .init(width: 50, height: 0))
-            
-            defaultTitle.anchor(top: view.topAnchor,
-                                leading: defaultImageView.trailingAnchor,
-                                trailing: view.trailingAnchor,
-                                bottom: view.bottomAnchor,
-                                padding: .init(top: 5, left: 5, bottom: 5, right: 5))
             
             return view
         }()
