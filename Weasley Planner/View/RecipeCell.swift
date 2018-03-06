@@ -14,8 +14,6 @@ class RecipeCell: UITableViewCell {
     var selectedMeasurement: UnitOfMeasurement = .cup
     let measurementPicker: DataPicker = {
         let picker = DataPicker()
-//        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-//        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
         return picker
     }()
     
@@ -23,7 +21,7 @@ class RecipeCell: UITableViewCell {
         let field = UITextField()
         field.anchor(size: .init(width: 50, height: 0))
         field.delegate = textManager
-        field.font = UIFont(name: fontName, size: smallFontSize)
+        field.font = UIFont(name: secondaryFontName, size: smallFontSize)
         field.addBorder()
         field.textAlignment = .center
         field.textColor = secondaryTextColor
@@ -34,7 +32,7 @@ class RecipeCell: UITableViewCell {
         let field = UITextField()
         field.anchor(size: .init(width: 50, height: 0))
         field.delegate = textManager
-        field.font = UIFont(name: fontName, size: smallFontSize)
+        field.font = UIFont(name: secondaryFontName, size: smallFontSize)
         field.addBorder()
         field.textAlignment = .center
         field.textColor = secondaryTextColor
@@ -43,10 +41,10 @@ class RecipeCell: UITableViewCell {
     
     let itemField: UITextField = {
         let field = UITextField()
+        field.addBorder()
         field.anchor()
         field.delegate = textManager
-        field.font = UIFont(name: fontName, size: smallFontSize)
-        field.addBorder()
+        field.font = UIFont(name: secondaryFontName, size: smallFontSize)
         field.textColor = secondaryTextColor
         return field
     }()
@@ -78,7 +76,7 @@ class RecipeCell: UITableViewCell {
         let cellView: UIView = {
             let view = UIView()
             view.backgroundColor = secondaryColor
-            view.addBorder()
+            view.addBorder(clipsToBounds: false)
             view.addLightShadows()
             view.layer.cornerRadius = 5
             
@@ -138,7 +136,6 @@ class RecipeCell: UITableViewCell {
     //-------------------------------
     // MARK: - LAYOUT FOR INGREDIENTS
     //-------------------------------
-    
     func layoutIngredientCellHeader() -> UIView {
         clearCell()
         
@@ -218,7 +215,7 @@ class RecipeCell: UITableViewCell {
         return ingredientHeaderView
     }
     
-    func layoutIngredientCell(withPicker picker: DataPicker) {
+    func layoutIngredientCell() {
         clearCell()
         
         let ingredientStack: UIStackView = {
@@ -235,7 +232,12 @@ class RecipeCell: UITableViewCell {
             return stackView
         }()
         
-        measurementField.inputView = picker
+        measurementPicker.anchor()
+        measurementPicker.dataPicker.dataSource = self
+        measurementPicker.dataPicker.delegate = self
+        measurementPicker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+        measurementPicker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+        measurementField.inputView = measurementPicker
         
         self.addSubview(ingredientStack)
         ingredientStack.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
@@ -259,7 +261,6 @@ class RecipeCell: UITableViewCell {
     //--------------------------------
     // MARK: - LAYOUT FOR INSTRUCTIONS
     //--------------------------------
-    
     func layoutInstructionCellHeader() -> UIView {
         let instructionsView: UIView = {
             let view = UIView()
@@ -306,7 +307,6 @@ class RecipeCell: UITableViewCell {
     //---------------------
     // MARK: - DATA METHODS
     //---------------------
-    
     func getRecipeIngredient() -> RecipeIngredient? {
         guard let quantity = quantityField.text, quantity != "" else { return recipeIngredient }
         guard let item = itemField.text, item != "" else { return recipeIngredient }
@@ -324,44 +324,49 @@ class RecipeCell: UITableViewCell {
 //-------------------------------------------
 // MARK: - PICKERVIEW DATASOURCE AND DELEGATE
 //-------------------------------------------
+extension RecipeCell: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
 
-//extension RecipeCell: UIPickerViewDataSource, UIPickerViewDelegate {
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return UnitOfMeasurement.allUnits.count
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//        let pickerLabel: UILabel = {
-//            let label = UILabel()
-//            label.font = UIFont(name: fontName, size: largeFontSize)
-//            label.text = UnitOfMeasurement.allUnits[row].rawValue
-//            label.textAlignment = .center
-//            label.textColor = secondaryTextColor
-//            return label
-//        }()
-//
-//        return pickerLabel
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        selectedMeasurement = UnitOfMeasurement.allUnits[row]
-//        print("MEASUREMENT: selectedMeasurement: \(selectedMeasurement)")
-//    }
-//
-//    @objc func pickerButtonPressed(_ sender: UIButton) {
-//        endEditing(true)
-//
-//        if sender.title(for: .normal) == "Done" {
-//            print("MEASUREMENT: in RecipeCell")
-//            if sender == measurementPicker.doneButton {
-//                print("MEASUREMENT: assigning TextField...")
-//                measurementField.text = selectedMeasurement.shortHandNotation
-//            }
-//        }
-//    }
-//}
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return UnitOfMeasurement.allUnits.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 30
+    }
 
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let pickerLabel: UILabel = {
+            let label = UILabel()
+            label.addBorder(clipsToBounds: false)
+            label.addLightShadows()
+            label.backgroundColor = secondaryColor
+            label.font = UIFont(name: fontName, size: largeFontSize)
+            label.text = UnitOfMeasurement.allUnits[row].rawValue
+            label.textAlignment = .center
+            label.textColor = secondaryTextColor
+            return label
+        }()
+        return pickerLabel
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedMeasurement = UnitOfMeasurement.allUnits[row]
+        print("MEASUREMENT: selectedMeasurement: \(selectedMeasurement)")
+    }
+
+    @objc func pickerButtonPressed(_ sender: UIButton) {
+        print("MEASUREMENT: in RecipeCell.pickerButtonPressed(_:)")
+        if sender.title(for: .normal)! == "Done" {
+            print("MEASUREMENT: Done pressed!")
+            if sender == measurementPicker.doneButton {
+                print("MEASUREMENT: assigning TextField...")
+                measurementField.text = selectedMeasurement.shortHandNotation
+            }
+        }
+        
+        endEditing(true)
+    }
+}

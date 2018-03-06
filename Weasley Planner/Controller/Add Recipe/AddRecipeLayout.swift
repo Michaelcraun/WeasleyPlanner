@@ -282,7 +282,7 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientsCell") as! RecipeCell
             switch indexPath.row {
             case ingredientCount: cell.layoutIngredientAddCell()
-            default: cell.layoutIngredientCell(withPicker: measurementPicker)
+            default: cell.layoutIngredientCell()
             }
             return cell
         } else {
@@ -340,17 +340,17 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
 
 extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView == measurementPicker {
-            return 1
-        } else {
+//        if pickerView == measurementPicker {
+//            return 1
+//        } else {
             return 4
-        }
+//        }
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == measurementPicker {
-            return UnitOfMeasurement.allUnits.count
-        } else {
+//        if pickerView == measurementPicker {
+//            return UnitOfMeasurement.allUnits.count
+//        } else {
             switch component {
             case 0: return 25
             case 1: return 1
@@ -358,21 +358,21 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
             case 3: return 1
             default: return 0
             }
-        }
+//        }
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        if pickerView == measurementPicker {
-            let rowLabel: UILabel = {
-                let label = UILabel()
-                label.font = UIFont(name: fontName, size: smallFontSize)
-                label.textAlignment = .center
-                label.textColor = secondaryTextColor
-                label.text = UnitOfMeasurement.allUnits[row].rawValue
-                return label
-            }()
-            return rowLabel
-        } else {
+//        if pickerView == measurementPicker {
+//            let rowLabel: UILabel = {
+//                let label = UILabel()
+//                label.font = UIFont(name: fontName, size: smallFontSize)
+//                label.textAlignment = .center
+//                label.textColor = secondaryTextColor
+//                label.text = UnitOfMeasurement.allUnits[row].rawValue
+//                return label
+//            }()
+//            return rowLabel
+//        } else {
             let rowLabel: UILabel = {
                 let label = UILabel()
                 label.font = UIFont(name: fontName, size: smallFontSize)
@@ -390,18 +390,19 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
                 return label
             }()
             return rowLabel
-        }
+//        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == measurementPicker {
-            let cells = ingredientsList.visibleCells as! [RecipeCell]
-            for cell in cells {
-                if cell.measurementField.isEditing {
-                    cell.selectedMeasurement = UnitOfMeasurement.allUnits[row]
-                }
-            }
-        } else if pickerView == activeDurationPicker.dataPicker {
+//        if pickerView == measurementPicker {
+//            let cells = ingredientsList.visibleCells as! [RecipeCell]
+//            for cell in cells {
+//                if cell.measurementField.isEditing {
+//                    cell.selectedMeasurement = UnitOfMeasurement.allUnits[row]
+//                }
+//            }
+//        } else
+    if pickerView == activeDurationPicker.dataPicker {
             switch component {
             case 0: activeTime[0] = row
             case 2: activeTime[1] = row * 5
@@ -418,14 +419,15 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
     
     @objc func pickerButtonPressed(_ sender: UIButton) {
         if sender.title(for: .normal) == "Done" {
-            if sender == measurementPicker.doneButton {
-                let cells = ingredientsList.visibleCells as! [RecipeCell]
-                for cell in cells {
-                    if cell.measurementField.isEditing {
-                        cell.measurementField.text = cell.selectedMeasurement.shortHandNotation
-                    }
-                }
-            } else if sender == activeDurationPicker.doneButton {
+//            if sender == measurementPicker.doneButton {
+//                let cells = ingredientsList.visibleCells as! [RecipeCell]
+//                for cell in cells {
+//                    if cell.measurementField.isEditing {
+//                        cell.measurementField.text = cell.selectedMeasurement.shortHandNotation
+//                    }
+//                }
+//            } else
+            if sender == activeDurationPicker.doneButton {
                 let activeTimeString = "\(activeTime[0]):\(activeTime[1])"
                 activeTimeField.inputField.text = activeTimeString
             } else if sender == totalDurationPicker.doneButton {

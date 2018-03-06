@@ -19,7 +19,6 @@ class AddRecipeVC: UIViewController {
     //------------------//
     // FIREBASE RECIPES //
     //------------------//
-    
     let firebaseRecipeList = UITableView()
     let searchBar: ModernSearchBar = {
         let bar = ModernSearchBar()
@@ -40,13 +39,13 @@ class AddRecipeVC: UIViewController {
         return picker
     }()
     
-    let measurementPicker: DataPicker = {
-        let picker = DataPicker()
-        picker.anchor()
-        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-        return picker
-    }()
+//    let measurementPicker: DataPicker = {
+//        let picker = DataPicker()
+//        picker.anchor()
+//        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+//        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
+//        return picker
+//    }()
     
     let totalDurationPicker: DataPicker = {
         let picker = DataPicker()
@@ -59,7 +58,6 @@ class AddRecipeVC: UIViewController {
     //----------------------//
     // NEW/EDIT RECIPE FORM //
     //----------------------//
-    
     var ingredientsListHeight: NSLayoutConstraint!
     var instructionsListHeight: NSLayoutConstraint!
     let ingredientsList = UITableView()
@@ -202,8 +200,8 @@ class AddRecipeVC: UIViewController {
         
         activeDurationPicker.dataPicker.dataSource = self
         activeDurationPicker.dataPicker.delegate = self
-        measurementPicker.dataPicker.dataSource = self
-        measurementPicker.dataPicker.delegate = self
+//        measurementPicker.dataPicker.dataSource = self
+//        measurementPicker.dataPicker.delegate = self
         totalDurationPicker.dataPicker.dataSource = self
         totalDurationPicker.dataPicker.delegate = self
 

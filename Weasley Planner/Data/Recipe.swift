@@ -117,7 +117,7 @@ struct RecipeIngredient {
 /// An enumeration that represents the possible units of measurement. Also contains short hand notations and
 /// conversion functions.
 enum UnitOfMeasurement: String {
-    case cup
+    case cup = "cup"
     case dash
     case pinch
     case pound
