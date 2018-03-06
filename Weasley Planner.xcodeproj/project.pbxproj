@@ -32,6 +32,8 @@
 		9B644D3B20308BD6003B6A50 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D3A20308BD6003B6A50 /* UserCell.swift */; };
 		9B9C70672049B67700F61248 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C70662049B67700F61248 /* LocationCell.swift */; };
 		9BA1F0A9204AD7E600B44843 /* RecurrenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */; };
+		9BA1F0AB204D994E00B44843 /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0AA204D994E00B44843 /* NotificationDelegate.swift */; };
+		9BA1F0AD204D995F00B44843 /* StoreKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0AC204D995F00B44843 /* StoreKitDelegate.swift */; };
 		9BA7B0DA2030A07E002886DF /* RecipeListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0D92030A07E002886DF /* RecipeListVC.swift */; };
 		9BA7B0DD2030A11F002886DF /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DC2030A11F002886DF /* SettingsVC.swift */; };
 		9BA7B0DF2030E323002886DF /* CalendarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DE2030E323002886DF /* CalendarLayout.swift */; };
@@ -111,6 +113,8 @@
 		9B644D3A20308BD6003B6A50 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		9B9C70662049B67700F61248 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceView.swift; sourceTree = "<group>"; };
+		9BA1F0AA204D994E00B44843 /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		9BA1F0AC204D995F00B44843 /* StoreKitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitDelegate.swift; sourceTree = "<group>"; };
 		9BA7B0D92030A07E002886DF /* RecipeListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListVC.swift; sourceTree = "<group>"; };
 		9BA7B0DC2030A11F002886DF /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9BA7B0DE2030E323002886DF /* CalendarLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarLayout.swift; sourceTree = "<group>"; };
@@ -263,7 +267,9 @@
 			isa = PBXGroup;
 			children = (
 				9BA7B0EF20332E35002886DF /* MapDelegate.swift */,
+				9BA1F0AA204D994E00B44843 /* NotificationDelegate.swift */,
 				9BF398C6203BCBB60009FC33 /* PhotoDelegate.swift */,
+				9BA1F0AC204D995F00B44843 /* StoreKitDelegate.swift */,
 				9BF398C8203C46C40009FC33 /* TextDelegate.swift */,
 			);
 			path = Delegate;
@@ -631,6 +637,7 @@
 				9BA7B1072035AA34002886DF /* StringExtension.swift in Sources */,
 				9BA7B0DD2030A11F002886DF /* SettingsVC.swift in Sources */,
 				9BA7B0DA2030A07E002886DF /* RecipeListVC.swift in Sources */,
+				9BA1F0AD204D995F00B44843 /* StoreKitDelegate.swift in Sources */,
 				9BC2E19D202DCA95000B8E15 /* ShoppingListVC.swift in Sources */,
 				9B124EE32038F447007D34BC /* ModernSearchBarCell.swift in Sources */,
 				9BA7B0EA20313748002886DF /* CalendarFirebase.swift in Sources */,
@@ -671,6 +678,7 @@
 				9B1E990520458AC700A23118 /* AddEventVC.swift in Sources */,
 				9B124EE72038F499007D34BC /* ModernSearchBarIcon.swift in Sources */,
 				9B124EB02037B338007D34BC /* AddRecipeVC.swift in Sources */,
+				9BA1F0AB204D994E00B44843 /* NotificationDelegate.swift in Sources */,
 				9BA7B0E22030E3D9002886DF /* Alertable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

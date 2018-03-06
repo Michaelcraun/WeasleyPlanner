@@ -66,6 +66,7 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
             if textField == addEvent.locationField.inputField {
                 addEvent.animateTableView(addEvent.locationList, shouldOpen: false)
             } else if textField == addEvent.recurrenceView.amountField {
+                addEvent.recurrenceView.recurrenceField.isEnabled = true
                 addEvent.recurrenceView.recurrenceTypePicker.dataPicker.reloadAllComponents()
                 addEvent.recurrenceView.updateRecurrenceView(true)
             } else if textField == addEvent.recurrenceView.recurrenceField {

@@ -70,6 +70,10 @@ extension Dictionary where Key == String {
             fetchedEvent.locationString = fetchedLocationString
         }
         
+        if let fetchedRecurrenceString = self["recurrenceString"] as? String {
+            fetchedEvent.recurrenceString = fetchedRecurrenceString
+        }
+        
         return fetchedEvent
     }
 }

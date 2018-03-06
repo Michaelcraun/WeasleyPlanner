@@ -21,9 +21,7 @@ extension AddEventVC {
         view.addSubview(titleBar)
         view.addSubview(saveButton)
         
-        if eventType == .meal {
-            
-        } else if eventType == .chore {
+        if eventType == .chore || eventType == .appointment {
             view.addSubview(recurrenceView)
             
             recurrenceView.anchor(top: userField.bottomAnchor,
@@ -191,16 +189,19 @@ extension AddEventVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view.endEditing(true)
-        
-        if tableView == locationList {
-            let location = matchingLocations[indexPath.row]
-            if let locationName = location.name {
-                selectedLocation = location
-                locationField.inputField.text = locationName
-            }
+        if indexPath.row == 0 {
+            animateTableView(tableView, shouldOpen: false)
         } else {
-            let meal = matchingRecipes[indexPath.row]
-            titleField.inputField.text = meal.title
+            if tableView == locationList {
+                let location = matchingLocations[indexPath.row - 1]
+                if let locationName = location.name {
+                    selectedLocation = location
+                    locationField.inputField.text = locationName
+                }
+            } else {
+                let meal = matchingRecipes[indexPath.row - 1]
+                titleField.inputField.text = meal.title
+            }
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

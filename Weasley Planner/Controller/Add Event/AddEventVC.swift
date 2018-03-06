@@ -101,17 +101,24 @@ class AddEventVC: UIViewController {
     //MARK: Data Variables
     let formatter = DateFormatter()
     var user: User?
-    var eventToEdit: Event?
     var assignedUser: User?
     var eventType: EventType = .appointment
-    var isRecurringChore = false
     var selectedDate: Date?
     var selectedLocation: MKMapItem?
+    var eventToEdit: Event? {
+        didSet {
+            if let eventType = eventToEdit?.type {
+                self.eventType = eventType
+            }
+        }
+    }
+    
     var matchingLocations = [MKMapItem]() {
         didSet {
             locationList.reloadData()
         }
     }
+    
     var matchingRecipes = [Recipe]() {
         didSet {
             recipeList.reloadData()
@@ -125,6 +132,7 @@ class AddEventVC: UIViewController {
         userPicker.dataPicker.delegate = self
         
         layoutView()
+        loadEvent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -143,7 +151,6 @@ class AddEventVC: UIViewController {
                 assignedUser = DataHandler.instance.familyUsers[row]
                 userField.inputField.text = assignedUser?.name!
             } else if sender == datePicker.doneButton {
-                let formatter = DateFormatter()
                 formatter.dateFormat = "MMMM dd, yyyy h:mm a"
                 
                 selectedDate = datePicker.datePicker.date
@@ -158,8 +165,18 @@ class AddEventVC: UIViewController {
             return
         }
         
-        let eventIdentifier = DataHandler.instance.createUniqueIDString(with: title)
-        let newEvent = Event(date: date, title: title, type: eventType, identifier: eventIdentifier)
+        guard let eventToEdit = eventToEdit else {
+            let eventIdentifier = DataHandler.instance.createUniqueIDString(with: title)
+            saveEvent(eventIdentifier, withTitle: title, andDate: date)
+            return
+        }
+        
+        let eventIdentifier = eventToEdit.identifier
+        saveEvent(eventIdentifier, withTitle: title, andDate: date)
+    }
+    
+    func saveEvent(_ identifier: String, withTitle title: String, andDate date: Date) {
+        let newEvent = Event(date: date, title: title, type: eventType, identifier: identifier)
         if let eventUser = assignedUser { newEvent.assignedUser = eventUser }
         if let selectedLocation = selectedLocation {
             if let eventLocation = selectedLocation.placemark.location { newEvent.location = eventLocation }
@@ -192,17 +209,35 @@ class AddEventVC: UIViewController {
         
         formatter.dateFormat = "MM dd yyyy"
         let calendar = Calendar.current
-        guard let calendarBounds = formatter.date(from: "12 31 2052") else { return }
+        guard let calendarBounds = formatter.date(from: calendarBounds[1]) else { return }
         guard let newEventDate = calendar.date(byAdding: dateComponents, to: event.date) else { return }
         
         if newEventDate <= calendarBounds {
             let newIdentifier = DataHandler.instance.createUniqueIDString(with: event.title)
-            print("RECURRENCE: newIdentifier: \(newIdentifier)")
-            print("RECURRENCE: newEventDate: \(newEventDate)")
             event.date = newEventDate
             event.identifier = newIdentifier
             updateFamilyEvent(event)
-//            scheduleFutureEvents(withRecurrence: recurrence, andEvent: event)
+        }
+    }
+    
+    func loadEvent() {
+        guard let eventToEdit = eventToEdit else { return }
+        formatter.dateFormat = "MMMM dd, yyyy h:mm a"
+        selectedDate = eventToEdit.date
+        selectedLocation = {
+            guard let eventCoordinate = eventToEdit.location?.coordinate else { return nil }
+            let eventPlacemark = MKPlacemark(coordinate: eventCoordinate)
+            let eventMapItem = MKMapItem(placemark: eventPlacemark)
+            return eventMapItem
+        }()
+        
+        titleField.inputField.text = eventToEdit.title
+        dateField.inputField.text = formatter.string(from: eventToEdit.date)
+        if let userName = eventToEdit.assignedUser?.name { userField.inputField.text = userName }
+        if let locationString = eventToEdit.locationString { locationField.inputField.text = locationString }
+        if let recurrenceString = eventToEdit.recurrenceString, recurrenceString != "none" {
+            recurrenceView.recurrenceString = recurrenceString
+            recurrenceView.recurrenceButtonPressed(nil)
         }
     }
 }

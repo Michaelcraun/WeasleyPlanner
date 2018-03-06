@@ -47,7 +47,20 @@ class CalendarVC: UIViewController {
         return view
     }()
     
-    let eventTable = UITableView()
+    let refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(observeFamilyEvents), for: .valueChanged)
+        control.attributedTitle = NSAttributedString(string: "Fetching new events...")
+        return control
+    }()
+    
+    let eventTable: UITableView = {
+        let tableView = UITableView()
+        tableView.addBorder()
+        tableView.register(EventTableCell.self, forCellReuseIdentifier: "eventCell")
+        tableView.separatorStyle = .none
+        return tableView
+    }()
     
     //MARK: Data Variables
     var user: User?

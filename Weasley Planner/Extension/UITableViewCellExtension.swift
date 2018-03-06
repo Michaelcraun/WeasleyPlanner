@@ -19,7 +19,17 @@ extension UITableViewCell {
     /// Used to layout cell for cancelling user input
     func layoutCancelCell() {
         //TODO: Layout for cell
+        let cancelLabel: UILabel = {
+            let label = UILabel()
+            label.font = UIFont(name: fontName, size: largeFontSize)
+            label.text = "Cancel"
+            label.textAlignment = .center
+            label.textColor = primaryTextColor
+            return label
+        }()
         
+        self.addSubview(cancelLabel)
+        cancelLabel.fillTo(self)
     }
     
     /// Used to layout cell when no items of a specific type are present.
@@ -39,7 +49,7 @@ extension UITableViewCell {
                 imageView.addBorder()
                 imageView.contentMode = .scaleAspectFit
                 imageView.image = #imageLiteral(resourceName: "defaultProfileImage")
-                imageView.layer.cornerRadius = 20
+                imageView.layer.cornerRadius = 15
                 return imageView
             }()
             
@@ -61,7 +71,8 @@ extension UITableViewCell {
             
             noEventsImageView.anchor(top: view.topAnchor,
                                      centerX: view.centerXAnchor,
-                                     size: .init(width: 40, height: 40))
+                                     padding: .init(top: 5, left: 0, bottom: 0, right: 0),
+                                     size: .init(width: 30, height: 30))
             
             return view
         }()

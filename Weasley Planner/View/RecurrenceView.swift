@@ -41,19 +41,28 @@ class RecurrenceView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     var isRecurringChore: Bool = false {
         didSet {
             switch isRecurringChore {
-            case true: recurrenceLabel.text = "Repeat this chore every:"
+            case true: recurrenceLabel.text = "Repeat this event every:"
             case false:
-                recurrenceLabel.text = "Do not repeat this chore."
+                recurrenceLabel.text = "Do not repeat this event."
                 recurrenceString = ""
             }
             updateRecurrenceView(isRecurringChore)
         }
     }
     
+    let indicatorButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(recurrenceButtonPressed(_:)), for: .touchUpInside)
+        button.layer.borderColor = primaryColor.cgColor
+        button.layer.borderWidth = 4
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
     let recurrenceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: secondaryFontName, size: smallFontSize)
-        label.text = "Do not repeat this chore."
+        label.text = "Do not repeat this event."
         label.textColor = secondaryTextColor
         return label
     }()
@@ -93,15 +102,6 @@ class RecurrenceView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         recurrenceTypePicker.dataPicker.dataSource = self
         recurrenceTypePicker.dataPicker.delegate = self
         
-        let indicatorButton: UIButton = {
-            let button = UIButton()
-            button.addTarget(self, action: #selector(recurrenceButtonPressed(_:)), for: .touchUpInside)
-            button.layer.borderColor = primaryColor.cgColor
-            button.layer.borderWidth = 4
-            button.layer.cornerRadius = 10
-            return button
-        }()
-        
         self.addSubview(indicatorButton)
         self.addSubview(recurrenceLabel)
         self.addSubview(amountField)
@@ -136,9 +136,6 @@ class RecurrenceView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     func updateRecurrenceView(_ shouldShowDetails: Bool) {
         if let recurrenceInterval = Int(amountField.text!), recurrenceInterval != 0, let recurrenceType = recurrenceField.text, recurrenceType != "" {
             recurrenceString = "\(recurrenceInterval)|\(recurrenceType)"
-        } else {
-            //TODO: Show alert explaining to user that recurrence must have a number of times to repeat and a repeating interval
-            print("RECURRENCE: Error creating recurrenceString!")
         }
         
         if recurrenceString != "" {
@@ -173,11 +170,11 @@ class RecurrenceView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
-    @objc func recurrenceButtonPressed(_ sender: UIButton) {
+    @objc func recurrenceButtonPressed(_ sender: UIButton?) {
         isRecurringChore = !isRecurringChore
         switch isRecurringChore {
-        case true: sender.backgroundColor = primaryColor
-        case false: sender.backgroundColor = .clear
+        case true: indicatorButton.backgroundColor = primaryColor
+        case false: indicatorButton.backgroundColor = .clear
         }
     }
     
@@ -212,7 +209,7 @@ class RecurrenceView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
             label.textAlignment = .center
             label.textColor = secondaryTextColor
             label.text = {
-                if let numOfRecurrences = Int(recurrenceField.text!) {
+                if let numOfRecurrences = Int(amountField.text!) {
                     if numOfRecurrences > 1 {
                         return Recurrence.allRecurrences[row].pluralValue
                     }

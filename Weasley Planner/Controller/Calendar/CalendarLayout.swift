@@ -88,9 +88,11 @@ extension CalendarVC {
         eventTable.backgroundColor = .clear
         eventTable.dataSource = self
         eventTable.delegate = self
-        eventTable.addBorder()
-        eventTable.register(EventTableCell.self, forCellReuseIdentifier: "eventCell")
-        eventTable.separatorStyle = .none
+        if #available(iOS 10.0, *) {
+            eventTable.refreshControl = refreshControl
+        } else {
+            eventTable.addSubview(refreshControl)
+        }
         eventTable.anchor(top: calendarView.bottomAnchor,
                           leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
@@ -118,7 +120,6 @@ extension CalendarVC {
 //---------------------------------------------
 // MARK: - CALENDARVIEW DATASOURCE AND DELEGATE
 //---------------------------------------------
-
 extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
@@ -129,12 +130,12 @@ extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
+        formatter.dateFormat = "MM dd yyyy"
         formatter.timeZone = Calendar.current.timeZone
         formatter.locale = Calendar.current.locale
         
-        let startDate = formatter.date(from: "2017 01 01")!
-        let endDate = formatter.date(from: "2052 12 31")!
+        let startDate = formatter.date(from: calendarBounds[0])!
+        let endDate = formatter.date(from: calendarBounds[1])!
         let parameters = ConfigurationParameters(startDate: startDate,
                                                  endDate: endDate,
                                                  numberOfRows: 1,
@@ -217,9 +218,8 @@ extension CalendarVC: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate
 }
 
 //----------------------------------------
-// MARK: TABLEVIEW DATASOURCE AND DELEGATE
+// MARK: - TABLEVIEW DATASOURCE AND DELEGATE
 //----------------------------------------
-
 extension CalendarVC: UITableViewDataSource, UITableViewDelegate {
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if eventsForDay.count > 0 { return eventsForDay.count }
@@ -274,8 +274,36 @@ extension CalendarVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+        let selectedEvent = eventsForDay[indexPath.row]
+        showEventOptionsSheet(forEvent: selectedEvent)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func showEventOptionsSheet(forEvent event: Event) {
+        let optionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let editAction = UIAlertAction(title: "Edit Event", style: .default) { (action) in
+            self.performSegue(withIdentifier: "showAddEvent", sender: event)
+        }
+        
+        let addIngredientsAction = UIAlertAction(title: "Add Ingredients to Shopping LIst", style: .default) { (action) in
+            // TODO: Add ingredients to shopping list (needs to be a meal that has ingredients)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
+            optionSheet.dismiss(animated: true, completion: nil)
+        }
+        
+        if event.type == .meal {
+            for recipe in DataHandler.instance.familyRecipes {
+                if recipe.title == event.title && recipe.ingredients.count > 0 {
+                    optionSheet.addAction(addIngredientsAction)
+                }
+            }
+        }
+        
+        optionSheet.addAction(editAction)
+        optionSheet.addAction(cancelAction)
+        
+        present(optionSheet, animated: true, completion: nil)
     }
 }
