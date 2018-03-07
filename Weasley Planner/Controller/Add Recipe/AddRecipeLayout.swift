@@ -64,7 +64,7 @@ extension AddRecipeVC {
                                                              toItem: nil,
                                                              attribute: .notAnAttribute,
                                                              multiplier: 1,
-                                                             constant: CGFloat(53 + (ingredientCount + 1) * 40))
+                                                             constant: CGFloat(53 + (recipeIngredients.count + 1) * 40))
             
             instructionsListHeight = NSLayoutConstraint(item: instructionsList,
                                                               attribute: .height,
@@ -72,7 +72,7 @@ extension AddRecipeVC {
                                                               toItem: nil,
                                                               attribute: .notAnAttribute,
                                                               multiplier: 1,
-                                                              constant: CGFloat(53 + (instructionCount + 1) * 40))
+                                                              constant: CGFloat(93 + (recipeInstructions.count) * 120))
             
             let textFieldHeight = 30
             let textViewHeight = 120
@@ -160,10 +160,10 @@ extension AddRecipeVC {
                             padding: .init(top: 5, left: 5, bottom: 0, right: 5),
                             size: .init(width: 0, height: textFieldHeight))
             
+            ingredientsList.addBorder()
             ingredientsList.backgroundColor = secondaryColor
             ingredientsList.dataSource = self
             ingredientsList.delegate = self
-            ingredientsList.addBorder()
             ingredientsList.register(RecipeCell.self, forCellReuseIdentifier: "ingredientsCell")
             ingredientsList.separatorStyle = .none
             ingredientsList.addConstraint(ingredientsListHeight)
@@ -172,10 +172,10 @@ extension AddRecipeVC {
                                    trailing: scrollView.trailingAnchor,
                                    padding: .init(top: 5, left: 5, bottom: 0, right: 5))
             
+            instructionsList.addBorder()
             instructionsList.backgroundColor = secondaryColor
             instructionsList.dataSource = self
             instructionsList.delegate = self
-            instructionsList.addBorder()
             instructionsList.register(RecipeCell.self, forCellReuseIdentifier: "instructionsCell")
             instructionsList.separatorStyle = .none
             instructionsList.addConstraint(instructionsListHeight)
@@ -211,7 +211,7 @@ extension AddRecipeVC {
                                                    toItem: nil,
                                                    attribute: .notAnAttribute,
                                                    multiplier: 1,
-                                                   constant: CGFloat(53 + (ingredientCount + 1) * 40))
+                                                   constant: CGFloat(53 + (recipeIngredients.count + 1) * 40))
         
         instructionsListHeight = NSLayoutConstraint(item: instructionsList,
                                                     attribute: .height,
@@ -219,7 +219,7 @@ extension AddRecipeVC {
                                                     toItem: nil,
                                                     attribute: .notAnAttribute,
                                                     multiplier: 1,
-                                                    constant: CGFloat(53 + (instructionCount + 1) * 40))
+                                                    constant: CGFloat(93 + (recipeInstructions.count) * 120))
         
         ingredientsList.addConstraint(ingredientsListHeight)
         instructionsList.addConstraint(instructionsListHeight)
@@ -247,15 +247,14 @@ extension AddRecipeVC: ModernSearchBarDelegate {
 //-------------------------------------------
 // MARK: - TABLE VIEW DATASOURCE AND DELEGATE
 //-------------------------------------------
-
 extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == firebaseRecipeList {
             return firebaseRecipes.count
         } else if tableView == ingredientsList {
-            return ingredientCount + 1
+            return recipeIngredients.count + 1
         } else {
-            return instructionCount + 1
+            return recipeInstructions.count + 1
         }
     }
     
@@ -269,7 +268,6 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "instructionsCell") as! RecipeCell
             return cell.layoutInstructionCellHeader()
         }
-        
         return nil
     }
     
@@ -281,15 +279,15 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
         } else if tableView == ingredientsList {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientsCell") as! RecipeCell
             switch indexPath.row {
-            case ingredientCount: cell.layoutIngredientAddCell()
-            default: cell.layoutIngredientCell()
+            case recipeIngredients.count: cell.layoutIngredientAddCell()
+            default: cell.layoutIngredientCell(withIngredient: recipeIngredients[indexPath.row])
             }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "instructionsCell") as! RecipeCell
             switch indexPath.row {
-            case instructionCount: cell.layoutInstructionAddCell()
-            default: cell.layoutInstructionCell()
+            case recipeInstructions.count: cell.layoutInstructionAddCell()
+            default: cell.layoutInstructionCell(withInstruction: recipeInstructions[indexPath.row])
             }
             return cell
         }
@@ -306,8 +304,13 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == firebaseRecipeList {
             return 100
-        } else {
+        } else if tableView == ingredientsList {
             return 40
+        } else {
+            switch indexPath.row {
+            case recipeInstructions.count: return 40
+            default: return 120
+            }
         }
     }
     
@@ -318,14 +321,16 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
             
             performSegue(withIdentifier: "showFirebaseRecipe", sender: recipeToView)
         } else if tableView == ingredientsList {
-            if indexPath.row == ingredientCount {
-                ingredientCount += 1
+            if indexPath.row == recipeIngredients.count {
+                let newIngredient = RecipeIngredient(quantity: "", unitOfMeasurement: .cup, item: "")
+                recipeIngredients.append(newIngredient)
                 ingredientsList.reloadData()
                 updateIngredientsandInstructionsConstraints()
             }
         } else {
-            if indexPath.row == instructionCount {
-                instructionCount += 1
+            if indexPath.row == recipeInstructions.count {
+                let newInstruction = ""
+                recipeInstructions.append(newInstruction)
                 instructionsList.reloadData()
                 updateIngredientsandInstructionsConstraints()
             }
@@ -337,72 +342,40 @@ extension AddRecipeVC: UITableViewDataSource, UITableViewDelegate {
 //---------------------------------------------
 // MARK: - PICKER VIEW DATA SOURCE AND DELEGATE
 //---------------------------------------------
-
 extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        if pickerView == measurementPicker {
-//            return 1
-//        } else {
-            return 4
-//        }
-    }
-    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int { return 4 }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        if pickerView == measurementPicker {
-//            return UnitOfMeasurement.allUnits.count
-//        } else {
-            switch component {
-            case 0: return 25
-            case 1: return 1
-            case 2: return 13
-            case 3: return 1
-            default: return 0
-            }
-//        }
+        switch component {
+        case 0: return 25
+        case 1: return 1
+        case 2: return 13
+        case 3: return 1
+        default: return 0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//        if pickerView == measurementPicker {
-//            let rowLabel: UILabel = {
-//                let label = UILabel()
-//                label.font = UIFont(name: fontName, size: smallFontSize)
-//                label.textAlignment = .center
-//                label.textColor = secondaryTextColor
-//                label.text = UnitOfMeasurement.allUnits[row].rawValue
-//                return label
-//            }()
-//            return rowLabel
-//        } else {
-            let rowLabel: UILabel = {
-                let label = UILabel()
-                label.font = UIFont(name: fontName, size: smallFontSize)
-                label.textAlignment = .center
-                label.textColor = secondaryTextColor
-                label.text = {
-                        switch component {
-                        case 0: return "\(row)"
-                        case 1: return "HH"
-                        case 2: return "\(row * 5)"
-                        case 3: return "mm"
-                        default: return ""
-                        }
-                }()
-                return label
+        let rowLabel: UILabel = {
+            let label = UILabel()
+            label.font = UIFont(name: fontName, size: smallFontSize)
+            label.textAlignment = .center
+            label.textColor = secondaryTextColor
+            label.text = {
+                switch component {
+                case 0: return "\(row)"
+                case 1: return "HH"
+                case 2: return "\(row * 5)"
+                case 3: return "mm"
+                default: return ""
+                }
             }()
-            return rowLabel
-//        }
+            return label
+        }()
+        return rowLabel
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if pickerView == measurementPicker {
-//            let cells = ingredientsList.visibleCells as! [RecipeCell]
-//            for cell in cells {
-//                if cell.measurementField.isEditing {
-//                    cell.selectedMeasurement = UnitOfMeasurement.allUnits[row]
-//                }
-//            }
-//        } else
-    if pickerView == activeDurationPicker.dataPicker {
+        if pickerView == activeDurationPicker.dataPicker {
             switch component {
             case 0: activeTime[0] = row
             case 2: activeTime[1] = row * 5
@@ -418,15 +391,7 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     @objc func pickerButtonPressed(_ sender: UIButton) {
-        if sender.title(for: .normal) == "Done" {
-//            if sender == measurementPicker.doneButton {
-//                let cells = ingredientsList.visibleCells as! [RecipeCell]
-//                for cell in cells {
-//                    if cell.measurementField.isEditing {
-//                        cell.measurementField.text = cell.selectedMeasurement.shortHandNotation
-//                    }
-//                }
-//            } else
+//        if sender.title(for: .normal) == "Done" {
             if sender == activeDurationPicker.doneButton {
                 let activeTimeString = "\(activeTime[0]):\(activeTime[1])"
                 activeTimeField.inputField.text = activeTimeString
@@ -434,7 +399,7 @@ extension AddRecipeVC: UIPickerViewDataSource, UIPickerViewDelegate {
                 let totalTimeString = "\(totalTime[0]):\(totalTime[1])"
                 totalTimeField.inputField.text = totalTimeString
             }
-        }
+//        }
         view.endEditing(true)
     }
 }

@@ -39,14 +39,6 @@ class AddRecipeVC: UIViewController {
         return picker
     }()
     
-//    let measurementPicker: DataPicker = {
-//        let picker = DataPicker()
-//        picker.anchor()
-//        picker.cancelButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-//        picker.doneButton.addTarget(self, action: #selector(pickerButtonPressed(_:)), for: .touchUpInside)
-//        return picker
-//    }()
-    
     let totalDurationPicker: DataPicker = {
         let picker = DataPicker()
         picker.anchor()
@@ -157,7 +149,7 @@ class AddRecipeVC: UIViewController {
         return button
     }()
     
-    //MARK: DataVariables
+    //MARK: - Data Variables
     var user: User?
     
     //------------------//
@@ -179,19 +171,17 @@ class AddRecipeVC: UIViewController {
     var shareToFirebase = true
     var activeTime = [0,30]
     var totalTime = [1,0]
-    var ingredientCount = 0
-    var instructionCount = 0
     var recipeIngredients = [RecipeIngredient]() {
         didSet {
-            ingredientCount = recipeIngredients.count
-            ingredientsList.reloadData()
+//            ingredientsList.reloadData()
+//            updateIngredientsandInstructionsConstraints()
         }
     }
     
     var recipeInstructions = [String]() {
         didSet {
-            instructionCount = recipeInstructions.count
-            instructionsList.reloadData()
+//            instructionsList.reloadData()
+//            updateIngredientsandInstructionsConstraints()
         }
     }
     
@@ -200,8 +190,6 @@ class AddRecipeVC: UIViewController {
         
         activeDurationPicker.dataPicker.dataSource = self
         activeDurationPicker.dataPicker.delegate = self
-//        measurementPicker.dataPicker.dataSource = self
-//        measurementPicker.dataPicker.delegate = self
         totalDurationPicker.dataPicker.dataSource = self
         totalDurationPicker.dataPicker.delegate = self
 
@@ -224,18 +212,20 @@ class AddRecipeVC: UIViewController {
         titleField.inputField.text = recipe.title
         descriptionView.inputTextView.text = recipe.description
         recipeImageView.image = recipe.image
-//        ingredientsView.inputTextView.text = recipe.ingredients
-//        instructionsView.inputTextView.text = recipe.instructions
         notesView.inputTextView.text = recipe.notes
         sourceField.inputField.text = recipe.source
         totalTimeField.inputField.text = "\(totalTime[0]):\(totalTime[1])"
         urlField.inputField.text = recipe.url
         yieldField.inputField.text = recipe.yield
+        recipeIngredients = recipe.ingredients
+        recipeInstructions = recipe.instructions
         
         switch recipeIsFavorite {
         case true: isFavoriteButton.setImage(#imageLiteral(resourceName: "isFavoriteIcon"), for: .normal)
         case false: isFavoriteButton.setImage(#imageLiteral(resourceName: "isNotFavoriteIcon"), for: .normal)
         }
+        
+        updateIngredientsandInstructionsConstraints()
     }
     
     @objc func isFavoriteButtonPressed(_ sender: UIButton) {
@@ -268,53 +258,61 @@ class AddRecipeVC: UIViewController {
     
     @objc func saveButtonPressed(_ sender: TextButton?) {
         view.endEditing(true)
-        
-        guard let recipe = recipeToEdit else {
-            guard let title = titleField.inputField.text, title != "" else {
-                showAlert(.missingTitle)
-                return
-            }
-            
-            let recipeIdentifier = DataHandler.instance.createUniqueIDString(with: title)
-            let newRecipe = Recipe(identifier: recipeIdentifier, title: title)
-            newRecipe.activeHours = activeTime[0]
-            newRecipe.activeMinutes = activeTime[1]
-            newRecipe.totalHours = totalTime[0]
-            newRecipe.totalMinutes = totalTime[1]
-            newRecipe.isFavorite = recipeIsFavorite
-            newRecipe.imageName = NSUUID().uuidString
-            if let description = descriptionView.inputTextView.text { newRecipe.description = description }
-            if let image = recipeImageView.image { newRecipe.image = image }
-//            if let instructions = instructionsView.inputTextView.text { newRecipe.instructions = instructions }
-            if let notes = notesView.inputTextView.text { newRecipe.notes = notes }
-            if let source = sourceField.inputField.text { newRecipe.source = source }
-            if let url = urlField.inputField.text { newRecipe.url = url }
-            if let yield = yieldField.inputField.text { newRecipe.yield = yield }
-            updateFamilyRecipe(newRecipe)
-            if shareToFirebase { uploadRecipeToFirebase(newRecipe) }
-            
-            return
-        }
+        getRecipeIngredients()
+        getRecipeInstructions()
         
         guard let title = titleField.inputField.text, title != "" else {
             showAlert(.missingTitle)
             return
         }
         
+        guard let recipe = recipeToEdit else {
+            let recipeIdentifier = DataHandler.instance.createUniqueIDString(with: title)
+            let newRecipe = Recipe(identifier: recipeIdentifier, title: title)
+            saveRecipe(newRecipe)
+            return
+        }
+        
         recipe.title = title
+        saveRecipe(recipe)
+    }
+    
+    func getRecipeIngredients() {
+        for i in 0..<recipeIngredients.count {
+            let ingredientIndex = IndexPath(row: i, section: 0)
+            let ingredientCell = ingredientsList.cellForRow(at: ingredientIndex) as! RecipeCell
+            if let recipeIngredient = ingredientCell.getRecipeIngredient() {
+                recipeIngredients[i] = recipeIngredient
+            }
+        }
+    }
+    
+    func getRecipeInstructions() {
+        for i in 0..<recipeInstructions.count {
+            let instructionIndex = IndexPath(row: i, section: 0)
+            let instructionCell = instructionsList.cellForRow(at: instructionIndex) as! RecipeCell
+            if let instruction = instructionCell.getInstruction() {
+                recipeInstructions[i] = instruction
+            }
+        }
+    }
+    
+    func saveRecipe(_ recipe: Recipe) {
         recipe.activeHours = activeTime[0]
         recipe.activeMinutes = activeTime[1]
         recipe.totalHours = totalTime[0]
         recipe.totalMinutes = totalTime[1]
         recipe.isFavorite = recipeIsFavorite
         recipe.imageName = NSUUID().uuidString
+        recipe.ingredients = recipeIngredients
+        recipe.instructions = recipeInstructions
         if let description = descriptionView.inputTextView.text { recipe.description = description }
         if let image = recipeImageView.image { recipe.image = image }
-//        if let instructions = instructionsView.inputTextView.text { recipe.instructions = instructions }
         if let notes = notesView.inputTextView.text { recipe.notes = notes }
         if let source = sourceField.inputField.text { recipe.source = source }
         if let url = urlField.inputField.text { recipe.url = url }
         if let yield = yieldField.inputField.text { recipe.yield = yield }
+        
         updateFamilyRecipe(recipe)
         if shareToFirebase { uploadRecipeToFirebase(recipe) }
     }

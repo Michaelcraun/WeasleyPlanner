@@ -84,14 +84,31 @@ class Recipe {
     
     /// Converts a specified Recipe to a Dictionary of type [String : Any] to store on Firebase
     /// - returns: A Dictionary of type [String : Any] that represents the specified Recipe
-    func dictionary() -> Dictionary<String,Any> {
-        var pushedDictionary = Dictionary<String,Any>()
+    func dictionary() -> [String : Any] {
+        var pushedDictionary = [String : Any]()
         pushedDictionary["activeHours"] = self.activeHours
         pushedDictionary["activeMinutes"] = self.activeMinutes
         pushedDictionary["description"] = self.description
         pushedDictionary["imageName"] = self.imageName
-        pushedDictionary["ingredients"] = self.ingredients
-        pushedDictionary["instructions"] = self.instructions
+        pushedDictionary["ingredients"] = {
+            var ingredients = [String]()
+            for ingredient in self.ingredients {
+                let ingredientString = ingredient.stringRepresentation
+                ingredients.append(ingredientString)
+            }
+            print("INGREDIENTS: \(ingredients)")
+            return ingredients
+        }()
+        pushedDictionary["instructions"] = {
+            var instructions = [[String : Any]]()
+            for i in 0..<self.instructions.count {
+                let instructionDict: [String : Any] = ["key" : i,
+                                                       "instruction" : self.instructions[i]]
+                instructions.append(instructionDict)
+            }
+            print("INSTRUCTIONS: \(instructions)")
+            return instructions
+        }()
         pushedDictionary["isFavorite"] = self.isFavorite
         pushedDictionary["notes"] = self.notes
         pushedDictionary["source"] = self.source
@@ -110,7 +127,7 @@ struct RecipeIngredient {
     var unitOfMeasurement: UnitOfMeasurement
     var item: String
     var stringRepresentation: String {
-        return "\(quantity) \(unitOfMeasurement.rawValue) \(item)"
+        return "\(quantity)|\(unitOfMeasurement.rawValue)|\(item)"
     }
 }
 
@@ -124,7 +141,6 @@ enum UnitOfMeasurement: String {
     case tablespoon
     case teaspoon
     case whole
-    static var allUnits: [UnitOfMeasurement] = [.cup, .dash, .pinch, .pound, .tablespoon, .teaspoon, .whole]
     
     var shortHandNotation: String {
         switch self {
@@ -136,5 +152,20 @@ enum UnitOfMeasurement: String {
         case .teaspoon: return "tsp."
         case .whole: return "whole"
         }
+    }
+    
+    func toCup(quantity: String) -> String {
+        let string = ""
+        return string
+    }
+    
+    func toPound(quantity: String) -> String {
+        let string = ""
+        return string
+    }
+    
+    func toTablespoon(quantity: String) -> String {
+        let string = ""
+        return string
     }
 }
