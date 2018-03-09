@@ -37,6 +37,12 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
                     addEvent.titleField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
                 }
             }
+        } else if let recipeList = delegate as? RecipeListVC {
+            if textField == recipeList.searchField.inputField {
+                recipeList.view.removeTapToDismissKeyboard()
+                recipeList.animateTableView(recipeList.searchList, shouldOpen: true)
+                recipeList.searchField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            }
         }
     }
     
@@ -54,6 +60,11 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
                 addEvent.performRecipeSearch(searchText: searchText)
             } else {
                 addEvent.saveButtonPressed(nil)
+            }
+        } else if let recipeList = delegate as? RecipeListVC {
+            if textField == recipeList.searchField.inputField {
+                guard let searchText = textField.text else { return false }
+                recipeList.performRecipeSearch(searchText: searchText)
             }
         }
         return true
@@ -83,6 +94,11 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
             } else if textField == addEvent.titleField.inputField {
                 guard let searchText = textField.text else { return }
                 addEvent.performRecipeSearch(searchText: searchText)
+            }
+        } else if let recipeList = delegate as? RecipeListVC {
+            if textField == recipeList.searchField.inputField {
+                guard let searchText = textField.text else { return }
+                recipeList.performRecipeSearch(searchText: searchText)
             }
         }
     }

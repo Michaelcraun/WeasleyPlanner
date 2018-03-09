@@ -134,13 +134,25 @@ struct RecipeIngredient {
 /// An enumeration that represents the possible units of measurement. Also contains short hand notations and
 /// conversion functions.
 enum UnitOfMeasurement: String {
-    case cup = "cup"
+    case cup
     case dash
     case pinch
     case pound
     case tablespoon
     case teaspoon
     case whole
+    
+    var pluralRepresentation: String {
+        switch self {
+        case .cup: return "cups"
+        case .dash: return "dashes"
+        case .pinch: return "pinches"
+        case .pound: return "pounds"
+        case .tablespoon: return "tablespoons"
+        case .teaspoon: return "teaspoons"
+        case .whole: return "whole"
+        }
+    }
     
     var shortHandNotation: String {
         switch self {

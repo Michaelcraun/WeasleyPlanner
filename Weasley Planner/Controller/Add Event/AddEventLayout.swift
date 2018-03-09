@@ -248,6 +248,8 @@ extension AddEventVC: UITableViewDataSource, UITableViewDelegate {
             
             if shouldOpen {
                 tableView.reloadData()
+            } else {
+                self.view.endEditing(true)
             }
         })
     }

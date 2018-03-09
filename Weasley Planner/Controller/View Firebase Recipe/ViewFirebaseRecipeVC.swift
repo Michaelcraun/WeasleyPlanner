@@ -9,27 +9,48 @@
 import UIKit
 
 class ViewFirebaseRecipeVC: UIViewController {
+    
+    // ----------------------
+    // MARK: - Data Variables
+    // ----------------------
+    var firebaseRecipeToView: Recipe?
+    
+    override var previewActionItems: [UIPreviewActionItem] {
+        var actionItems = [UIPreviewActionItem]()
+        
+        let likeAction = UIPreviewAction(title: "Like Recipe", style: .default) { (action, controller) in
+            //TODO: Allow for liking Firebase recipe
+        }
+        
+        let reportAction = UIPreviewAction(title: "Delete", style: .destructive) { (action, controller) in
+            //TODO: Allow for deletion of recipe
+        }
+        
+        let suggestEditAction = UIPreviewAction(title: "Add to Shopping List", style: .default) { (action, controller) in
+            //TODO: Allow for adding
+        }
+        
+//        for i in 0..<subToDos.count {
+//            if let title = subToDos[i].title {
+//                let action = UIPreviewAction(title: "Toggle \(title)", style: .default, handler: { (action, controller) in
+//                    self.subToDos[i].completed = !self.subToDos[i].completed
+//                    self.savePressed(sender: nil)
+//                    CoreDataHandler.instance.attemptFetch()
+//
+//                    guard let mainVC = DataHandler.instance.owningVC as? MainVC else { return }
+//                    mainVC.toDoTable.reloadData()
+//                    mainVC.animateProgressBars()
+//                })
+//
+//                actionItems.append(action)
+//            }
+//        }
+        return actionItems
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        layoutView()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

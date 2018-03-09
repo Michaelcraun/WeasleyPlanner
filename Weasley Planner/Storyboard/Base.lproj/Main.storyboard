@@ -119,7 +119,7 @@
         <!--View Firebase RecipeVC-->
         <scene sceneID="ccu-Tz-c5A">
             <objects>
-                <viewController id="Yee-OR-QrU" customClass="ViewFirebaseRecipeVC" customModule="Weasley_Planner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewFirebaseRecipeVC" id="Yee-OR-QrU" customClass="ViewFirebaseRecipeVC" customModule="Weasley_Planner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IWh-pe-FLo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

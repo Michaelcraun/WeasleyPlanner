@@ -38,6 +38,7 @@ class InputView: UIView {
         case location = "Location"
         case notes = "Notes"
         case password = "Password"
+        case search = "Search"
         case source = "Source"
         case title = "Title"
         case url = "URL"
@@ -50,7 +51,7 @@ class InputView: UIView {
     
     override func layoutSubviews() {
         self.backgroundColor = secondaryColor
-        self.addBorder()
+        self.addBorder(clipsToBounds: false)
         
         let placeHolderLabel: UILabel = {
             let label = UILabel()
@@ -63,13 +64,13 @@ class InputView: UIView {
         }()
         
         switch inputType {
-        case .activeTime, .date, .email, .firstName, .lastName, .location, .password, .source, .title, .totalTime, .url, .user, .yield:
+        case .activeTime, .date, .email, .firstName, .lastName, .location, .password, .search, .source, .title, .totalTime, .url, .user, .yield:
             if inputType == .email {
                 inputField.autocapitalizationType = .none
             } else if inputType == .password {
                 inputField.autocapitalizationType = .none
                 inputField.isSecureTextEntry = true
-            }
+            } 
             
             self.addSubview(inputField)
             self.addSubview(placeHolderLabel)

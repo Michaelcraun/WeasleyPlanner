@@ -65,7 +65,24 @@ extension RecipeListVC {
         })
     }
     
-    func addRecipeIngredientToShoppingList(_ ingredient: String) {
+    func addRecipeIngredientsToShoppingList(_ ingredients: [String]) {
+        guard let userFamily = user?.family else { return }
         
+        DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value) { (snapshot) in
+            guard let familySnapshot = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+            for family in familySnapshot {
+                guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
+                if familyName == userFamily {
+                    var shoppingList = ingredients
+                    guard let currentShoppingList = family.childSnapshot(forPath: "shoppingList").value as? [String] else {
+                        DataHandler.instance.updateFirebaseFamily(id: family.key, familyData: ["shoppingList" : shoppingList])
+                        return
+                    }
+                    
+                    for item in currentShoppingList { shoppingList.append(item) }
+                    DataHandler.instance.updateFirebaseFamily(id: family.key, familyData: ["shoppingList" : shoppingList])
+                }
+            }
+        }
     }
 }

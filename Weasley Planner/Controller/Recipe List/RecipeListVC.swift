@@ -10,17 +10,33 @@ import UIKit
 
 class RecipeListVC: UIViewController {
     //MARK: UI Variables
-    let recipeList = UITableView()
+    var searchListHeight: NSLayoutConstraint!
     
-    let searchBar: ModernSearchBar = {
-        let bar = ModernSearchBar()
-        bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
-        bar.searchLabel_textColor = primaryTextColor
-        bar.searchLabel_backgroundColor = primaryColor
-        bar.suggestionsView_maxHeight = 180
-        bar.suggestionsView_separatorStyle = .none
-        bar.suggestionsView_contentViewColor = primaryColor
-        return bar
+    let searchField: InputView = {
+        let field = InputView()
+        field.addDeepShadows()
+        field.inputField.delegate = textManager
+        field.inputType = .search
+        return field
+    }()
+    
+    let recipeList: UITableView = {
+        let tableView = UITableView()
+        tableView.register(RecipeCell.self, forCellReuseIdentifier: "recipeCell")
+        return tableView
+    }()
+    
+    let shadowView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
+        return view
+    }()
+    
+    let searchList: UITableView = {
+        let tableView = UITableView()
+        tableView.register(RecipeCell.self, forCellReuseIdentifier: "searchCell")
+        return tableView
     }()
     
     let titleBar: TitleBar = {
@@ -31,8 +47,12 @@ class RecipeListVC: UIViewController {
     
     //MARK: Data Variables
     var user: User?
-    var recipeSearched: Recipe?
     var isAddingFirebaseRecipe = false
+    var matchingRecipes = [Recipe]() {
+        didSet {
+            searchList.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +62,12 @@ class RecipeListVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        textManager.delegate = self
         titleBar.delegate = self
-        searchBar.delegateModernSearchBar = self
         
         observeFamilyRecipes()
+        displayLoadingView(true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.displayLoadingView(false) }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -95,7 +117,13 @@ class RecipeListVC: UIViewController {
         }
         
         let addIngredientsAction = UIAlertAction(title: "Add To Shopping List", style: .default) { (action) in
-            
+            var ingredientsToAdd = [String]()
+            let selectedRecipe = DataHandler.instance.familyRecipes[index]
+            for ingredient in selectedRecipe.ingredients {
+                let ingredientString = "\(ingredient.quantity) \(ingredient.unitOfMeasurement.rawValue) \(ingredient.item)"
+                ingredientsToAdd.append(ingredientString)
+            }
+            self.addRecipeIngredientsToShoppingList(ingredientsToAdd)
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in

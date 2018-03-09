@@ -10,6 +10,8 @@ import UIKit
 
 class AddRecipeVC: UIViewController {
     //MARK: UI Variables
+    lazy var slideInTransitionManager = SlideInPresentationManager()
+    
     let titleBar: TitleBar = {
         let bar = TitleBar()
         bar.subtitle = "Add Recipe"
@@ -171,19 +173,8 @@ class AddRecipeVC: UIViewController {
     var shareToFirebase = true
     var activeTime = [0,30]
     var totalTime = [1,0]
-    var recipeIngredients = [RecipeIngredient]() {
-        didSet {
-//            ingredientsList.reloadData()
-//            updateIngredientsandInstructionsConstraints()
-        }
-    }
-    
-    var recipeInstructions = [String]() {
-        didSet {
-//            instructionsList.reloadData()
-//            updateIngredientsandInstructionsConstraints()
-        }
-    }
+    var recipeIngredients = [RecipeIngredient]()
+    var recipeInstructions = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -315,5 +306,29 @@ class AddRecipeVC: UIViewController {
         
         updateFamilyRecipe(recipe)
         if shareToFirebase { uploadRecipeToFirebase(recipe) }
+    }
+}
+
+extension AddRecipeVC: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let adjustedLocation = CGPoint(x: location.x, y: location.y - topBannerHeight)
+        if let indexPath = firebaseRecipeList.indexPathForRow(at: adjustedLocation) {
+            let selectedRecipe = firebaseRecipes[indexPath.row]
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let detailVC = storyboard.instantiateViewController(withIdentifier: "ViewFirebaseRecipeVC") as! ViewFirebaseRecipeVC
+            detailVC.firebaseRecipeToView = selectedRecipe
+            detailVC.layoutView()
+            previewingContext.sourceRect = firebaseRecipeList.rectForRow(at: indexPath)
+            return detailVC
+        }
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        let controller = viewControllerToCommit
+        slideInTransitionManager.direction = .right
+        controller.transitioningDelegate = slideInTransitionManager
+        controller.modalPresentationStyle = .custom
+        present(controller, animated: true, completion: nil)
     }
 }

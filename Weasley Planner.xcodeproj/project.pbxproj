@@ -34,6 +34,7 @@
 		9BA1F0A9204AD7E600B44843 /* RecurrenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */; };
 		9BA1F0AB204D994E00B44843 /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0AA204D994E00B44843 /* NotificationDelegate.swift */; };
 		9BA1F0AD204D995F00B44843 /* StoreKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0AC204D995F00B44843 /* StoreKitDelegate.swift */; };
+		9BA1F0CD2052D0E800B44843 /* ViewFirebaseRecipeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1F0CC2052D0E800B44843 /* ViewFirebaseRecipeLayout.swift */; };
 		9BA7B0DA2030A07E002886DF /* RecipeListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0D92030A07E002886DF /* RecipeListVC.swift */; };
 		9BA7B0DD2030A11F002886DF /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DC2030A11F002886DF /* SettingsVC.swift */; };
 		9BA7B0DF2030E323002886DF /* CalendarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA7B0DE2030E323002886DF /* CalendarLayout.swift */; };
@@ -115,6 +116,7 @@
 		9BA1F0A8204AD7E600B44843 /* RecurrenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceView.swift; sourceTree = "<group>"; };
 		9BA1F0AA204D994E00B44843 /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
 		9BA1F0AC204D995F00B44843 /* StoreKitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitDelegate.swift; sourceTree = "<group>"; };
+		9BA1F0CC2052D0E800B44843 /* ViewFirebaseRecipeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFirebaseRecipeLayout.swift; sourceTree = "<group>"; };
 		9BA7B0D92030A07E002886DF /* RecipeListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListVC.swift; sourceTree = "<group>"; };
 		9BA7B0DC2030A11F002886DF /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9BA7B0DE2030E323002886DF /* CalendarLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarLayout.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				9B130EC6203DC83B0022C992 /* ViewFirebaseRecipeVC.swift */,
+				9BA1F0CC2052D0E800B44843 /* ViewFirebaseRecipeLayout.swift */,
 			);
 			path = "View Firebase Recipe";
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				9BF398BB2039EB0D0009FC33 /* Connection.swift in Sources */,
 				9BA7B1032035147E002886DF /* Item.swift in Sources */,
 				9BF398BD2039F67F0009FC33 /* Recipe.swift in Sources */,
+				9BA1F0CD2052D0E800B44843 /* ViewFirebaseRecipeLayout.swift in Sources */,
 				9BC2E18B202CFB73000B8E15 /* SlideInPresentationAnimator.swift in Sources */,
 				9BCF3874202DEA2500617558 /* UIButtonExtension.swift in Sources */,
 				9BA7B0FF203513EF002886DF /* ShoppingListLayout.swift in Sources */,

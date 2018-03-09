@@ -16,11 +16,11 @@ extension Array where Array == [Recipe] {
     /// - parameter searchText: The String value to search the Array of Recipe for
     /// - returns: A filtered Array of Recipe where the title of those Recipes contains the given searchText
     func filterByTitle(searchText: String) -> [Recipe] {
+        let searchText = searchText.lowercased()
         var filteredRecipes = [Recipe]()
         for recipe in self {
-            if recipe.title.contains(searchText) {
-                filteredRecipes.append(recipe)
-            }
+            let searchableRecipeTitle = recipe.title.lowercased()
+            if searchableRecipeTitle.contains(searchText) { filteredRecipes.append(recipe) }
         }
         return filteredRecipes
     }
