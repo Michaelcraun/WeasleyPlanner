@@ -18,7 +18,8 @@ extension UITableViewCell {
     
     /// Used to layout cell for cancelling user input
     func layoutCancelCell() {
-        //TODO: Layout for cell
+        clearCell()
+        
         let cancelLabel: UILabel = {
             let label = UILabel()
             label.font = UIFont(name: fontName, size: largeFontSize)

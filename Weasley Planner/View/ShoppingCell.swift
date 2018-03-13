@@ -42,15 +42,28 @@ class ShoppingCell: UITableViewCell {
     func layoutCellForPrevious(entry: String) {
         clearCell()
         
-        let itemLabel: UILabel = {
-            let label = UILabel()
-            label.font = UIFont(name: fontName, size: smallFontSize)
-            label.text = entry
-            label.textColor = secondaryTextColor
-            return label
+        let cellView: UIView = {
+            let view = UIView()
+            view.addBorder(clipsToBounds: false)
+            view.addLightShadows()
+            view.backgroundColor = secondaryColor
+            view.layer.cornerRadius = 5
+            
+            let itemLabel: UILabel = {
+                let label = UILabel()
+                label.font = UIFont(name: secondaryFontName, size: smallerFontSize)
+                label.text = entry
+                label.textColor = secondaryTextColor
+                return label
+            }()
+            
+            view.addSubview(itemLabel)
+            itemLabel.fillTo(view, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
+            return view
         }()
-        self.addSubview(itemLabel)
-        itemLabel.fillTo(self)
+        
+        self.addSubview(cellView)
+        cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
     func layoutCellForItem(_ item: Item) {
@@ -59,10 +72,10 @@ class ShoppingCell: UITableViewCell {
         
         let itemView: UIView = {
             let view = UIView()
-            view.backgroundColor = secondaryColor
-            view.addBorder()
-            view.layer.cornerRadius = 5
+            view.addBorder(clipsToBounds: false)
             view.addLightShadows()
+            view.backgroundColor = secondaryColor
+            view.layer.cornerRadius = 5
             
             let obtainedIndicator: UIView = {
                 let indicator = UIView()
@@ -81,13 +94,7 @@ class ShoppingCell: UITableViewCell {
                 let label = UILabel()
                 label.font = UIFont(name: fontName, size: smallFontSize)
                 label.textColor = secondaryTextColor
-                label.text = {
-                    if item.quantity == "" {
-                        return item.name
-                    } else {
-                        return "\(item.quantity) \(item.name)"
-                    }
-                }()
+                label.text = item.stringRepresentation()
                 return label
             }()
             

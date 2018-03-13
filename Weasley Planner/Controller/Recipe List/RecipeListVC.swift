@@ -117,11 +117,15 @@ class RecipeListVC: UIViewController {
         }
         
         let addIngredientsAction = UIAlertAction(title: "Add To Shopping List", style: .default) { (action) in
-            var ingredientsToAdd = [String]()
+            var ingredientsToAdd = [[String : Any]]()
             let selectedRecipe = DataHandler.instance.familyRecipes[index]
             for ingredient in selectedRecipe.ingredients {
-                let ingredientString = "\(ingredient.quantity) \(ingredient.unitOfMeasurement.rawValue) \(ingredient.item)"
-                ingredientsToAdd.append(ingredientString)
+                let newShoppingItem = Item(quantity: ingredient.quantity,
+                                           unitOfMeasurement: ingredient.unitOfMeasurement,
+                                           name: ingredient.item,
+                                           obtained: false)
+                let shoppingItemAsDict = newShoppingItem.dictionary()
+                ingredientsToAdd.append(shoppingItemAsDict)
             }
             self.addRecipeIngredientsToShoppingList(ingredientsToAdd)
         }

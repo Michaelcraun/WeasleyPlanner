@@ -10,10 +10,8 @@ import UIKit
 
 class RecipeCell: UITableViewCell {
     var recipe: Recipe?
-    let allMeasurements: [UnitOfMeasurement] = [.cup, .dash, .pinch, .pound, .tablespoon, .teaspoon, .whole]
     var selectedMeasurement: UnitOfMeasurement = .cup {
         didSet {
-            print("INGREDIENTS: selectedMeasurement: \(selectedMeasurement.rawValue)")
             self.measurementField.text = selectedMeasurement.shortHandNotation
         }
     }
@@ -78,9 +76,8 @@ class RecipeCell: UITableViewCell {
     //---------------------------
     func layoutCellForRecipe(_ recipe: Recipe) {
         clearCell()
-        
         self.recipe = recipe
-        
+       
         let cellView: UIView = {
             let view = UIView()
             view.backgroundColor = secondaryColor
@@ -136,7 +133,25 @@ class RecipeCell: UITableViewCell {
             return view
         }()
         
+        let favoriteIcon: UIImageView = {
+            let imageView = UIImageView()
+            imageView.image = {
+                switch recipe.isFavorite {
+                case true: return #imageLiteral(resourceName: "isFavoriteIcon")
+                case false: return #imageLiteral(resourceName: "isNotFavoriteIcon")
+                }
+            }()
+            return imageView
+        }()
+        
         self.addSubview(cellView)
+        self.addSubview(favoriteIcon)
+        
+        favoriteIcon.anchor(top: self.topAnchor,
+                            leading: self.leadingAnchor,
+                            padding: .init(top: 0, left: 0, bottom: 0, right: 0),
+                            size: .init(width: 30, height: 30))
+        
         cellView.fillTo(self, withPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
     
@@ -346,7 +361,7 @@ class RecipeCell: UITableViewCell {
 extension RecipeCell: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int { return 1 }
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat { return 30 }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { return allMeasurements.count }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { return UnitOfMeasurement.allUnits.count }
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let pickerLabel: UILabel = {
             let label = UILabel()
@@ -354,7 +369,7 @@ extension RecipeCell: UIPickerViewDataSource, UIPickerViewDelegate {
             label.addLightShadows()
             label.backgroundColor = secondaryColor
             label.font = UIFont(name: secondaryFontName, size: smallerFontSize)
-            label.text = allMeasurements[row].rawValue
+            label.text = UnitOfMeasurement.allUnits[row].rawValue
             label.textAlignment = .center
             label.textColor = secondaryTextColor
             return label
@@ -367,7 +382,7 @@ extension RecipeCell: UIPickerViewDataSource, UIPickerViewDelegate {
         
         if sender == measurementPicker.doneButton {
             let selectedRow = measurementPicker.dataPicker.selectedRow(inComponent: 0)
-            selectedMeasurement = allMeasurements[selectedRow]
+            selectedMeasurement = UnitOfMeasurement.allUnits[selectedRow]
             self.measurementField.text = selectedMeasurement.shortHandNotation
         }
     }

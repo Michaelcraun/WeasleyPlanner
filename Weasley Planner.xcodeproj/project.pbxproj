@@ -24,6 +24,7 @@
 		9B1E990720458D7B00A23118 /* AddEventLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1E990620458D7A00A23118 /* AddEventLayout.swift */; };
 		9B1E990920458DC100A23118 /* AddEventFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1E990820458DC100A23118 /* AddEventFirebase.swift */; };
 		9B1E990F2045B63500A23118 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1E990E2045B63500A23118 /* UIViewControllerExtension.swift */; };
+		9B429BE2205806000066DD17 /* Fraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B429BE1205806000066DD17 /* Fraction.swift */; };
 		9B644D30202F4C7B003B6A50 /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D2F202F4C7B003B6A50 /* TextButton.swift */; };
 		9B644D32202F815A003B6A50 /* FirebaseLoginLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */; };
 		9B644D34202F818C003B6A50 /* FirebaseLoginFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */; };
@@ -106,6 +107,7 @@
 		9B1E990620458D7A00A23118 /* AddEventLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventLayout.swift; sourceTree = "<group>"; };
 		9B1E990820458DC100A23118 /* AddEventFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventFirebase.swift; sourceTree = "<group>"; };
 		9B1E990E2045B63500A23118 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		9B429BE1205806000066DD17 /* Fraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fraction.swift; sourceTree = "<group>"; };
 		9B644D2F202F4C7B003B6A50 /* TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
 		9B644D31202F815A003B6A50 /* FirebaseLoginLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginLayout.swift; sourceTree = "<group>"; };
 		9B644D33202F818C003B6A50 /* FirebaseLoginFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginFirebase.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				9BC2E17C202CEADD000B8E15 /* Constants.swift */,
 				9BC2E190202DC781000B8E15 /* DataHandler.swift */,
 				9BA7B0E7203134B9002886DF /* Event.swift */,
+				9B429BE1205806000066DD17 /* Fraction.swift */,
 				9BA7B1022035147E002886DF /* Item.swift */,
 				9BF398BC2039F67F0009FC33 /* Recipe.swift */,
 				9B644D36202FC6C1003B6A50 /* User.swift */,
@@ -628,6 +631,7 @@
 				9BA7B0FF203513EF002886DF /* ShoppingListLayout.swift in Sources */,
 				9B1E98D72040A5EE00A23118 /* EventCell.swift in Sources */,
 				9BA7B0EC2031FC63002886DF /* SettingsFirebase.swift in Sources */,
+				9B429BE2205806000066DD17 /* Fraction.swift in Sources */,
 				9BA7B0F020332E35002886DF /* MapDelegate.swift in Sources */,
 				9B124EE52038F480007D34BC /* ModernSearchBarDelegate.swift in Sources */,
 				9B130EC9203DF8560022C992 /* ArrayExtension.swift in Sources */,

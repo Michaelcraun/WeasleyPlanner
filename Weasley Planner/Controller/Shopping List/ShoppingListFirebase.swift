@@ -19,15 +19,14 @@ extension ShoppingListVC {
             for family in familySnapshot {
                 guard let name = family.childSnapshot(forPath: "name").value as? String else { return }
                 if name == familyName {
-                    guard let shoppingList = family.childSnapshot(forPath: "shoppingList").value as? [Dictionary<String,Any>] else { return }
+                    guard let shoppingList = family.childSnapshot(forPath: "shoppingList").value as? [[String : Any]] else { return }
                     for item in shoppingList {
-                        guard let quantity = item["quantity"] as? String else { return }
-                        guard let name = item["name"] as? String else { return }
-                        guard let obtained = item["obtained"] as? Bool else { return }
-                        
-                        let newItem = Item(quantity: quantity, name: name, obtained: obtained)
-                        self.shoppingItems.append(newItem)
+                        if let newItem = item.toItem() {
+                            let combinedItem = self.combineLikeItems(forItem: newItem)
+                            self.shoppingItems.append(combinedItem)
+                        }
                     }
+//                    updateShoppingList()
                 }
             }
         })
@@ -35,10 +34,10 @@ extension ShoppingListVC {
     
     func updateShoppingList() {
         guard let familyName = user?.family, familyName != "" else { return }
-        var shoppingList: [Dictionary<String,Any>] {
-            var _shoppingList = [Dictionary<String,Any>]()
+        var shoppingList: [[String : Any]] {
+            var _shoppingList = [[String: Any]]()
             for item in shoppingItems {
-                let itemAsDict: Dictionary<String,Any> = ["quantity" : item.quantity, "name" : item.name, "obtained" : item.obtained]
+                let itemAsDict = item.dictionary()
                 _shoppingList.append(itemAsDict)
             }
             return _shoppingList

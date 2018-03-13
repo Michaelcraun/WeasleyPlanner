@@ -141,6 +141,7 @@ enum UnitOfMeasurement: String {
     case tablespoon
     case teaspoon
     case whole
+    static let allUnits: [UnitOfMeasurement] = [.cup, .dash, .pinch, .pound, .tablespoon, .teaspoon, .whole]
     
     var pluralRepresentation: String {
         switch self {

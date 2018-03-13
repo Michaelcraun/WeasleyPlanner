@@ -65,7 +65,7 @@ extension RecipeListVC {
         })
     }
     
-    func addRecipeIngredientsToShoppingList(_ ingredients: [String]) {
+    func addRecipeIngredientsToShoppingList(_ ingredients: [[String : Any]]) {
         guard let userFamily = user?.family else { return }
         
         DataHandler.instance.REF_FAMILY.observeSingleEvent(of: .value) { (snapshot) in
@@ -74,7 +74,7 @@ extension RecipeListVC {
                 guard let familyName = family.childSnapshot(forPath: "name").value as? String else { return }
                 if familyName == userFamily {
                     var shoppingList = ingredients
-                    guard let currentShoppingList = family.childSnapshot(forPath: "shoppingList").value as? [String] else {
+                    guard let currentShoppingList = family.childSnapshot(forPath: "shoppingList").value as? [[String : Any]] else {
                         DataHandler.instance.updateFirebaseFamily(id: family.key, familyData: ["shoppingList" : shoppingList])
                         return
                     }

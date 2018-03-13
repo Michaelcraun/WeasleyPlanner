@@ -29,19 +29,25 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
             if textField == addEvent.locationField.inputField {
                 addEvent.view.removeTapToDismissKeyboard()
                 addEvent.animateTableView(addEvent.locationList, shouldOpen: true)
-                addEvent.locationField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
             } else if textField == addEvent.titleField.inputField {
                 if addEvent.eventType == .meal {
                     addEvent.view.removeTapToDismissKeyboard()
                     addEvent.animateTableView(addEvent.recipeList, shouldOpen: true)
-                    addEvent.titleField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                    textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
                 }
             }
         } else if let recipeList = delegate as? RecipeListVC {
             if textField == recipeList.searchField.inputField {
                 recipeList.view.removeTapToDismissKeyboard()
                 recipeList.animateTableView(recipeList.searchList, shouldOpen: true)
-                recipeList.searchField.inputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            }
+        } else if let shoppingList = delegate as? ShoppingListVC {
+            if textField == shoppingList.searchField.inputField {
+                shoppingList.view.removeTapToDismissKeyboard()
+                shoppingList.animateTableView(shoppingList.searchList, shouldOpen: true)
+                textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
             }
         }
     }
@@ -65,6 +71,10 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
             if textField == recipeList.searchField.inputField {
                 guard let searchText = textField.text else { return false }
                 recipeList.performRecipeSearch(searchText: searchText)
+            }
+        } else if let shoppingList = delegate as? ShoppingListVC {
+            if textField == shoppingList.searchField.inputField {
+                shoppingList.addNewItem()
             }
         }
         return true
@@ -100,13 +110,17 @@ class TextDelegate: NSObject, UITextFieldDelegate, UITextViewDelegate {
                 guard let searchText = textField.text else { return }
                 recipeList.performRecipeSearch(searchText: searchText)
             }
+        } else if let shoppingList = delegate as? ShoppingListVC {
+            if textField == shoppingList.searchField.inputField {
+                guard let searchText = textField.text else { return }
+                shoppingList.performEntrySearch(searchText: searchText)
+            }
         }
     }
     
     //-----------------------------------
     // MARK: - TEXT VIEW DELEGATE METHODS
     //-----------------------------------
-    
     internal func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         delegate.view.endEditing(true)
         

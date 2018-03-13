@@ -59,6 +59,33 @@ extension Dictionary where Key == String {
         return fetchedEvent
     }
     
+    ///Converts a dictionary fetched from Firebase into an Item
+    /// - returns: An Item that contains the information stored on Firebase
+    func toItem() -> Item? {
+        guard let name = self["name"] as? String else { return nil }
+        
+        let fetchedItem = Item(name: name)
+        if let quantity = self["quantity"] as? String { fetchedItem.quantity = quantity }
+        if let obtained = self["obtained"] as? Bool { fetchedItem.obtained = obtained }
+        fetchedItem.unitOfMeasurement = {
+            if let unitOfMeasurementString = self["measurement"] as? String, unitOfMeasurementString != "none" {
+                guard let unitOfMeasurement = UnitOfMeasurement(rawValue: unitOfMeasurementString) else {
+                    switch unitOfMeasurementString {
+                    case "cups": return .cup
+                    case "dashes": return .dash
+                    case "pinches": return .pinch
+                    case "pounds": return .pound
+                    case "tablespoons": return .tablespoon
+                    default: return nil
+                    }
+                }
+                return unitOfMeasurement
+            }
+            return nil
+        }()
+        return fetchedItem
+    }
+    
     /// Converts a dictionary fetched from Firebase into a Recipe
     /// - returns: A Recipe that contains the information stored on Firebase
     func toRecipe() -> Recipe? {

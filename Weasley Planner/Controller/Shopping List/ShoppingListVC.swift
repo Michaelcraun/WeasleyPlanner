@@ -9,35 +9,51 @@
 import UIKit
 
 class ShoppingListVC: UIViewController {
-    private let identifier = "showShoppingList"
-    
-    //MARK: UI Variables
+    //---------------------
+    // MARK: - UI Variables
+    //---------------------
+    var searchListHeight: NSLayoutConstraint!
     let titleBar: TitleBar = {
         let bar = TitleBar()
         bar.subtitle = "Shopping List"
         return bar
     }()
     
-//    let addEntryField: UISearchBar()
-    let addEntryField: ModernSearchBar = {
-        let bar = ModernSearchBar()
-        bar.searchImage = #imageLiteral(resourceName: "addIcon")
-        bar.searchLabel_font = UIFont(name: fontName, size: smallFontSize)
-        bar.searchLabel_textColor = primaryTextColor
-        bar.searchLabel_backgroundColor = primaryColor
-        bar.suggestionsView_maxHeight = 180
-        bar.suggestionsView_separatorStyle = .none
-        bar.suggestionsView_contentViewColor = primaryColor
-        return bar
+    let searchField: InputView = {
+        let field = InputView()
+        field.addDeepShadows()
+        field.inputField.delegate = textManager
+        field.inputType = .search
+        return field
     }()
     
-    let shoppingList = UITableView()
+    let shadowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
+        view.isHidden = true
+        return view
+    }()
     
-    //MARK: Data Variables
+    let searchList: UITableView = {
+        let tableView = UITableView()
+        tableView.register(ShoppingCell.self, forCellReuseIdentifier: "searchCell")
+        return tableView
+    }()
+    
+    let shoppingList: UITableView = {
+        let tableView = UITableView()
+        tableView.register(ShoppingCell.self, forCellReuseIdentifier: "shoppingCell")
+        return tableView
+    }()
+    
+    //-----------------------
+    // MARK: - Data Variables
+    //-----------------------
     var user: User?
-    var previousEntries = [String]() {
+    var previousEntries = [String]()
+    var matchingEntries = [String]() {
         didSet {
-            addEntryField.setDatas(datas: previousEntries)
+            searchList.reloadData()
         }
     }
     
@@ -52,16 +68,76 @@ class ShoppingListVC: UIViewController {
 
         layoutView()
         beginConnectionTest()
+        loadPreviousEntries()
+        observeFamilyShoppingList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        textManager.delegate = self
         titleBar.delegate = self
-        addEntryField.delegateModernSearchBar = self
-        
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    func combineLikeItems(forItem item: Item) -> Item {
+        let itemsToCombine = checkForLikeItems(forItem: item)
+        var newQuantity = ""
+        var newDouble = 0.0
+        var newInt = 0
+        var newFraction = Fraction()
+        var obtained: Bool {
+            for foundItem in itemsToCombine {
+                if foundItem.obtained == false {
+                    return false
+                }
+            }
+            return true
+        }
         
+        for foundItem in itemsToCombine {
+            if let itemInt = Int(foundItem.quantity), itemInt != 0 {
+                newInt += itemInt
+            } else if let itemDouble = Double(foundItem.quantity), itemDouble != 0.0 {
+                newDouble += itemDouble
+            } else {
+                print("COMBINE: Couldn't cast \(foundItem.quantity) as a Double or Int...")
+                if foundItem.quantity.contains("/") {
+                    let fractionParts = foundItem.quantity.split(separator: "/")
+                    if let numerator = Int(String(fractionParts[0])), let denominator = Int(String(fractionParts[1])) {
+                        let foundFraction = Fraction(num: numerator, den: denominator)
+                        if newFraction.description == "0/0" {
+                            newFraction = foundFraction
+                        } else {
+                            newFraction = newFraction.add(foundFraction)
+                        }
+                    }
+                }
+            }
+        }
+        
+        if newInt != 0 {
+            newQuantity = "\(newInt)"
+        } else if newDouble != 0.0 {
+            newQuantity = "\(newDouble)"
+        } else {
+            newQuantity = newFraction.description
+        }
+        
+        let combinedItem = Item(quantity: "\(newQuantity)", unitOfMeasurement: item.unitOfMeasurement, name: item.name, obtained: obtained)
+        return combinedItem
+    }
+    
+    func checkForLikeItems(forItem item: Item) -> [Item] {
+        var itemsToCombine = [item]
+        var index = 0
+        
+        for shoppingItem in shoppingItems {
+            if shoppingItem.name == item.name {
+                itemsToCombine.append(shoppingItem)
+                shoppingItems.remove(at: index)
+            }
+            index += 1
+        }
+        
+        return itemsToCombine
     }
     
     func loadPreviousEntries() {
@@ -125,22 +201,31 @@ class ShoppingListVC: UIViewController {
         }
     }
     
-    func clearList() {
-        shoppingItems = []
-        updateShoppingList()
-    }
-    
     func addNewItem() {
-        if let text = addEntryField.text {
+        if let text = searchField.inputField.text {
             let newItem = createItemFromText(text)
             searchShoppingListForDuplicate(newItem)
-            addEntryField.text = ""
+            searchField.inputField.text = ""
             
             saveNewPreviousEntry(withText: text)
         }
     }
     
+    func createItemFromText(_ text: String) -> Item {
+        let itemQuantity = text.quantity()
+        let itemMeasurement = text.measurement()
+        let itemName = text.trimming(quantity: itemQuantity, andMeasurement: itemMeasurement)
+        
+        let newItem = Item(quantity: itemQuantity, name: itemName, obtained: false)
+        return newItem
+    }
+    
     @objc func clearListPressed(_ sender: TextButton?) {
         showAlert(.clearShoppingList)
+    }
+    
+    func clearList() {
+        shoppingItems = []
+        updateShoppingList()
     }
 }

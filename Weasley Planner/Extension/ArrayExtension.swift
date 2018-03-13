@@ -153,3 +153,7 @@ extension Array where Array == [Event] {
         return sortedArray
     }
 }
+
+extension Array where Array == [Item] {
+    
+}

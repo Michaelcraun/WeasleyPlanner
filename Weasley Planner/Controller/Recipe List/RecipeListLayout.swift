@@ -55,7 +55,7 @@ extension RecipeListVC {
         recipeList.anchor(top: searchField.bottomAnchor,
                           leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
-                          bottom: view.safeAreaLayoutGuide.bottomAnchor, padding: .init(top: 0, left: 5, bottom: 5, right: 5))
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor, padding: .init(top: 5, left: 5, bottom: 0, right: 5))
     }
 }
 
@@ -64,6 +64,7 @@ extension RecipeListVC {
 //-------------------------------------------
 extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
     func animateTableView(_ tableView: UITableView, shouldOpen: Bool) {
+        shadowView.isHidden = !shouldOpen
         var heightConstant: CGFloat {
             switch shouldOpen {
             case true: return 180
@@ -90,10 +91,8 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
             tableView.updateConstraints()
             
             if shouldOpen {
-                self.shadowView.isHidden = false
                 tableView.reloadData()
             } else {
-                self.shadowView.isHidden = true
                 self.searchField.inputField.text = ""
                 self.matchingRecipes = []
                 self.view.endEditing(true)
@@ -159,8 +158,7 @@ extension RecipeListVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             switch indexPath.row {
             case 0: animateTableView(searchList, shouldOpen: false)
-            default:
-                if let selectedRecipe = selectedCell.recipe { showOptionSheetForFamilyRecipe(selectedRecipe, atIndex: indexPath.row) }
+            default: if let selectedRecipe = selectedCell.recipe { showOptionSheetForFamilyRecipe(selectedRecipe, atIndex: indexPath.row) }
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
